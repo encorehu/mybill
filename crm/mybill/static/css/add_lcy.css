@@ -1,0 +1,21 @@
+/* CSS Document百宝箱针对理财易添加样式 chenshouzhe@corp.netease.com */
+a.a_INDEX,.Top_B_arr{background-image:url(http://mimg.163.com/assist/res/bg.gif);background-repeat:no-repeat}
+.Top{background-image:url(http://mimg.163.com/assist/res/bg_x.gif);background-repeat:repeat-x}
+
+.Top{height:36px;padding-left:8px;background-color:#FCFDFE;background-position:0px -12px; margin-bottom:3px}
+	.Top span{float:left;color:#000;margin:12px 4px 0px 8px}
+	.Top a{float:left;margin:12px 4px 0px 8px;color:#555}
+	.Top strong,.Top a:hover{color:#333}
+	a.a_INDEX{display:block;width:93px;height:25px;margin-top:6px;line-height:25px;text-indent:24px;background-position:0px -36px;float:left;margin-left:0px; overflow:hidden}
+	*:lang(zh) a.a_INDEX{ margin-top:7px}
+	a.a_INDEX:hover{background-position:0px -5px;text-decoration:none;color:#333}
+	.Top_B_arr{display:block;width:5px;height:8px;background-position:-95px -15px;float:left;margin-top:14px;margin-left:5px}
+
+/*返回按钮*/
+.bot_back_btn{text-align:left; padding-left:95px; margin-top:15px; clear:both; border-top:#E0E9ED 2px solid; padding-top:8px; padding-bottom:15px}
+	input.Back_IND{font-size:14px; color:#333; padding-top:2px; height:30px;width:160px; padding-top:2px;cursor:pointer!important;cursor:hand}
+
+ul.eNav{top:50px}
+/* 去掉返回百宝箱链接 20121108 */
+a.a_INDEX{ display:none}
+.bot_back_btn{ visibility:hidden}
