@@ -20,6 +20,26 @@ class Account(models.Model):
 	def __unicode__(self):
 		return u'{0}({1})'.format(self.name, self.number)
 
+TX_TYPE=(
+	(1,u'收入'),
+	(0, u'支出')
+)
+
+class AccountCategory(models.Model):
+	name =  models.CharField(max_length=255, blank=True)
+	display_name = models.CharField(max_length=255, null=True, blank=True, default=u'')
+	parent = models.ForeignKey('self', null=True, blank=True, related_name='child_category_set')
+	tx_type =  models.IntegerField(u'收支类型', default=0, choices=TX_TYPE)
+	class Meta:
+		verbose_name = u'收支分类'
+		verbose_name_plural =u'收支分类'
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		return u'{0}: {1}'.format(self.get_tx_type_display(), self.name)
+
 class AccountItem(models.Model):
 	account = models.ForeignKey(Account, related_name='account_set')
 	title =  models.CharField(max_length=255, null=True, blank=True, default=u'')
@@ -36,7 +56,7 @@ class AccountItem(models.Model):
 	class Meta:
 		verbose_name = u'记账条目'
 		verbose_name_plural =u'记账条目'
-		ordering = ('tx_date', )
+		ordering = ('tx_date', 'id')
 
 	def __str__(self):
 		return self.__unicode__().encode('utf-8')
