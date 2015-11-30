@@ -42,4 +42,4 @@ class AccountItem(models.Model):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'{0},{1},收入:{2}, 支出:{3}'.format(self.account, self.summary, self.debit, self.credit)
+		return u'{0},{1},收入:{2}, 支出:{3}'.format(self.account, self.summary, self.amount, self.amount)
