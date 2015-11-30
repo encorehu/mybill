@@ -3,6 +3,10 @@ import json
 
 from django.shortcuts import render
 from django.http import HttpResponse
+
+from django.db.models import Sum, Value as V
+from django.db.models.functions import Coalesce
+
 from django.views.generic import ListView
 from .models import AccountItem
 
@@ -47,6 +51,23 @@ class BillDoView(ListView):
         ait.summary = request.POST.get('type','0')
 
         return HttpResponse(json.dumps(response))
+
+    def listmonth(self, request):
+        strMonth=request.GET.get('strMonth','2015-10')
+        year,month = map(int, strMonth.split('-'))
+
+        accountitem_list = AccountItem.objects.filter(tx_date__year=year, tx_date__month=month).all()
+        last_balance = 0
+        income = accountitem_list.aggregate(
+                     combined_debit=Coalesce(Sum('debit'), V(0)))['combined_debit']
+        outcome = accountitem_list.aggregate(
+                     combined_credit=Coalesce(Sum('credit'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+            'income': income,
+            'outcome': outcome,
+            'balance': balance,
+            })
 
     def get(self, request, *args, **kwargs):
         method=request.GET.get('method', 'list')
