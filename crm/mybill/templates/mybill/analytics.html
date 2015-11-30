@@ -1,0 +1,68 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/analytics.js"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+
+	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
+		<li id='liTop4' class="topbar on"><a href="/mybill/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+		<div class="eSubNav"> <a href="/mybill/bill.do?method=analytics&type=-1&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class='on' >收支对比分析</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=analytics&type=1&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" >收入分配分析</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=analytics&type=0&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" >支出分配分析</a> </div>
+		<form id='frmAnalytics' name='analyticsForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
+		<input id='hdnLoadData' name='loadData' value='1' type='hidden'/>
+		<div class="anyBar">
+			<div id='divButtonContainer' class="aB1">
+				<input id='hdnMethod' name='method' value='analytics' type='hidden'/>
+				<input name='type' value='-1' type='hidden'/>
+				从 <input id='txtFromRecDate' name="fromRecDate"  readonly='readonly' type="text" style=" width:75px" value="2015-09-13"/> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;&nbsp;&nbsp;至&nbsp;<input id='txtToRecDate' name='toRecDate' type="text"  readonly='readonly' style=" width:75px" value="2015-10-13"/> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;
+				<input id='btnSearch' type="button" class="btnFnt" value="查看" />&nbsp;&nbsp;
+
+			</div>
+		</div>
+		</form>
+
+		<br/>
+		<br/>
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+</body>
+</html>
