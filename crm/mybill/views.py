@@ -1,5 +1,6 @@
 #-*- coding=utf-8 -*-
 import json
+import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -10,6 +11,7 @@ from django.db.models import Q
 
 from django.views.generic import ListView
 from .models import AccountItem
+from .models import AccountCategory
 
 # Create your views here.
 class BillIndexView(ListView):
@@ -86,6 +88,8 @@ class BillDoView(ListView):
             return self.listmonth(request)
         elif method == 'edit':
             return self.edit(request)
+        elif method == 'append':
+            return self.append(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -96,6 +100,18 @@ class BillDoView(ListView):
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
         return render(request, self.template_name, {'form': ''})
+
+    def append(self, request):
+        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+
+        return render(request,
+                      self.template_name,
+                      {
+                      'servertime':datetime.datetime.now(),
+                      'income_category_list': income_category_list,
+                      'outcome_category_list': outcome_category_list,
+                      })
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
