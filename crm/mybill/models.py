@@ -27,6 +27,7 @@ class AccountItem(models.Model):
 	#debit =   models.DecimalField(u'收入', max_digits=10, decimal_places=2, default=0.00)
 	#credit =   models.DecimalField(u'支出', max_digits=10, decimal_places=2, default=0.00)
 	#balance =   models.DecimalField(u'余额', max_digits=10, decimal_places=2, default=0.00)
+	amount =   models.DecimalField(u'金额', max_digits=10, decimal_places=2, default=0.00)
 	tx_date =  models.DateTimeField(u'交易日期', default=timezone.now)
 	adding_type =  models.IntegerField(default=0, editable=False)
 	adding_type_name =  models.CharField(max_length=20, default='manual', editable=False)
