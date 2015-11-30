@@ -80,6 +80,10 @@ class BillDoView(ListView):
         print method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
+        elif method == 'listmonth':
+            return self.listmonth(request)
+        elif method == 'edit':
+            return self.edit(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
