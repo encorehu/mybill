@@ -24,7 +24,7 @@ class AccountItem(models.Model):
 	account = models.ForeignKey(Account, related_name='account_set')
 	title =  models.CharField(max_length=255, null=True, blank=True, default=u'')
 	summary =  models.CharField(max_length=255, null=True, blank=True, default=u'餐费')
-	debit =   models.DecimalField(u'收入', max_digits=10, decimal_places=2, default=0.00)
+	#debit =   models.DecimalField(u'收入', max_digits=10, decimal_places=2, default=0.00)
 	#credit =   models.DecimalField(u'支出', max_digits=10, decimal_places=2, default=0.00)
 	#balance =   models.DecimalField(u'余额', max_digits=10, decimal_places=2, default=0.00)
 	tx_date =  models.DateTimeField(u'交易日期', default=timezone.now)
