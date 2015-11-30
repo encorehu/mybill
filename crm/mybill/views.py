@@ -6,6 +6,7 @@ from django.http import HttpResponse
 
 from django.db.models import Sum, Value as V
 from django.db.models.functions import Coalesce
+from django.db.models import Q
 
 from django.views.generic import ListView
 from .models import AccountItem
@@ -56,12 +57,13 @@ class BillDoView(ListView):
         strMonth=request.GET.get('strMonth','2015-10')
         year,month = map(int, strMonth.split('-'))
 
-        accountitem_list = AccountItem.objects.filter(tx_date__year=year, tx_date__month=month).all()
+        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
         last_balance = 0
-        income = accountitem_list.aggregate(
-                     combined_debit=Coalesce(Sum('debit'), V(0)))['combined_debit']
-        outcome = accountitem_list.aggregate(
-                     combined_credit=Coalesce(Sum('credit'), V(0)))['combined_credit']
+        print type(accountitem_list)
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
         return render(request, self.template_name, {'accountitem_list': accountitem_list,
             'income': income,
