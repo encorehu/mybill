@@ -65,4 +65,7 @@ class AccountItem(models.Model):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'{0},{1},收入:{2}, 支出:{3}'.format(self.account, self.summary, self.amount, self.amount)
+		if self.tx_type==1:
+			return u'{0},{1},收入:{2}'.format(self.account, self.summary, self.amount)
+		else:
+			return u'{0},{1},支出:{2}'.format(self.account, self.summary, self.amount)
