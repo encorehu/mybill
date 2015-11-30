@@ -8,7 +8,7 @@ class AccountAdmin(admin.ModelAdmin):
 	pass
 
 class AccountItemAdmin(admin.ModelAdmin):
-	list_display=('tx_date', 'amount')
+	list_display=('tx_date','summary','tx_type','amount')
 
 class AccountCategoryAdmin(admin.ModelAdmin):
   list_display=('tx_type','name')
