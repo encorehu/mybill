@@ -25,3 +25,13 @@ class BillDoView(ListView):
         self.template_name = 'mybill/%s.html' % method
         print method
         return render(request, self.template_name, {'form': ''})
+
+class BillCategoryDoView(ListView):
+    def get_queryset(self):
+        return []
+
+    def get(self, request, *args, **kwargs):
+        print 'ff'
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/category_%s.html' % method
+        return render(request, self.template_name, {'form': ''})

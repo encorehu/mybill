@@ -1,0 +1,284 @@
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444741376679"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/manage.js?1444741376679"></script>
+</head>
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+
+	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
+		<li id='liTop3' class="topbar on"><a href="/mybill/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="/mybill/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/category.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增收支项目</a> </div>
+
+		<!--没有记录时候显示-->
+		<div id='divNoList' class="eInfo2" style='display:none'>
+			<img src="http://mimg.163.com/xm/mybill/images/ico_info2.gif"/>
+			<p>暂时没有收支项目记录，<br/>请点击“<a href="/mybill/category.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增收支项目</a>”添加。</p>
+		</div>
+
+		<div id='divCList' >
+
+			<table class="eTb  inTb" style="width:320px; float:left; margin:0">
+			<col width="240" />
+			<col width="80" />
+				<tr>
+					<th>收入项目</th>
+					<th>操作</th>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529755">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 工资 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529755&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529755">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529756">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 奖金 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529756&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529756">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529757">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 分红 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529757&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529757">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529758">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 投资收入 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529758&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529758">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529759">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 礼金 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529759&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529759">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529760">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 兼职 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529760&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529760">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529761">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 其他收入 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529761&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="50529761">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+
+			</table>
+
+			<table class="eTb  outTb" style="width:320px; float:right; margin:0">
+			<col width="240" />
+			<col width="80" />
+				<tr>
+					<th>支出项目</th>
+					<th>操作</th>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529762">
+					<td class="td1"><a id='aCategory0' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="50529762">&nbsp;&nbsp;&nbsp;&nbsp;</a> 交通 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529762&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529762">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529763' class="trlev2 trCategory_50529762 trSubCategory_50529762" cId="50529762" subCId="50529763">
+					<td class="tdCutL">交通 - <span id='spnViewSubCategoryName_50529763'>违章交通</span><span id='spnEditSubCategoryName_50529763' style='display:none'><input id='iptSubCategoryName_50529763' type="text" value="违章交通" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529763" cId="50529762" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529763'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529763' href="#" class="icoEdt aEditSubCategory" subCId='50529763' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529763' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529764' class="trlev2 trCategory_50529762 trSubCategory_50529762" cId="50529762" subCId="50529764">
+					<td class="tdCutL">交通 - <span id='spnViewSubCategoryName_50529764'>汽油费</span><span id='spnEditSubCategoryName_50529764' style='display:none'><input id='iptSubCategoryName_50529764' type="text" value="汽油费" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529764" cId="50529762" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529764'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529764' href="#" class="icoEdt aEditSubCategory" subCId='50529764' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529764' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529765' class="trlev2 trCategory_50529762 trSubCategory_50529762" cId="50529762" subCId="50529765">
+					<td class="tdCutL">交通 - <span id='spnViewSubCategoryName_50529765'>公共交通</span><span id='spnEditSubCategoryName_50529765' style='display:none'><input id='iptSubCategoryName_50529765' type="text" value="公共交通" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529765" cId="50529762" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529765'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529765' href="#" class="icoEdt aEditSubCategory" subCId='50529765' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529765' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529766' class="trlev2 trCategory_50529762 trSubCategory_50529762" cId="50529762" subCId="50529766">
+					<td class="tdCutL">交通 - <span id='spnViewSubCategoryName_50529766'>停车过路</span><span id='spnEditSubCategoryName_50529766' style='display:none'><input id='iptSubCategoryName_50529766' type="text" value="停车过路" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529766" cId="50529762" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529766'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529766' href="#" class="icoEdt aEditSubCategory" subCId='50529766' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529766' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529767' class="trlev2 trCategory_50529762 trSubCategory_50529762" cId="50529762" subCId="50529767">
+					<td class="tdCutL">交通 - <span id='spnViewSubCategoryName_50529767'>车辆维护</span><span id='spnEditSubCategoryName_50529767' style='display:none'><input id='iptSubCategoryName_50529767' type="text" value="车辆维护" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529767" cId="50529762" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529767'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529767' href="#" class="icoEdt aEditSubCategory" subCId='50529767' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529767' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_57845390' class="trlev2 trCategory_50529762 trSubCategory_50529762" cId="50529762" subCId="57845390">
+					<td class="tdCutL">交通 - <span id='spnViewSubCategoryName_57845390'>火车票</span><span id='spnEditSubCategoryName_57845390' style='display:none'><input id='iptSubCategoryName_57845390' type="text" value="火车票" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="57845390" cId="50529762" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='57845390'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_57845390' href="#" class="icoEdt aEditSubCategory" subCId='57845390' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='57845390' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529768">
+					<td class="td1"><a id='aCategory1' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="50529768">&nbsp;&nbsp;&nbsp;&nbsp;</a> 饮食 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529768&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529768">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529769' class="trlev2 trCategory_50529768 trSubCategory_50529768" cId="50529768" subCId="50529769">
+					<td class="tdCutL">饮食 - <span id='spnViewSubCategoryName_50529769'>工作餐</span><span id='spnEditSubCategoryName_50529769' style='display:none'><input id='iptSubCategoryName_50529769' type="text" value="工作餐" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529769" cId="50529768" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529769'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529769' href="#" class="icoEdt aEditSubCategory" subCId='50529769' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529769' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529770' class="trlev2 trCategory_50529768 trSubCategory_50529768" cId="50529768" subCId="50529770">
+					<td class="tdCutL">饮食 - <span id='spnViewSubCategoryName_50529770'>聚餐请客</span><span id='spnEditSubCategoryName_50529770' style='display:none'><input id='iptSubCategoryName_50529770' type="text" value="聚餐请客" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529770" cId="50529768" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529770'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529770' href="#" class="icoEdt aEditSubCategory" subCId='50529770' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529770' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529771' class="trlev2 trCategory_50529768 trSubCategory_50529768" cId="50529768" subCId="50529771">
+					<td class="tdCutL">饮食 - <span id='spnViewSubCategoryName_50529771'>蔬菜水果</span><span id='spnEditSubCategoryName_50529771' style='display:none'><input id='iptSubCategoryName_50529771' type="text" value="蔬菜水果" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529771" cId="50529768" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529771'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529771' href="#" class="icoEdt aEditSubCategory" subCId='50529771' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529771' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529772">
+					<td class="td1"><a id='aCategory2' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="50529772">&nbsp;&nbsp;&nbsp;&nbsp;</a> 服饰美容 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529772&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529772">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529773' class="trlev2 trCategory_50529772 trSubCategory_50529772" cId="50529772" subCId="50529773">
+					<td class="tdCutL">服饰美容 - <span id='spnViewSubCategoryName_50529773'>衣服</span><span id='spnEditSubCategoryName_50529773' style='display:none'><input id='iptSubCategoryName_50529773' type="text" value="衣服" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529773" cId="50529772" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529773'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529773' href="#" class="icoEdt aEditSubCategory" subCId='50529773' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529773' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529774' class="trlev2 trCategory_50529772 trSubCategory_50529772" cId="50529772" subCId="50529774">
+					<td class="tdCutL">服饰美容 - <span id='spnViewSubCategoryName_50529774'>鞋类</span><span id='spnEditSubCategoryName_50529774' style='display:none'><input id='iptSubCategoryName_50529774' type="text" value="鞋类" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529774" cId="50529772" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529774'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529774' href="#" class="icoEdt aEditSubCategory" subCId='50529774' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529774' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529775' class="trlev2 trCategory_50529772 trSubCategory_50529772" cId="50529772" subCId="50529775">
+					<td class="tdCutL">服饰美容 - <span id='spnViewSubCategoryName_50529775'>护肤品</span><span id='spnEditSubCategoryName_50529775' style='display:none'><input id='iptSubCategoryName_50529775' type="text" value="护肤品" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529775" cId="50529772" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529775'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529775' href="#" class="icoEdt aEditSubCategory" subCId='50529775' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529775' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529776' class="trlev2 trCategory_50529772 trSubCategory_50529772" cId="50529772" subCId="50529776">
+					<td class="tdCutL">服饰美容 - <span id='spnViewSubCategoryName_50529776'>其他</span><span id='spnEditSubCategoryName_50529776' style='display:none'><input id='iptSubCategoryName_50529776' type="text" value="其他" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529776" cId="50529772" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529776'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529776' href="#" class="icoEdt aEditSubCategory" subCId='50529776' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529776' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529777">
+					<td class="td1"><a id='aCategory3' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="50529777">&nbsp;&nbsp;&nbsp;&nbsp;</a> 日常开支 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529777&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529777">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529778' class="trlev2 trCategory_50529777 trSubCategory_50529777" cId="50529777" subCId="50529778">
+					<td class="tdCutL">日常开支 - <span id='spnViewSubCategoryName_50529778'>水费</span><span id='spnEditSubCategoryName_50529778' style='display:none'><input id='iptSubCategoryName_50529778' type="text" value="水费" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529778" cId="50529777" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529778'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529778' href="#" class="icoEdt aEditSubCategory" subCId='50529778' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529778' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529779' class="trlev2 trCategory_50529777 trSubCategory_50529777" cId="50529777" subCId="50529779">
+					<td class="tdCutL">日常开支 - <span id='spnViewSubCategoryName_50529779'>电费</span><span id='spnEditSubCategoryName_50529779' style='display:none'><input id='iptSubCategoryName_50529779' type="text" value="电费" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529779" cId="50529777" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529779'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529779' href="#" class="icoEdt aEditSubCategory" subCId='50529779' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529779' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529780' class="trlev2 trCategory_50529777 trSubCategory_50529777" cId="50529777" subCId="50529780">
+					<td class="tdCutL">日常开支 - <span id='spnViewSubCategoryName_50529780'>房租</span><span id='spnEditSubCategoryName_50529780' style='display:none'><input id='iptSubCategoryName_50529780' type="text" value="房租" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529780" cId="50529777" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529780'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529780' href="#" class="icoEdt aEditSubCategory" subCId='50529780' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529780' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529781' class="trlev2 trCategory_50529777 trSubCategory_50529777" cId="50529777" subCId="50529781">
+					<td class="tdCutL">日常开支 - <span id='spnViewSubCategoryName_50529781'>燃气费</span><span id='spnEditSubCategoryName_50529781' style='display:none'><input id='iptSubCategoryName_50529781' type="text" value="燃气费" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529781" cId="50529777" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529781'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529781' href="#" class="icoEdt aEditSubCategory" subCId='50529781' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529781' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529782' class="trlev2 trCategory_50529777 trSubCategory_50529777" cId="50529777" subCId="50529782">
+					<td class="tdCutL">日常开支 - <span id='spnViewSubCategoryName_50529782'>物业管理费</span><span id='spnEditSubCategoryName_50529782' style='display:none'><input id='iptSubCategoryName_50529782' type="text" value="物业管理费" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529782" cId="50529777" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529782'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529782' href="#" class="icoEdt aEditSubCategory" subCId='50529782' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529782' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr id='trSubCategory_50529783' class="trlev2 trCategory_50529777 trSubCategory_50529777" cId="50529777" subCId="50529783">
+					<td class="tdCutL">日常开支 - <span id='spnViewSubCategoryName_50529783'>生活用品</span><span id='spnEditSubCategoryName_50529783' style='display:none'><input id='iptSubCategoryName_50529783' type="text" value="生活用品" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="50529783" cId="50529777" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='50529783'/></span></td>
+					<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_50529783' href="#" class="icoEdt aEditSubCategory" subCId='50529783' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='50529783' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529784">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 教育培训 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529784&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529784">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529785">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 通讯电话费 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529785&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529785">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529786">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 文化/娱乐 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529786&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529786">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529787">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 卫生医疗费 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529787&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529787">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529788">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 孝敬父母 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529788&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529788">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529789">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 子女培养 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529789&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529789">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529790">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 人情往来 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529790&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529790">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+				<tr class="trlev1  trCategory_50529791">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; 其他开支 </td>
+					<td><a href="/mybill/category.do?method=edit&id=50529791&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="50529791">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+			</table>
+			<div class="clear"></div>
+		</div>
+		<br/>
+		<br/>
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+
+
+</body>
+</html>
