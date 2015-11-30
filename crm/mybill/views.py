@@ -9,3 +9,19 @@ class BillIndexView(ListView):
 
     def get_queryset(self):
         return []
+
+class BillDoView(ListView):
+    def get_queryset(self):
+        return []
+
+    def get(self, request, *args, **kwargs):
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/%s.html' % method
+        print method
+        return render(request, self.template_name, {'form': ''})
+
+    def post(self, request, *args, **kwargs):
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/%s.html' % method
+        print method
+        return render(request, self.template_name, {'form': ''})
