@@ -1,0 +1,192 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_edit.js"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+
+	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
+		<li id='liTop2' class="topbar on"><a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+
+
+					<style>
+					.sFrm li b{width:80px}/*调整对齐修改此数值*/
+					</style>
+					<input type='hidden' name='sid'  value="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class='billdata'/>
+					<input id='hdnId' name='id' type='hidden' class='billdata' value=""/>
+					<input id='hdnType' name='type' type='hidden' class='billdata' value="1" />
+					<input id='hdnCategoryId' name='categoryId' type='hidden' class='billdata' value="" />
+					<input id='hdnSubCategoryId' name='subCategoryId' type='hidden' class='billdata' value="" />
+  					<ul class="sFrm">
+
+						<li><b><span class="icoImp">　</span> 收支日期：</b><div class="itemFm" style="padding-top:2px"><input id='txtRecDate' name='recDate' type="text"  class="sIpt3 billdata" style="width:80px" readonly='readonly' value="2015-10-13"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></div><div class="clear0"></div></li>
+						<li><b>说明：</b><input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 billdata" style="width:187px" value=''/><div class="clear0"></div></li>
+						<li id='liInOption' class='disable' >
+							<b><span class="icoImp">　</span> 收支项目：</b>
+							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype" />收入：<select id='selInCategory' class="sSel" style="text-align:left"><option value='1|50529755|0' >工资</option>
+<option value='1|50529756|0' >奖金</option>
+<option value='1|50529757|0' >分红</option>
+<option value='1|50529758|0' >投资收入</option>
+<option value='1|50529759|0' >礼金</option>
+<option value='1|50529760|0' >兼职</option>
+<option value='1|50529761|0' >其他收入</option>
+</select>&nbsp;&nbsp;<a id='aAddInCategory' href="#" class="udl">添加新收支项目</a></div>
+							<div class="clear0"></div>
+						</li>
+						<input type='hidden' name='sid'  value="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class='categoryData'/>
+						<input id='hdnCType' type='hidden' name='type' class='categoryData'/>
+						<input id='hdnCId' type='hidden' name='id' value='0' class='categoryData'/>
+						<input id='hdnCCategoryName' type='hidden' name='categoryName' class='categoryData'/>
+						<input id='hdnCParentId' type='hidden' value='0' name='parentId' class='categoryData'/>
+						<li id='liAddInCategory' class='hide'>
+							<b></b>
+							<div class="expBox itemFm" style="width:310px; background-position:-160px 0; margin:0 0 0 53px">
+								<div class="expBdy">
+								<style>.expBdy .sFrm li b{width:100px}/*调整对齐修改此数值*/</style>
+									<ul class="sFrm">
+										<li><b><span class="icoImp">　</span> 收支项目名称：</b><input id='txtInCategoryName' maxlength='8' type="text" class="sIpt2 itemFm" /><div class="clear0"></div></li>
+										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoScopeInCategory' type="radio" name='scopeIn' checked='checked' />一级收支项目<br/><input id='rdoScopeInSubCategory' type="radio" name="scopeIn"/>从属于<select id='selInCategories' style="width:100px"><option value='1|50529755' >工资</option>
+<option value='1|50529756' >奖金</option>
+<option value='1|50529757' >分红</option>
+<option value='1|50529758' >投资收入</option>
+<option value='1|50529759' >礼金</option>
+<option value='1|50529760' >兼职</option>
+<option value='1|50529761' >其他收入</option>
+</select></div><div class="clear0"></div></li>
+										<li class="bar"><b></b><input id='btnSubmitInCategory' type="button" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input id="btnCancelAddInCategory" type="button" value="取消"/></li>
+									</ul>
+								</div>
+							</div>
+							<div class="clear0"></div>
+						</li>
+
+						<li id='liOutOption'  style="margin-top:-3px">
+							<b></b>
+							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" checked='checked'/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left"><option value='0|50529762|0' >交通</option>
+<option value='0|50529762|50529763' >　　违章交通</option>
+<option value='0|50529762|50529764' >　　汽油费</option>
+<option value='0|50529762|50529765' >　　公共交通</option>
+<option value='0|50529762|50529766' >　　停车过路</option>
+<option value='0|50529762|50529767' >　　车辆维护</option>
+<option value='0|50529762|57845390' >　　火车票</option>
+<option value='0|50529768|0' >饮食</option>
+<option value='0|50529768|50529769' >　　工作餐</option>
+<option value='0|50529768|50529770' >　　聚餐请客</option>
+<option value='0|50529768|50529771' >　　蔬菜水果</option>
+<option value='0|50529772|0' >服饰美容</option>
+<option value='0|50529772|50529773' >　　衣服</option>
+<option value='0|50529772|50529774' >　　鞋类</option>
+<option value='0|50529772|50529775' >　　护肤品</option>
+<option value='0|50529772|50529776' >　　其他</option>
+<option value='0|50529777|0' >日常开支</option>
+<option value='0|50529777|50529778' >　　水费</option>
+<option value='0|50529777|50529779' >　　电费</option>
+<option value='0|50529777|50529780' >　　房租</option>
+<option value='0|50529777|50529781' >　　燃气费</option>
+<option value='0|50529777|50529782' >　　物业管理费</option>
+<option value='0|50529777|50529783' >　　生活用品</option>
+<option value='0|50529784|0' >教育培训</option>
+<option value='0|50529785|0' >通讯电话费</option>
+<option value='0|50529786|0' >文化/娱乐</option>
+<option value='0|50529787|0' >卫生医疗费</option>
+<option value='0|50529788|0' >孝敬父母</option>
+<option value='0|50529789|0' >子女培养</option>
+<option value='0|50529790|0' >人情往来</option>
+<option value='0|50529791|0' >其他开支</option>
+</select>&nbsp;&nbsp;<a id='aAddOutCategory' href="#" class="udl">添加新收支项目</a></div>
+							<div class="clear0"></div>
+						</li>
+
+						<li id='liAddOutCategory' class='hide'>
+							<b></b>
+							<div class="expBox itemFm" style="width:310px; background-position:-160px 0; margin:0 0 0 53px">
+								<div class="expBdy">
+								<style>.expBdy .sFrm li b{width:100px}/*调整对齐修改此数值*/</style>
+									<ul class="sFrm">
+										<li><b><span class="icoImp">　</span> 收支项目名称：</b><input id='txtOutCategoryName' maxlength='8' type="text" class="sIpt2 itemFm" /><div class="clear0"></div></li>
+										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoScopeOutCategory' type="radio" name="scopeOut" checked="checked"/>一级收支项目<br/><input id='rdoScopeInSubCategory' type="radio" name="scopeOut"/>从属于<select id='selOutCategories' style="width:100px"><option value='0|50529762' >交通</option>
+<option value='0|50529768' >饮食</option>
+<option value='0|50529772' >服饰美容</option>
+<option value='0|50529777' >日常开支</option>
+<option value='0|50529784' >教育培训</option>
+<option value='0|50529785' >通讯电话费</option>
+<option value='0|50529786' >文化/娱乐</option>
+<option value='0|50529787' >卫生医疗费</option>
+<option value='0|50529788' >孝敬父母</option>
+<option value='0|50529789' >子女培养</option>
+<option value='0|50529790' >人情往来</option>
+<option value='0|50529791' >其他开支</option>
+</select></div><div class="clear0"></div></li>
+										<li class="bar"><b></b><input  id='btnSubmitOutCategory' type="button" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input id="btnCancelAddOutCategory" type="button" value="取消"/></li>
+									</ul>
+								</div>
+							</div>
+							<div class="clear0"></div>
+						</li>
+
+
+
+						<li><b><span class="icoImp">　</span> 金额：</b><div class="itemFm"><input id='txtAmount'name='amount' maxlength='11' type="text" class="sIpt3 billdata" value='' /> 元</div><div class="clear0"></div></li>
+
+
+						<li class="bar"><b></b><input  id='btnAdd' type="button" value="提 交" class="btnFnt"/></li>
+
+					</ul>
+
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+
+
+</body>
+</html>
