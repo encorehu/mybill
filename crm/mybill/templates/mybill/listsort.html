@@ -1,0 +1,186 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_month.js?1444742024987"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+
+	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按收支项目查看</a> </div>
+
+		<form id='frmBillSort' name='billSortForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
+		<div style="margin-bottom:15px">
+		<input name='method' value='listsort' type='hidden'/>
+		<input id='hdnType' name='type' type='hidden' value='0' />
+		<input id='hdnCategoryId' name='categoryId' type='hidden' value='0' />
+		<input id='hdnSubCategoryId' name='subCategoryId' type='hidden' value='0' />
+		<select id='selCategoryIds' class='sSel'>
+		<option value='0|50529762|0' selected='true' >交通</option>
+<option value='0|50529762|50529763' >　　违章交通</option>
+<option value='0|50529762|50529764' >　　汽油费</option>
+<option value='0|50529762|50529765' >　　公共交通</option>
+<option value='0|50529762|50529766' >　　停车过路</option>
+<option value='0|50529762|50529767' >　　车辆维护</option>
+<option value='0|50529762|57845390' >　　火车票</option>
+<option value='0|50529768|0' >饮食</option>
+<option value='0|50529768|50529769' >　　工作餐</option>
+<option value='0|50529768|50529770' >　　聚餐请客</option>
+<option value='0|50529768|50529771' >　　蔬菜水果</option>
+<option value='0|50529772|0' >服饰美容</option>
+<option value='0|50529772|50529773' >　　衣服</option>
+<option value='0|50529772|50529774' >　　鞋类</option>
+<option value='0|50529772|50529775' >　　护肤品</option>
+<option value='0|50529772|50529776' >　　其他</option>
+<option value='0|50529777|0' >日常开支</option>
+<option value='0|50529777|50529778' >　　水费</option>
+<option value='0|50529777|50529779' >　　电费</option>
+<option value='0|50529777|50529780' >　　房租</option>
+<option value='0|50529777|50529781' >　　燃气费</option>
+<option value='0|50529777|50529782' >　　物业管理费</option>
+<option value='0|50529777|50529783' >　　生活用品</option>
+<option value='0|50529784|0' >教育培训</option>
+<option value='0|50529785|0' >通讯电话费</option>
+<option value='0|50529786|0' >文化/娱乐</option>
+<option value='0|50529787|0' >卫生医疗费</option>
+<option value='0|50529788|0' >孝敬父母</option>
+<option value='0|50529789|0' >子女培养</option>
+<option value='0|50529790|0' >人情往来</option>
+<option value='0|50529791|0' >其他开支</option>
+<option value='1|50529755|0' >工资</option>
+<option value='1|50529756|0' >奖金</option>
+<option value='1|50529757|0' >分红</option>
+<option value='1|50529758|0' >投资收入</option>
+<option value='1|50529759|0' >礼金</option>
+<option value='1|50529760|0' >兼职</option>
+<option value='1|50529761|0' >其他收入</option>
+
+		</select>&nbsp;&nbsp;&nbsp;从<input id='txtFromRecDate' name='fromRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;至&nbsp; <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
+
+		</div>
+		</form>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="frd">支出:330.00￥</b></div>
+
+		<!--没有记录时候显示-->
+		<div class="eInfo2"  style='display:none'>
+			<img src="http://mimg.163.com/xm/mybill/images/ico_info2.gif"/>
+			<p>本收支项目下没有记录，<br/>请点击“<a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a>”添加。</p>
+		</div>
+
+		<table class="eTb" >
+		<col width="" />
+		<col width="85" />
+		<col width="140" />
+		<col width="100" />
+		<col width="100" />
+		<col width="90" />
+			<tr>
+				<th>收支项目</th>
+				<th>日期</th>
+				<th>说明</th>
+				<th>收入金额</th>
+				<th>支出金额</th>
+				<th>操作</th>
+			</tr>
+
+			<tr id='trBill_74150426583' class="tr1 trBillList">
+				<td class="tdCutL" title="交通">交通</td>
+				<td>2012-09-17</td>
+				<td class="tdCutL" title=""><nobr>136,135</nobr></td>
+				<td class="fgn"></td>
+				<td class="frd">4.00￥</td>
+				<td><a href="/mybill/bill.do?method=edit&id=74150426583&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("74150426583","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+
+			<tr id='trBill_74150372565' class="tr2 trBillList">
+				<td class="tdCutL" title="交通 - 公共交通">交通 - 公共交通</td>
+				<td>2012-09-17</td>
+				<td class="tdCutL" title=""><nobr>包车从火车站回单位</nobr></td>
+				<td class="fgn"></td>
+				<td class="frd">20.00￥</td>
+				<td><a href="/mybill/bill.do?method=edit&id=74150372565&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("74150372565","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+
+			<tr id='trBill_74150244680' class="tr1 trBillList">
+				<td class="tdCutL" title="交通 - 火车票">交通 - 火车票</td>
+				<td>2012-09-17</td>
+				<td class="tdCutL" title=""><nobr>5元异地购票手续费</nobr></td>
+				<td class="fgn"></td>
+				<td class="frd">29.00￥</td>
+				<td><a href="/mybill/bill.do?method=edit&id=74150244680&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("74150244680","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+
+			<tr id='trBill_74150222190' class="tr2 trBillList">
+				<td class="tdCutL" title="交通 - 火车票">交通 - 火车票</td>
+				<td>2012-09-17</td>
+				<td class="tdCutL" title=""><nobr>高铁</nobr></td>
+				<td class="fgn"></td>
+				<td class="frd">165.00￥</td>
+				<td><a href="/mybill/bill.do?method=edit&id=74150222190&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("74150222190","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+
+			<tr id='trBill_7575330' class="tr1 trBillList">
+				<td class="tdCutL" title="交通 - 火车票">交通 - 火车票</td>
+				<td>2008-12-19</td>
+				<td class="tdCutL" title=""><nobr>动车组</nobr></td>
+				<td class="fgn"></td>
+				<td class="frd">112.00￥</td>
+				<td><a href="/mybill/bill.do?method=edit&id=7575330&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("7575330","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+
+		</table>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="frd">支出:330.00￥</b></div>
+
+		<br/><br/>
+
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+</body>
+</html>
