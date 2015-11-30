@@ -7,7 +7,7 @@ class AccountAdmin(admin.ModelAdmin):
 	pass
 
 class AccountItemAdmin(admin.ModelAdmin):
-	list_display=('tx_date','debit','credit')
+	list_display=('tx_date','debit')
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
