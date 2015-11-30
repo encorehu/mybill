@@ -44,13 +44,16 @@ class AccountItem(models.Model):
 	account = models.ForeignKey(Account, related_name='account_set')
 	title =  models.CharField(max_length=255, null=True, blank=True, default=u'')
 	summary =  models.CharField(max_length=255, null=True, blank=True, default=u'餐费')
+	category =  models.ForeignKey(AccountCategory, related_name='account_category_item_set')
+	category_verbosename =  models.CharField(max_length=255, null=True, blank=True, default=u'')
 	#debit =   models.DecimalField(u'收入', max_digits=10, decimal_places=2, default=0.00)
 	#credit =   models.DecimalField(u'支出', max_digits=10, decimal_places=2, default=0.00)
 	#balance =   models.DecimalField(u'余额', max_digits=10, decimal_places=2, default=0.00)
 	amount =   models.DecimalField(u'金额', max_digits=10, decimal_places=2, default=0.00)
 	tx_date =  models.DateTimeField(u'交易日期', default=timezone.now)
+	tx_type =  models.IntegerField(u'收支类型', default=0, choices=TX_TYPE)
 	adding_type =  models.IntegerField(default=0, editable=False)
-	adding_type_name =  models.CharField(max_length=20, default='manual', editable=False)
+	adding_type_name =  models.CharField(max_length=20, default='manual', editable=False) #手工还是系统操作
 	operator =  models.CharField(max_length=20, default='hcz', editable=False)
 	transaction_id =  models.IntegerField(default=0, editable=False)
 	class Meta:
