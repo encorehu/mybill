@@ -69,6 +69,11 @@ class BillDoView(ListView):
             'balance': balance,
             })
 
+    def edit(self, request):
+        pk = request.GET.get('id','1')
+        accountitem = AccountItem.objects.get(pk=pk)
+        return render(request, self.template_name, {'accountitem': accountitem})
+
     def get(self, request, *args, **kwargs):
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
