@@ -159,4 +159,8 @@ class BillCategoryDoView(ListView):
         print 'ff'
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
+
+    def post(self, request, *args, **kwargs):
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/category_%s.html' % method
         return render(request, self.template_name, {'form': ''})
