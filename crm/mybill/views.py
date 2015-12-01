@@ -139,6 +139,8 @@ class BillDoView(ListView):
             return self.edit(request)
         elif method == 'append':
             return self.append(request)
+        elif method == 'list':
+            return self.listall(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -161,6 +163,31 @@ class BillDoView(ListView):
                       'income_category_list': income_category_list,
                       'outcome_category_list': outcome_category_list,
                       })
+
+    def listall(self, request):
+        strMonth=request.GET.get('strMonth','')
+        if strMonth:
+            year,month = map(int, strMonth.split('-'))
+        else:
+            now = datetime.datetime.now()
+            year,month = now.year, now.month
+
+        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
+        last_balance = 0
+        print year, month
+        print type(accountitem_list)
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+            'income': income,
+            'outcome': outcome,
+            'balance': balance,
+            'year': year,
+            'month': month,
+            })
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
