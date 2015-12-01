@@ -62,7 +62,7 @@
 						<li><b>说明：</b><input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 billdata" style="width:187px" value='{{accountitem.summary}}'/><div class="clear0"></div></li>
 						<li id='liInOption' class='disable' >
 							<b><span class="icoImp">　</span> 收支项目：</b>
-							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype" />收入：<select id='selInCategory' class="sSel" style="text-align:left"><option value='1|50529755|0' >工资</option>
+							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype"  {%if accountitem.tx_type%}checked='checked'{%else%} {%endif%}/>收入：<select id='selInCategory' class="sSel" style="text-align:left"><option value='1|50529755|0' >工资</option>
 <option value='1|50529756|0' >奖金</option>
 <option value='1|50529757|0' >分红</option>
 <option value='1|50529758|0' >投资收入</option>
@@ -101,7 +101,7 @@
 
 						<li id='liOutOption'  style="margin-top:-3px">
 							<b></b>
-							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" checked='checked'/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left"><option value='0|50529762|0' selected='true' >交通</option>
+							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" {%if accountitem.tx_type%}{%else%} checked='checked'{%endif%}/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left"><option value='0|50529762|0' selected='true' >交通</option>
 <option value='0|50529762|50529763' >　　违章交通</option>
 <option value='0|50529762|50529764' >　　汽油费</option>
 <option value='0|50529762|50529765' >　　公共交通</option>
@@ -165,7 +165,7 @@
 
 
 
-						<li><b><span class="icoImp">　</span> ###金额：</b><div class="itemFm"><input id='txtAmount'name='amount' maxlength='11' type="text" class="sIpt3 billdata" value='{{accountitem.credit}}' /> 元</div><div class="clear0"></div></li>
+						<li><b><span class="icoImp">　</span> 金额：</b><div class="itemFm"><input id='txtAmount'name='amount' maxlength='11' type="text" class="sIpt3 billdata" value='{{accountitem.amount}}' /> 元</div><div class="clear0"></div></li>
 
 
 						<li class="bar"><b></b><input id='btnUpdate' type="button" value="保 存" class="btnFnt"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="取消" onclick='javascript:history.back();' class="btnFnt"/></li>
