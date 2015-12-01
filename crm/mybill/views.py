@@ -90,7 +90,8 @@ class BillDoView(ListView):
             #instance.summary = request.POST.get('categoryId','')
             instance.tx_type = request.POST.get('type','0')
             instance.save()
-
+        year,month = instance.tx_date.year, instance.tx_date.month
+        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=%s-%s' class='udl fbu'>该月账本</a>" % (year, month)
         return HttpResponse(json.dumps(response))
 
     def listmonth(self, request):
