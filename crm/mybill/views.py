@@ -95,8 +95,16 @@ class BillDoView(ListView):
         return HttpResponse(json.dumps(response))
 
     def listmonth(self, request):
-        strMonth=request.GET.get('strMonth','2015-10')
+        if request.method == 'GET':
+            strMonth=request.GET.get('strMonth','')
+        else:
+            strMonth=request.POST.get('strMonth','')
+
+        if strMonth:
         year,month = map(int, strMonth.split('-'))
+        else:
+            now = datetime.datetime.now()
+            year,month = now.year, now.month
 
         accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
         last_balance = 0
@@ -110,6 +118,8 @@ class BillDoView(ListView):
             'income': income,
             'outcome': outcome,
             'balance': balance,
+            'year': year,
+            'month': month,
             })
 
     def edit(self, request):
