@@ -10,6 +10,7 @@ from django.db.models.functions import Coalesce
 from django.db.models import Q
 
 from django.views.generic import ListView
+from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
 
@@ -44,14 +45,51 @@ class BillDoView(ListView):
         response['result']['totalCount']='0'
         response['result']['pageSize']='100'
 
-        ait = AccountItem()
-        ait.summary = request.POST.get('note','')
-        ait.summary = request.POST.get('id','')
-        ait.summary = request.POST.get('subCategoryId','0')
-        ait.summary = request.POST.get('amount','')
-        ait.summary = request.POST.get('recDate','')
-        ait.summary = request.POST.get('categoryId','')
-        ait.summary = request.POST.get('type','0')
+
+        ait_id = request.POST.get('id','')
+        print 'ait_id', ait_id
+        if not ait_id:
+            #account=Account.objects.get_or_create(id=1,name=u'默认账户')
+            account,created=Account.objects.get_or_create(id=1)
+            instance = AccountItem(account=account)
+            #instance.account_id = 1
+            category_id = request.POST.get('categoryId','0')
+            subcategory_id = request.POST.get('subCategoryId','0')
+            if subcategory_id=='0':
+                category, created = AccountCategory.objects.get_or_create(id=category_id, parent_id=None)
+            else:
+                category, created = AccountCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
+            instance.category = category
+            instance.summary = request.POST.get('note','')
+            #instance.summary = request.POST.get('subCategoryId','0')
+            instance.amount = request.POST.get('amount','')
+            if request.POST.get('recDate',''):
+                instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
+            else:
+                instance.tx_date = datetime.datetime.now()
+            #instance.summary = request.POST.get('categoryId','')
+            instance.tx_type = request.POST.get('type','0')
+            instance.save()
+        else:
+            account,created=Account.objects.get_or_create(id=1)
+            instance = AccountItem.objects.get(id=ait_id, account=account)
+            category_id = request.POST.get('categoryId','0')
+            subcategory_id = request.POST.get('subCategoryId','0')
+            if subcategory_id=='0':
+                category, created = AccountCategory.objects.get_or_create(id=category_id, parent_id=None)
+            else:
+                category, created = AccountCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
+            instance.category = category
+            instance.summary = request.POST.get('note','')
+            #instance.summary = request.POST.get('subCategoryId','0')
+            instance.amount = request.POST.get('amount','')
+            if request.POST.get('recDate',''):
+                instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
+            else:
+                instance.tx_date = datetime.datetime.now()
+            #instance.summary = request.POST.get('categoryId','')
+            instance.tx_type = request.POST.get('type','0')
+            instance.save()
 
         return HttpResponse(json.dumps(response))
 
