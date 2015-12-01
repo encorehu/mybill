@@ -161,6 +161,8 @@ class BillCategoryDoView(ListView):
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
+        elif method == 'list':
+            return self.listall(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -215,3 +217,12 @@ class BillCategoryDoView(ListView):
               category.name = name
               category.save()
         return HttpResponse(json.dumps(response))
+
+    def listall(self, request, *args, **kwargs):
+        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+
+        return render(request, self.template_name, {
+            'income_category_list': income_category_list,
+            'outcome_category_list': outcome_category_list,
+            })
