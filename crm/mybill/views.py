@@ -173,5 +173,45 @@ class BillCategoryDoView(ListView):
         return render(request, self.template_name, {'form': ''})
 
     def addOrUpdate(self, request, *args, **kwargs):
+        '''
+        {"result":
+            {
+                "success":"true",
+                "message":"新增记录成功，点击这里查看<a href='\/mybill\/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本<\/a>",
+                "totalCount":"0",
+                "pageIndex":"0",
+                "pageSize":"100"
+            }
+        }
+        '''
         response={}
+        response['result']={}
+        response['result']['success']='true'
+        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
+        response['result']['totalCount']='0'
+        response['result']['pageSize']='100'
+
+        category_id = request.POST.get('id','')
+        print 'category_id', category_id
+        if category_id=='0':
+            name = request.POST.get('categoryName','无名')
+            tx_type = request.POST.get('type','0')
+            parent_id = request.POST.get('parentId','0')
+            if parent_id=='0':
+                category, created = AccountCategory.objects.get_or_create(parent_id=None, name=name, tx_type=tx_type)
+            else:
+                category, created = AccountCategory.objects.get_or_create(parent_id=parent_id, name=name, tx_type=tx_type)
+        else:
+            print 'category_id', category_id
+            category=AccountCategory.objects.get(id=category_id)
+            if parent_id=='0':
+              category.parent_id = None
+              category.tx_type = tx_type
+              category.name = name
+              category.save()
+            else:
+              category.parent_id = parent_id
+              category.tx_type = tx_type
+              category.name = name
+              category.save()
         return HttpResponse(json.dumps(response))
