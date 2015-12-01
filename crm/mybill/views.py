@@ -101,7 +101,7 @@ class BillDoView(ListView):
             strMonth=request.POST.get('strMonth','')
 
         if strMonth:
-        year,month = map(int, strMonth.split('-'))
+            year,month = map(int, strMonth.split('-'))
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
