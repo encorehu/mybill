@@ -159,8 +159,19 @@ class BillCategoryDoView(ListView):
         print 'ff'
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request)
+        else:
+            return render(request, self.template_name, {'form': ''})
 
     def post(self, request, *args, **kwargs):
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
+        print method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request)
         return render(request, self.template_name, {'form': ''})
+
+    def addOrUpdate(self, request, *args, **kwargs):
+        response={}
+        return HttpResponse(json.dumps(response))
