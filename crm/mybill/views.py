@@ -145,7 +145,9 @@ class BillDoView(ListView):
             return render(request, self.template_name, {'form': ''})
 
     def post(self, request, *args, **kwargs):
-        method=request.GET.get('method', 'list')
+        method=request.POST.get('method', '')
+        if not method:
+            method = request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
         print method
         if method == 'addOrUpdate':
