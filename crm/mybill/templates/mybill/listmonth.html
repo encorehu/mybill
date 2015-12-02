@@ -49,7 +49,7 @@
 		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" >
 		<div style="margin-bottom:15px">
 		<input type=hidden name='method' value='listmonth'/>
-		月份：<input id='txtStrMonth' name="strMonth" type="text" style=" width:65px" value="2015-10" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
+		月份：<input id='txtStrMonth' name="strMonth" type="text" style=" width:65px" value="{{year}}-{{month}}" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
 
 			<div id='divSelectMonth' class="expBox hide" style="width:240px;margin:0;background-position:-210px 0">
 				<div class="expBdy">
@@ -59,15 +59,17 @@
 		</div>
 		</form>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">2015年10月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
+		{%if not accountitem_list%}
 		<!--没有记录时候显示-->
-		<div class="eInfo2"  style='display:none'>
+		<div class="eInfo2">
 			<img src="http://mimg.163.com/xm/mybill/images/ico_info2.gif"/>
 			<p>本月暂无收支记录，<br/>请点击“<a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a>”添加。</p>
 		</div>
+		{%endif%}
 
-		<table class="eTb" >
+		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
 		<col width="" />
 		<col width="85" />
 		<col width="140" />
@@ -97,7 +99,7 @@
 
 		</table>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">2015年10月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
 		<br/>
 
