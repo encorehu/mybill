@@ -43,16 +43,17 @@
 		<div class="eSubNav"> <a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按收支项目查看</a> </div>
 
 
-		<div class="SummaryTxt bmSt"><b class="fLe">2015年10月合计</b>&nbsp; <b class="fgn">收入:0.00￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:0.00￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:0.00￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
-
+    {% if not accountitem_list %}
 		<!--没有记录时候显示-->
 		<div class="eInfo2"  >
 			<img src="http://mimg.163.com/xm/mybill/images/ico_info2.gif"/>
 			<p>本月暂无收支记录，<br/>请点击“<a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a>”添加。</p>
 		</div>
+    {%endif%}
 
-		<table class="eTb" style='display:none'>
+		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
 		<col width="" />
 		<col width="85" />
 		<col width="140" />
@@ -68,9 +69,27 @@
 				<th>操作</th>
 			</tr>
 
+			{% for accountitem in accountitem_list %}
+
+			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
+				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
+				<td class="fgn">{%if accountitem.tx_type%}{{accountitem.amount}}￥{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}{{accountitem.amount}}￥{%endif%}</td>
+				<td><a href="/mybill/bill.do?method=edit&id={{accountitem.id}}&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+			{% endfor %}
+
+
+
 		</table>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">2015年10月合计</b>&nbsp; <b class="fgn">收入:0.00￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:0.00￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:0.00￥</b></div>
+
+
+
+
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
 		<br/>
 
