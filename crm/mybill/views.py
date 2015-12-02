@@ -152,7 +152,16 @@ class BillDoView(ListView):
         print method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
-        return render(request, self.template_name, {'form': ''})
+        elif method == 'listmonth':
+            return self.listmonth(request)
+        elif method == 'edit':
+            return self.edit(request)
+        elif method == 'append':
+            return self.append(request)
+        elif method == 'list':
+            return self.listall(request)
+        else:
+            return render(request, self.template_name, {'form': ''})
 
     def append(self, request):
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
