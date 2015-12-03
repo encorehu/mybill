@@ -151,6 +151,8 @@ class BillDoView(ListView):
             return self.listall(request)
         elif method == 'listsort':
             return self.listsort(request)
+        elif method == 'export':
+            return self.export(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -292,7 +294,6 @@ class BillDoView(ListView):
 
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
-        print outcome_category_list
         return render(request, self.template_name, {'accountitem_list': accountitem_list,
             'income': income,
             'outcome': outcome,
@@ -303,6 +304,9 @@ class BillDoView(ListView):
             'income_category_list': income_category_list,
             'outcome_category_list': outcome_category_list,
             })
+
+    def export(self, request):
+        pass
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
