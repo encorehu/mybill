@@ -107,3 +107,7 @@ SHORT_DATETIME_FORMAT='Y-m-d H:i:s'
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MANAGER='Mr. Lee'
+AUTHOR='Mr. Hu'
+ORGNAME='PUBLIC ORG'
