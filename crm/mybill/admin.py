@@ -5,13 +5,13 @@ from .models import AccountItem
 from .models import AccountCategory
 
 class AccountAdmin(admin.ModelAdmin):
-	pass
+    pass
 
 class AccountItemAdmin(admin.ModelAdmin):
-	list_display=('tx_date','summary','tx_type','amount')
+    list_display=('tx_date','summary','tx_type','amount')
 
 class AccountCategoryAdmin(admin.ModelAdmin):
-  list_display=('tx_type','name')
+    list_display=('tx_type','name')
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
