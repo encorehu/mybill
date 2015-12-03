@@ -105,37 +105,16 @@
 
 						<li id='liOutOption' {%if accountitem.tx_type%} class='disable'{%else%}{%endif%} style="margin-top:-3px">
 							<b></b>
-							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" {%if accountitem.tx_type%}{%else%} checked='checked'{%endif%}/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left"><option value='0|50529762|0' selected='true' >交通</option>
-<option value='0|50529762|50529763' >　　违章交通</option>
-<option value='0|50529762|50529764' >　　汽油费</option>
-<option value='0|50529762|50529765' >　　公共交通</option>
-<option value='0|50529762|50529766' >　　停车过路</option>
-<option value='0|50529762|50529767' >　　车辆维护</option>
-<option value='0|50529762|57845390' >　　火车票</option>
-<option value='0|50529768|0' >饮食</option>
-<option value='0|50529768|50529769' >　　工作餐</option>
-<option value='0|50529768|50529770' >　　聚餐请客</option>
-<option value='0|50529768|50529771' >　　蔬菜水果</option>
-<option value='0|50529772|0' >服饰美容</option>
-<option value='0|50529772|50529773' >　　衣服</option>
-<option value='0|50529772|50529774' >　　鞋类</option>
-<option value='0|50529772|50529775' >　　护肤品</option>
-<option value='0|50529772|50529776' >　　其他</option>
-<option value='0|50529777|0' >日常开支</option>
-<option value='0|50529777|50529778' >　　水费</option>
-<option value='0|50529777|50529779' >　　电费</option>
-<option value='0|50529777|50529780' >　　房租</option>
-<option value='0|50529777|50529781' >　　燃气费</option>
-<option value='0|50529777|50529782' >　　物业管理费</option>
-<option value='0|50529777|50529783' >　　生活用品</option>
-<option value='0|50529784|0' >教育培训</option>
-<option value='0|50529785|0' >通讯电话费</option>
-<option value='0|50529786|0' >文化/娱乐</option>
-<option value='0|50529787|0' >卫生医疗费</option>
-<option value='0|50529788|0' >孝敬父母</option>
-<option value='0|50529789|0' >子女培养</option>
-<option value='0|50529790|0' >人情往来</option>
-<option value='0|50529791|0' >其他开支</option>
+							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" {%if accountitem.tx_type%}{%else%} checked='checked'{%endif%}/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left">
+				{% for category in outcome_category_list %}
+				<option value='{{category.tx_type}}|{{category.id}}|0' {%ifequal category.id accountitem.category.id%} selected='true' {%endifequal%}>{{category.name}}</option>
+
+					{% for subcategory in category.child_category_set.all %}
+					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' {%ifequal subcategory.id accountitem.category.id%} selected='true' {%endifequal%} >　　{{subcategory.name}}</option>
+					{%endfor%}
+
+				{%endfor%}
+
 </select>&nbsp;&nbsp;<a id='aAddOutCategory' href="#" class="udl">添加新收支项目</a></div>
 							<div class="clear0"></div>
 						</li>
