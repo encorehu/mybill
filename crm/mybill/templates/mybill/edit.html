@@ -91,13 +91,10 @@
 								<style>.expBdy .sFrm li b{width:100px}/*调整对齐修改此数值*/</style>
 									<ul class="sFrm">
 										<li><b><span class="icoImp">　</span> 收支项目名称：</b><input id='txtInCategoryName' maxlength='8' type="text" class="sIpt2 itemFm" /><div class="clear0"></div></li>
-										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoScopeInCategory' type="radio" name='scopeIn' checked='checked' />一级收支项目<br/><input id='rdoScopeInSubCategory' type="radio" name="scopeIn"/>从属于<select id='selInCategories' style="width:100px"><option value='1|50529755' >工资</option>
-<option value='1|50529756' >奖金</option>
-<option value='1|50529757' >分红</option>
-<option value='1|50529758' >投资收入</option>
-<option value='1|50529759' >礼金</option>
-<option value='1|50529760' >兼职</option>
-<option value='1|50529761' >其他收入</option>
+										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoScopeInCategory' type="radio" name='scopeIn' checked='checked' />一级收支项目<br/><input id='rdoScopeInSubCategory' type="radio" name="scopeIn"/>从属于<select id='selInCategories' style="width:100px">
+											{% for category in income_category_list %}
+											<option value='{{category.tx_type}}|{{category.id}}|0'{%ifequal category.id category_id%} selected='true' {%endifequal%}>{{category.name}}</option>
+											{%endfor%}
 </select></div><div class="clear0"></div></li>
 										<li class="bar"><b></b><input id='btnSubmitInCategory' type="button" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input id="btnCancelAddInCategory" type="button" value="取消"/></li>
 									</ul>
