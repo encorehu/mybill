@@ -103,7 +103,7 @@
 							<div class="clear0"></div>
 						</li>
 
-						<li id='liOutOption'  style="margin-top:-3px">
+						<li id='liOutOption' {%if accountitem.tx_type%} class='disable'{%else%}{%endif%} style="margin-top:-3px">
 							<b></b>
 							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" {%if accountitem.tx_type%}{%else%} checked='checked'{%endif%}/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left"><option value='0|50529762|0' selected='true' >交通</option>
 <option value='0|50529762|50529763' >　　违章交通</option>
