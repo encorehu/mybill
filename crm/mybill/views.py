@@ -228,8 +228,15 @@ class BillCategoryDoView(ListView):
         {"result":
             {
                 "success":"true",
-                "message":"新增记录成功，点击这里查看<a href='\/mybill\/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本<\/a>",
+                "message":"已经成功保存收支项目信息!",
                 "totalCount":"0",
+                "data":{
+                    "@class":"categoryform",
+                    "id":"12345",
+                    "categoryName":"租金",
+                    "parentId":"0",
+                    "type":"1"
+                },
                 "pageIndex":"0",
                 "pageSize":"100"
             }
