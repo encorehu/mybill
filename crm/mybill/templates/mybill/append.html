@@ -65,9 +65,9 @@
 
 						<li><b><span class="icoImp">　</span> 收支日期：</b><div class="itemFm" style="padding-top:2px"><input id='txtRecDate' name='recDate' type="text"  class="sIpt3 billdata" style="width:80px" readonly='readonly' value="{{servertime|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a></div><div class="clear0"></div></li>
 						<li><b>说明：</b><input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 billdata" style="width:187px" value=''/><div class="clear0"></div></li>
-						<li id='liInOption' class='disable' >
+						<li id='liInOption'>
 							<b><span class="icoImp">　</span> 收支项目：</b>
-							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype" />收入：<select id='selInCategory' class="sSel" style="text-align:left">
+							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype"  checked='checked'/>收入：<select id='selInCategory' class="sSel" style="text-align:left">
 	{% for category in income_category_list %}
 	<option value='{{category.tx_type}}|{{category.id}}|0' >{{category.name}}</option>
 	{% for subcategory in category.child_category_set.all %}
@@ -101,9 +101,9 @@
 							<div class="clear0"></div>
 						</li>
 
-						<li id='liOutOption'  style="margin-top:-3px">
+						<li id='liOutOption'   class='disable'  style="margin-top:-3px">
 							<b></b>
-							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype" checked='checked'/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left">
+							<div class="itemFm"><input  id="rdoTypeOut"  type="radio" value='0' name="rdotype"/>支出：<select id='selOutCategory' class="sSel"  style="text-align:left">
 	{% for category in outcome_category_list %}
 	<option value='{{category.tx_type}}|{{category.id}}|0' >{{category.name}}</option>
 	{% for subcategory in category.child_category_set.all %}
