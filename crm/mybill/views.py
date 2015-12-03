@@ -10,7 +10,7 @@ from django.db.models.functions import Coalesce
 from django.db.models import Q
 
 from django.views.generic import ListView
-from django import settings
+from django.conf import settings
 from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
