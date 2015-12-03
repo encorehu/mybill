@@ -62,13 +62,20 @@
 						<li><b>说明：</b><input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 billdata" style="width:187px" value='{{accountitem.summary}}'/><div class="clear0"></div></li>
 						<li id='liInOption' {%if accountitem.tx_type%}{%else%} class='disable'{%endif%} >
 							<b><span class="icoImp">　</span> 收支项目：</b>
-							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype"  {%if accountitem.tx_type%}checked='checked'{%else%} {%endif%}/>收入：<select id='selInCategory' class="sSel" style="text-align:left"><option value='1|50529755|0' >工资</option>
-<option value='1|50529756|0' >奖金</option>
-<option value='1|50529757|0' >分红</option>
-<option value='1|50529758|0' >投资收入</option>
-<option value='1|50529759|0' >礼金</option>
-<option value='1|50529760|0' >兼职</option>
-<option value='1|50529761|0' >其他收入</option>
+							<div class="itemFm"><input id="rdoTypeIn"  type="radio" value='1' name="rdotype"  {%if accountitem.tx_type%}checked='checked'{%else%} {%endif%}/>收入：<select id='selInCategory' class="sSel" style="text-align:left">
+
+				{% for category in income_category_list %}
+				<option value='{{category.tx_type}}|{{category.id}}|0'{%ifequal category.id accountitem.category.id%} selected='true' {%endifequal%}>{{category.name}}</option>
+
+					{% for subcategory in category.child_category_set.all %}
+					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' {%ifequal subcategory.id accountitem.category.id%} selected='true' {%endifequal%}>　　{{subcategory.name}}</option>
+					{%endfor%}
+
+				{%endfor%}
+
+
+
+
 </select>&nbsp;&nbsp;<a id='aAddInCategory' href="#" class="udl">添加新收支项目</a></div>
 							<div class="clear0"></div>
 						</li>
