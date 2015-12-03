@@ -253,7 +253,6 @@ class BillDoView(ListView):
                 })
 
         if fromRecDate:
-            print datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
             accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
             if toRecDate:
                 print '1',toRecDate
