@@ -141,6 +141,8 @@ class BillDoView(ListView):
             return self.append(request)
         elif method == 'list':
             return self.listall(request)
+        elif method == 'listsort':
+            return self.listsort(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -160,6 +162,8 @@ class BillDoView(ListView):
             return self.append(request)
         elif method == 'list':
             return self.listall(request)
+        elif method == 'listsort':
+            return self.listsort(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -198,6 +202,99 @@ class BillDoView(ListView):
             'balance': balance,
             'year': year,
             'month': month,
+            })
+
+    def listsort(self, request):
+        '''
+        method:listsort
+        type:0
+        categoryId:50529762
+        subCategoryId:0
+        fromRecDate:
+        toRecDate:
+        '''
+        fromRecDate=request.POST.get('fromRecDate','')
+        toRecDate=request.POST.get('toRecDate','')
+        tx_type=request.POST.get('type','')
+        categoryId=request.POST.get('categoryId','0')
+        subCategoryId=request.POST.get('subCategoryId','0')
+        strMonth=request.POST.get('strMonth','')
+
+        categoryId = int(categoryId)
+        subCategoryId = int(subCategoryId)
+        category_id = categoryId
+
+        if strMonth:
+            year,month = map(int, strMonth.split('-'))
+        else:
+            now = datetime.datetime.now()
+            year,month = now.year, now.month
+
+        if request.method == 'GET':
+            income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
+            outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+            return render(request, self.template_name, {'accountitem_list': [],
+                'income': 0,
+                'outcome': 0,
+                'balance': 0,
+                'year': year,
+                'month': month,
+                'category_id': category_id,
+                'income_category_list': income_category_list,
+                'outcome_category_list': outcome_category_list,
+                })
+
+        if fromRecDate:
+            print datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
+            accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
+            if toRecDate:
+                print '1',toRecDate
+                print datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
+                accountitem_list= accountitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
+        else:
+            accountitem_list = AccountItem.objects.select_related('category')
+            if toRecDate:
+                print '2',toRecDate
+                print datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
+                accountitem_list= accountitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
+
+        if tx_type:
+            accountitem_list= accountitem_list.filter(tx_type = tx_type)
+
+        if subCategoryId:
+            #如果子分类不为空, 即选中子分类, 就只过滤子分类
+            accountitem_list= accountitem_list.filter(category__id = subCategoryId)
+            category_id = subCategoryId
+        else:
+            #否则过滤父分类和所有的子分类
+            if categoryId:
+                subCategoryIds= list(AccountCategory.objects.filter(parent__id=categoryId).values_list('id', flat=True).all())
+                print 'subCategoryIds', subCategoryIds
+                subCategoryIds.insert(0, categoryId)
+                accountitem_list= accountitem_list.filter(category__id__in = subCategoryIds)
+
+        last_balance = 0
+        print year, month
+        print type(accountitem_list)
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        print self.template_name, '00000000000000000000000000000000000000000000000000'
+
+        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+        print outcome_category_list
+        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+            'income': income,
+            'outcome': outcome,
+            'balance': balance,
+            'year': year,
+            'month': month,
+            'category_id': category_id,
+            'income_category_list': income_category_list,
+            'outcome_category_list': outcome_category_list,
             })
 
 class BillCategoryDoView(ListView):
