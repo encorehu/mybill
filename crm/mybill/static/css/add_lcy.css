@@ -1,6 +1,6 @@
 /* CSS Document百宝箱针对理财易添加样式 chenshouzhe@corp.netease.com */
-a.a_INDEX,.Top_B_arr{background-image:url(http://mimg.163.com/assist/res/bg.gif);background-repeat:no-repeat}
-.Top{background-image:url(http://mimg.163.com/assist/res/bg_x.gif);background-repeat:repeat-x}
+a.a_INDEX,.Top_B_arr{background-image:url(/static/res/bg.gif);background-repeat:no-repeat}
+.Top{background-image:url(/static/res/bg_x.gif);background-repeat:repeat-x}
 
 .Top{height:36px;padding-left:8px;background-color:#FCFDFE;background-position:0px -12px; margin-bottom:3px}
 	.Top span{float:left;color:#000;margin:12px 4px 0px 8px}
