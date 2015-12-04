@@ -38,7 +38,6 @@ class BillDoView(ListView):
             }
         }
 '''
-        print request.POST
         response={}
         response['result']={}
         response['result']['success']='true'
@@ -48,7 +47,6 @@ class BillDoView(ListView):
 
 
         ait_id = request.POST.get('id','')
-        print 'ait_id', ait_id
         if not ait_id:
             #account=Account.objects.get_or_create(id=1,name=u'默认账户')
             account,created=Account.objects.get_or_create(id=1)
@@ -109,7 +107,6 @@ class BillDoView(ListView):
 
         accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
         last_balance = 0
-        print type(accountitem_list)
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
@@ -139,7 +136,6 @@ class BillDoView(ListView):
     def get(self, request, *args, **kwargs):
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
-        print method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
         elif method == 'listmonth':
@@ -162,7 +158,6 @@ class BillDoView(ListView):
         if not method:
             method = request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
-        print method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
         elif method == 'listmonth':
@@ -200,8 +195,6 @@ class BillDoView(ListView):
 
         accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
         last_balance = 0
-        print year, month
-        print type(accountitem_list)
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
@@ -258,14 +251,10 @@ class BillDoView(ListView):
         if fromRecDate:
             accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
             if toRecDate:
-                print '1',toRecDate
-                print datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
                 accountitem_list= accountitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
         else:
             accountitem_list = AccountItem.objects.select_related('category')
             if toRecDate:
-                print '2',toRecDate
-                print datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
                 accountitem_list= accountitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
 
         if tx_type:
@@ -279,19 +268,15 @@ class BillDoView(ListView):
             #否则过滤父分类和所有的子分类
             if categoryId:
                 subCategoryIds= list(AccountCategory.objects.filter(parent__id=categoryId).values_list('id', flat=True).all())
-                print 'subCategoryIds', subCategoryIds
                 subCategoryIds.insert(0, categoryId)
                 accountitem_list= accountitem_list.filter(category__id__in = subCategoryIds)
 
         last_balance = 0
-        print year, month
-        print type(accountitem_list)
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
-        print self.template_name, '00000000000000000000000000000000000000000000000000'
 
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
@@ -350,8 +335,6 @@ class BillDoView(ListView):
         accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         #accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
-        print year, month
-        print type(accountitem_list)
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         last_month_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
@@ -445,7 +428,6 @@ class BillCategoryDoView(ListView):
         return []
 
     def get(self, request, *args, **kwargs):
-        print 'ff'
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
@@ -458,7 +440,6 @@ class BillCategoryDoView(ListView):
     def post(self, request, *args, **kwargs):
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
-        print method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
         return render(request, self.template_name, {'form': ''})
@@ -490,7 +471,6 @@ class BillCategoryDoView(ListView):
         response['result']['pageSize']='100'
 
         category_id = request.POST.get('id','')
-        print 'category_id', category_id
         if category_id=='0':
             name = request.POST.get('categoryName','无名')
             tx_type = request.POST.get('type','0')
@@ -500,7 +480,6 @@ class BillCategoryDoView(ListView):
             else:
                 category, created = AccountCategory.objects.get_or_create(parent_id=parent_id, name=name, tx_type=tx_type)
         else:
-            print 'category_id', category_id
             category=AccountCategory.objects.get(id=category_id)
             if parent_id=='0':
               category.parent_id = None
