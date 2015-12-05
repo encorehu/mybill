@@ -302,7 +302,7 @@ class BillDoView(ListView):
             'outcome_category_list': outcome_category_list,
             })
 
-    def export(self, request):
+    def export(self, request, *args, **kwargs):
         strMonth = request.GET.get('strMonth','')
         if strMonth:
             year,month = map(int, strMonth.split('-'))
