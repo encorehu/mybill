@@ -104,7 +104,7 @@ class BillDoView(ListView):
         response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=%s-%s' class='udl fbu'>该月账本</a>" % (year, month)
         return HttpResponse(json.dumps(response))
 
-    def listmonth(self, request):
+    def listmonth(self, request, *args, **kwargs):
         if request.method == 'GET':
             strMonth=request.GET.get('strMonth','')
         else:
