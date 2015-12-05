@@ -404,6 +404,7 @@ class BillDoView(ListView):
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
         worksheet.set_header(left+center+right, margin=0.6)
         worksheet.set_footer('&C&P/&N', margin=0.5)
+        worksheet.set_margins(top=1)
 
         worksheet.repeat_rows(0)
         #worksheet.hide_gridlines(0)
