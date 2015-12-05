@@ -219,7 +219,7 @@ class BillDoView(ListView):
             'month': month,
             })
 
-    def listsort(self, request):
+    def listsort(self, request, *args, **kwargs):
         '''
         method:listsort
         type:0
