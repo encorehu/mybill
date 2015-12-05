@@ -131,7 +131,7 @@ class BillDoView(ListView):
             'month': month,
             })
 
-    def edit(self, request):
+    def edit(self, request, *args, **kwargs):
         pk = request.GET.get('id','1')
         accountitem = AccountItem.objects.get(pk=pk)
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
