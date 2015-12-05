@@ -37,7 +37,7 @@ class BillDoView(ListView):
     def get_queryset(self):
         return []
 
-    def addOrUpdate(self, request):
+    def addOrUpdate(self, request, *args, **kwargs):
         '''
         {"result":
             {
