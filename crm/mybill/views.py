@@ -196,7 +196,7 @@ class BillDoView(ListView):
                       'outcome_category_list': outcome_category_list,
                       })
 
-    def listall(self, request):
+    def listall(self, request, *args, **kwargs):
         strMonth=request.GET.get('strMonth','')
         if strMonth:
             year,month = map(int, strMonth.split('-'))
