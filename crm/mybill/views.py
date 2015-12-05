@@ -184,7 +184,7 @@ class BillDoView(ListView):
         else:
             return render(request, self.template_name, {'form': ''})
 
-    def append(self, request):
+    def append(self, request, *args, **kwargs):
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
 
