@@ -1,4 +1,5 @@
 #-*- coding=utf-8 -*-
+import os
 import json
 import datetime
 
@@ -14,6 +15,17 @@ from django.conf import settings
 from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
+
+from django.core.servers.basehttp import FileWrapper
+
+def file_download(request, filename, displayname):
+    filepath = filename
+    wrapper = FileWrapper(open(filepath,'rb'))
+    response = HttpResponse(wrapper, content_type='application/octet-stream')
+    #response = HttpResponse(wrapper, content_type='text/csv')
+    response['Content-Length'] = os.path.getsize(filepath)
+    response['Content-Disposition'] = (u'attachment; filename=%s' % displayname).encode('utf-8')
+    return response
 
 # Create your views here.
 class BillIndexView(ListView):
@@ -420,8 +432,11 @@ class BillDoView(ListView):
         response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
         response['result']['totalCount']='0'
         response['result']['pageSize']='100'
-        return HttpResponse(json.dumps(response))
+        #return HttpResponse(json.dumps(response))
 
+        filename = strMonth+'.xlsx'
+        displayname=  u'%s年%s月.xlsx' % (year,month)
+        return file_download(request, filename, displayname)
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
