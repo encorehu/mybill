@@ -399,8 +399,6 @@ class BillDoView(ListView):
 
         # Insert an image.
         # worksheet.insert_image('B5', 'logo.png')
-        worksheet.set_header()
-        worksheet.set_header()
         left = u'&L\n单位:%s' % settings.ORGNAME
         center = u'&C%s年%s月日记账' % (year, month)
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
