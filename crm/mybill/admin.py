@@ -17,6 +17,12 @@ from .models import AccountCategory
 class AccountAdmin(admin.ModelAdmin):
     pass
 
+
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+make_published.short_description = "Mark selected stories as published"
+
+
 class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','summary','tx_type','amount')
     search_fields = ('summary',)
