@@ -147,6 +147,8 @@ class BillDoView(ListView):
             })
 
     def edit(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         pk = request.GET.get('id','1')
         accountitem = AccountItem.objects.get(pk=pk)
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
@@ -154,6 +156,8 @@ class BillDoView(ListView):
         return render(request,
                       self.template_name,
                       {
+                          'account':account,
+                          'account_list':account_list,
                           'accountitem': accountitem,
                           'income_category_list': income_category_list,
                           'outcome_category_list': outcome_category_list,
