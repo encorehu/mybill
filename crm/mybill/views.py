@@ -224,6 +224,8 @@ class BillDoView(ListView):
                       })
 
     def listall(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         strMonth=request.GET.get('strMonth','')
         if strMonth:
             year,month = map(int, strMonth.split('-'))
