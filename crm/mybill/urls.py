@@ -7,4 +7,5 @@ urlpatterns = [
     url(r'(?P<accountid>\d+)/bill.do', BillDoView.as_view()),
     url(r'(?P<accountid>\d+)/category.do', BillCategoryDoView.as_view()),
     url(r'(?P<accountid>\d+)/$', BillIndexView.as_view()),
+    url(r'(?P<accountid>\d+)', BillIndexView.as_view()),
 ]
