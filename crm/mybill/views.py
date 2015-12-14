@@ -33,6 +33,16 @@ class BillIndexView(ListView):
     def get_queryset(self):
         return []
 
+    def get(self, request, accountid=1):
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404("Account does not exist")
+        return render(request, self.template_name, {
+                'account': account,
+                'account_list':  Account.objects.all(),
+                    })
+
 class BillDoView(ListView):
     def get_queryset(self):
         return []
