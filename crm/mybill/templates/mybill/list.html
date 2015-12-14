@@ -82,7 +82,7 @@
 				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
 				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
 				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
-				<td class="fgn">{%if accountitem.tx_type%}{{accountitem.amount}}￥{%else%}&nbsp;{%endif%}</td>
+				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
 				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}{{accountitem.amount}}￥{%endif%}</td>
 				<td><a href="/mybill/bill.do?method=edit&id={{accountitem.id}}&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
 			</tr>
@@ -96,7 +96,7 @@
 
 
 
-		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
 
 		<br/>
 
