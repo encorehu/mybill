@@ -490,7 +490,11 @@ class BillCategoryDoView(ListView):
     def get_queryset(self):
         return []
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, accountid=1, *args, **kwargs):
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404("Account does not exist")
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
@@ -500,7 +504,11 @@ class BillCategoryDoView(ListView):
         else:
             return render(request, self.template_name, {'form': ''})
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request, accountid=1, *args, **kwargs):
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404("Account does not exist")
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
