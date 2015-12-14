@@ -547,6 +547,8 @@ class BillCategoryDoView(ListView):
             }
         }
         '''
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         response={}
         response['result']={}
         response['result']['success']='true'
