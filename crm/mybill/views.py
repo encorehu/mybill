@@ -154,8 +154,8 @@ class BillDoView(ListView):
         account_list = kwargs.get('account_list')
         pk = request.GET.get('id','1')
         accountitem = AccountItem.objects.get(pk=pk)
-        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
         return render(request,
                       self.template_name,
                       {
