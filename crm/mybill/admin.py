@@ -35,8 +35,6 @@ class AccountItemAdmin(admin.ModelAdmin):
 
     def changeCategory(self, request, queryset):
         form = None
-        print request.POST
-
         if 'cancel' in request.POST:
             self.message_user(request, 'Canceled link categorization')
             return
@@ -64,7 +62,6 @@ class AccountItemAdmin(admin.ModelAdmin):
 
     def changeAccount(self, request, queryset):
         form = None
-        print request.POST
         if 'cancel' in request.POST:
             self.message_user(request, 'Canceled link account')
             return
