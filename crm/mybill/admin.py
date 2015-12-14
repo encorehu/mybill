@@ -73,9 +73,6 @@ class AccountItemAdmin(admin.ModelAdmin):
                 queryset.update(account=account)
             else:
                 print form.errors()
-                #for item in queryset:
-                #    item.account = account
-                #    item.save()
             self.message_user(request, self.accountSuccess.render(Context({'count':queryset.count(), 'account':account})))
             return HttpResponseRedirect(request.get_full_path())
 
