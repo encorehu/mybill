@@ -564,7 +564,7 @@ class BillCategoryDoView(ListView):
               category.save()
         return HttpResponse(json.dumps(response))
 
-    def listall(self, request, *args, **kwargs):
+    def listall(self, request, accountid, *args, **kwargs):
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
 
