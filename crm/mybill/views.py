@@ -154,7 +154,16 @@ class BillDoView(ListView):
                           'outcome_category_list': outcome_category_list,
                       })
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request, accountid=1, *args, **kwargs):
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404("Account does not exist")
+        account_list = Account.objects.all()
+        kwargs.update({
+            'account':account,
+            'account_list':account_list,
+        })
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
         if method == 'addOrUpdate':
