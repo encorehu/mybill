@@ -52,8 +52,8 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按收支项目查看</a> </div>
-		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" >
+		<div class="eSubNav"> <a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按月份查看</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按收支项目查看</a> </div>
+		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybill/{{account.id}}/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" >
 		<div style="margin-bottom:15px">
 		<input type=hidden name='method' value='listmonth'/>
 		月份：<input id='txtStrMonth' name="strMonth" type="text" style=" width:65px" value="{{year}}-{{month}}" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
