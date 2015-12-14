@@ -167,19 +167,19 @@ class BillDoView(ListView):
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
         if method == 'addOrUpdate':
-            return self.addOrUpdate(request)
+            return self.addOrUpdate(request, *args, **kwargs)
         elif method == 'listmonth':
-            return self.listmonth(request)
+            return self.listmonth(request, *args, **kwargs)
         elif method == 'edit':
-            return self.edit(request)
+            return self.edit(request, *args, **kwargs)
         elif method == 'append':
-            return self.append(request)
+            return self.append(request, *args, **kwargs)
         elif method == 'list':
-            return self.listall(request)
+            return self.listall(request, *args, **kwargs)
         elif method == 'listsort':
-            return self.listsort(request)
+            return self.listsort(request, *args, **kwargs)
         elif method == 'export':
-            return self.export(request)
+            return self.export(request, *args, **kwargs)
         else:
             return render(request, self.template_name, {'form': ''})
 
