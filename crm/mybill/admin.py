@@ -87,12 +87,12 @@ class AccountItemAdmin(admin.ModelAdmin):
     def change_tx_type0(self, request, queryset):
         queryset.update(tx_type=0)
 
-    change_tx_type0.short_description = u'change tx_type as income'
+    change_tx_type0.short_description = u'change tx_type as outcome'
 
     def change_tx_type1(self, request, queryset):
         queryset.update(tx_type=1)
 
-    change_tx_type1.short_description = u'change tx_type as outcome'
+    change_tx_type1.short_description = u'change tx_type as income'
 
 
 
