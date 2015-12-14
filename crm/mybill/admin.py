@@ -26,7 +26,7 @@ class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','summary','tx_type','amount')
     list_filter=('tx_type', 'account','category')
     search_fields = ('summary',)
-    actions = ['changeCategory', 'changeAccount']
+    actions = ['change_tx_type0','change_tx_type1', 'changeCategory', 'changeAccount']
     categorySuccess = Template('{{ count }} link{{ count|pluralize }}`s category changed to {{ category.name }}')
     accountSuccess = Template('{{ count }} link{{ count|pluralize }}`s account changed to {{ account.name }}')
 
@@ -83,6 +83,17 @@ class AccountItemAdmin(admin.ModelAdmin):
                                   {'links': queryset, 'form': form, 'path':request.get_full_path()},
                                   context_instance=RequestContext(request))
     changeAccount.short_description = u'change Account'
+
+    def change_tx_type0(self, request, queryset):
+        queryset.update(tx_type=0)
+
+    change_tx_type0.short_description = u'change tx_type as income'
+
+    def change_tx_type1(self, request, queryset):
+        queryset.update(tx_type=1)
+
+    change_tx_type1.short_description = u'change tx_type as outcome'
+
 
 
 class AccountCategoryAdmin(admin.ModelAdmin):
