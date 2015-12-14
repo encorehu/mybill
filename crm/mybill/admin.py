@@ -87,6 +87,35 @@ class AccountItemAdmin(admin.ModelAdmin):
 
 class AccountCategoryAdmin(admin.ModelAdmin):
     list_display=('account', 'tx_type','name')
+    actions = ['changeAccount']
+    accountSuccess = Template('{{ count }} link{{ count|pluralize }}`s account changed to {{ account.name }}')
+
+    class AccountForm(forms.Form):
+        _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+        account = forms.ModelChoiceField(Account.objects)
+
+    def changeAccount(self, request, queryset):
+        form = None
+        if 'cancel' in request.POST:
+            self.message_user(request, 'Canceled link account')
+            return
+        elif 'categorize' in request.POST:
+            #do the categorization
+            form = self.AccountForm(request.POST)
+            if form.is_valid():
+                account = form.cleaned_data['account']
+                queryset.update(account=account)
+            else:
+                print form.errors()
+            self.message_user(request, self.accountSuccess.render(Context({'count':queryset.count(), 'account':account})))
+            return HttpResponseRedirect(request.get_full_path())
+
+        if not form:
+            form = self.AccountForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        return render_to_response('mybill/change_account.html',
+                                  {'links': queryset, 'form': form, 'path':request.get_full_path()},
+                                  context_instance=RequestContext(request))
+    changeAccount.short_description = u'change Account'
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
