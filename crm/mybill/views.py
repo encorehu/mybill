@@ -59,6 +59,8 @@ class BillDoView(ListView):
             }
         }
 '''
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         response={}
         response['result']={}
         response['result']['success']='true'
@@ -69,8 +71,9 @@ class BillDoView(ListView):
 
         ait_id = request.POST.get('id','')
         if not ait_id:
+            # 新建账目条目
             #account=Account.objects.get_or_create(id=1,name=u'默认账户')
-            account,created=Account.objects.get_or_create(id=1)
+            #account,created=Account.objects.get_or_create(id=1)
             instance = AccountItem(account=account)
             #instance.account_id = 1
             category_id = request.POST.get('categoryId','0')
@@ -91,7 +94,7 @@ class BillDoView(ListView):
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         else:
-            account,created=Account.objects.get_or_create(id=1)
+            #account,created=Account.objects.get_or_create(id=1)
             instance = AccountItem.objects.get(id=ait_id, account=account)
             category_id = request.POST.get('categoryId','0')
             subcategory_id = request.POST.get('subCategoryId','0')
@@ -111,7 +114,7 @@ class BillDoView(ListView):
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         year,month = instance.tx_date.year, instance.tx_date.month
-        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=%s-%s' class='udl fbu'>该月账本</a>" % (year, month)
+        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/%s/bill.do?method=listmonth&strMonth=%s-%s' class='udl fbu'>该月账本</a>" % (account.id, year, month)
         return HttpResponse(json.dumps(response))
 
     def listmonth(self, request, *args, **kwargs):
