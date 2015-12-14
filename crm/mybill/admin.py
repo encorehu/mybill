@@ -87,6 +87,7 @@ class AccountItemAdmin(admin.ModelAdmin):
 
 class AccountCategoryAdmin(admin.ModelAdmin):
     list_display=('account', 'tx_type','name')
+    list_filter=('account','name')
     actions = ['changeAccount']
     accountSuccess = Template('{{ count }} link{{ count|pluralize }}`s account changed to {{ account.name }}')
 
