@@ -2,23 +2,23 @@
 {% load i18n l10n %}
 
 {% block content %}
-<h1>Change Category of the Selected Links</h1> 
-<h2>This categorization will affect your selection as the following:</h2> 
-{% for link in links %} 
+<h1>Change Category of the Selected Links</h1>
+<h2>This categorization will affect your selection as the following:</h2>
+{% for link in links %}
 [origin category:{{ link.category }}]
 <ul>
     <li>title:{{ link.title }}</li>
     <li>url: {{ link.url }}</li>
-</ul>{% endfor %} 
-<p>Choose a new category for the selected link{{ links|pluralize }}:</p> 
-<form method="post" action="{{ path }}"> {% csrf_token %} 
-    <table> 
-    {{ form }} 
-    </table> 
-    <p> 
-        <input type="hidden" name="action" value="changeCategory" /> 
-        <input type="submit" name="cancel" value="Cancel" /> 
-        <input type="submit" name="categorize" value="Categorize" /> 
-    </p> 
-</form> 
+</ul>{% endfor %}
+<p>Choose a new category for the selected link{{ links|pluralize }}:</p>
+<form method="post" action="{{ path }}"> {% csrf_token %}
+    <table>
+    {{ form }}
+    </table>
+    <p>
+        <input type="hidden" name="action" value="changeCategory" />
+        <input type="submit" name="cancel" value="Cancel" />
+        <input type="submit" name="categorize" value="Categorize" />
+    </p>
+</form>
 {% endblock %}
