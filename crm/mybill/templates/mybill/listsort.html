@@ -52,9 +52,9 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按收支项目查看</a> </div>
+		<div class="eSubNav"> <a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按收支项目查看</a> </div>
 
-		<form id='frmBillSort' name='billSortForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
+		<form id='frmBillSort' name='billSortForm' method="post" action="/mybill/{{account.id}}/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
 		<div style="margin-bottom:15px">
 		<input name='method' value='listsort' type='hidden'/>
 		<input id='hdnType' name='type' type='hidden' value='0' />
