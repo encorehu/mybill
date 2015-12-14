@@ -115,6 +115,8 @@ class BillDoView(ListView):
         return HttpResponse(json.dumps(response))
 
     def listmonth(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         if request.method == 'GET':
             strMonth=request.GET.get('strMonth','')
         else:
@@ -133,7 +135,10 @@ class BillDoView(ListView):
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
-        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+        return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
+            'accountitem_list': accountitem_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
