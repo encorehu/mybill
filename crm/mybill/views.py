@@ -193,7 +193,8 @@ class BillDoView(ListView):
         elif method == 'export':
             return self.export(request, *args, **kwargs)
         else:
-            return render(request, self.template_name, {'form': ''})
+            kwargs.update(form=None)
+            return render(request, self.template_name, kwargs)
 
     def post(self, request, accountid=1, *args, **kwargs):
         try:
