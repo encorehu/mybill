@@ -24,7 +24,7 @@ class AccountAdmin(admin.ModelAdmin):
 
 class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','summary','tx_type','amount')
-    list_filter=('account','category')
+    list_filter=('tx_type', 'account','category')
     search_fields = ('summary',)
     actions = ['changeCategory', 'changeAccount']
     categorySuccess = Template('{{ count }} link{{ count|pluralize }}`s category changed to {{ category.name }}')
