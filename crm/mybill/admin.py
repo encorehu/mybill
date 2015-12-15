@@ -45,9 +45,7 @@ class AccountItemAdmin(admin.ModelAdmin):
             form = self.CategoryForm(request.POST)
             if form.is_valid():
                 category = form.cleaned_data['category']
-            for link in queryset:
-                link.category = category
-                link.save()
+                queryset.update(category=category)
             self.message_user(request, self.categorySuccess.render(Context({'count':queryset.count(), 'category':category})))
             return HttpResponseRedirect(request.get_full_path())
 
