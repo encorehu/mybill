@@ -18,6 +18,7 @@ def export_selected_objects(modeladmin, request, queryset):
 from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
+from .models import AccountItemDetail
 
 class AccountAdmin(admin.ModelAdmin):
     pass
@@ -129,6 +130,10 @@ class AccountCategoryAdmin(admin.ModelAdmin):
                                   context_instance=RequestContext(request))
     changeAccount.short_description = u'change Account'
 
+class AccountItemDetailAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
 admin.site.register(AccountCategory, AccountCategoryAdmin)
+admin.site.register(AccountItemDetail, AccountItemDetailAdmin)

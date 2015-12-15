@@ -72,3 +72,24 @@ class AccountItem(models.Model):
 			return u'{0},{1},收入:{2}'.format(self.account, self.summary, self.amount)
 		else:
 			return u'{0},{1},支出:{2}'.format(self.account, self.summary, self.amount)
+
+class AccountItemDetail(models.Model):
+	accountitem = models.ForeignKey(AccountItem, related_name='accountitem_set')
+	summary =  models.CharField(max_length=255, null=True, blank=True, default=u'餐费')
+	amount =   models.DecimalField(u'金额', max_digits=10, decimal_places=2, default=0.00)
+	tx_date =  models.DateTimeField(u'交易日期', default=timezone.now)
+	tx_type =  models.IntegerField(u'收支类型', default=0, choices=TX_TYPE)
+	operator =  models.CharField(max_length=20, default='hcz', editable=False)
+	class Meta:
+		verbose_name = u'记账条目明细'
+		verbose_name_plural =u'记账条目明细'
+		ordering = ('tx_date', 'id')
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		if self.tx_type==1:
+			return u'{0},{1},收入:{2}'.format(self.account, self.summary, self.amount)
+		else:
+			return u'{0},{1},支出:{2}'.format(self.account, self.summary, self.amount)
