@@ -12,6 +12,10 @@
   <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
 	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
 
+<script type="text/javascript" lang="Javascript">
+	var account_id={{account.id}};
+</script>
+
 <script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
 <script type="text/javascript" lang="Javascript" src="/static/js/page/bill_month.js?1444742024987"></script>
 </head>
@@ -109,6 +113,8 @@
 		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
 
 		<br/>
+
+		<div class="SummaryTxt bmSt"><a href="/mybill/{{account.id}}/bill.do?method=export&strMonth={{year}}-{{month}}">导出{{year}}年{{month}}月数据</a></div>
 
 
 
