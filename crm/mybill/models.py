@@ -59,6 +59,7 @@ class AccountItem(models.Model):
 	adding_type_name =  models.CharField(max_length=20, default='manual', editable=False) #手工还是系统操作
 	operator =  models.CharField(max_length=20, default='hcz', editable=False)
 	transaction_id =  models.IntegerField(default=0, editable=False)
+	billnum =  models.CharField(u'票据号码', max_length=32, blank=True, default='')
 	class Meta:
 		verbose_name = u'记账条目'
 		verbose_name_plural =u'记账条目'
