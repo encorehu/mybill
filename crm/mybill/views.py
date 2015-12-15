@@ -222,6 +222,8 @@ class BillDoView(ListView):
             return self.listall(request, *args, **kwargs)
         elif method == 'listsort':
             return self.listsort(request, *args, **kwargs)
+        elif method == 'del':
+            return self.delete(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -498,6 +500,26 @@ class BillDoView(ListView):
         filename = strMonth+'.xlsx'
         displayname=  u'%s年%s月.xlsx' % (year,month)
         return file_download(request, filename, displayname)
+
+    def delete(self, request, *args, **kwargs):
+        response={}
+        response['result']={}
+        response['result']['success']='true'
+        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
+        response['result']['totalCount']='0'
+        response['result']['pageSize']='100'
+        ait_id = request.POST.get('id','')
+        if not ait_id:
+            response['result']['message']=u"无效的id"
+        else:
+            try:
+                item = AccountItem.objects.get(pk=ait_id)
+            except:
+                response['result']['message']=u"没有这个id"
+            else:
+                item.delete()
+                response['result']['message']=u"删除记录成功"
+        return HttpResponse(json.dumps(response))
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
