@@ -2,8 +2,26 @@
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
+class AccountBook(models.Model):
+	name = models.CharField(max_length=20, null=True, blank=True)
+	balance = models.DecimalField(u'余额', max_digits=10, decimal_places=2, default=0.00)
+	balance_cash = models.DecimalField(u'现金', max_digits=10, decimal_places=2, default=0.00)
+	balance_deposit = models.DecimalField(u'存款', max_digits=10, decimal_places=2, default=0.00)
+
+	class Meta:
+		verbose_name = u'账本'
+		verbose_name_plural =u'账本'
+		ordering = ('id',)
+
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		return u'{0}({1})'.format(self.name, self.balance)
+
 class Account(models.Model):
+	accountbook = models.ForeignKey(AccountBook, null=True, blank=True, default=None, related_name='account_book_set')
 	number = models.CharField(max_length=20)
 	account_type = models.CharField(max_length=10, null=True, blank=True)
 	name = models.CharField(max_length=20, null=True, blank=True)
@@ -12,7 +30,6 @@ class Account(models.Model):
 	class Meta:
 		verbose_name = u'科目（账户）'
 		verbose_name_plural =u'科目（账户）'
-		#ordering = ('id','number', )
 		ordering = ('id',)
 
 
