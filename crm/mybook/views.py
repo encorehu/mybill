@@ -13,10 +13,7 @@ from django.db.models import Q
 from django.views.generic import ListView
 from django.conf import settings
 
-from mybill.models import Book
-from mybill.models import BookBook
-from mybill.models import BookItem
-from mybill.models import BookCategory
+from mybill.models import AccountBook
 
 from django.core.servers.basehttp import FileWrapper
 
@@ -37,12 +34,12 @@ class BookIndexView(ListView):
 
     def get(self, request, bookid=1):
         try:
-            book = Book.objects.get(id=bookid)
-        except Book.DoesNotExist:
-            raise Http404("Book does not exist")
+            book = AccountBook.objects.get(id=bookid)
+        except AccountBook.DoesNotExist:
+            raise Http404("AccountBook does not exist")
         return render(request, self.template_name, {
                 'book': book,
-                'book_list':  Book.objects.all(),
+                'book_list':  AccountBook.objects.all(),
                     })
 
 class BookDoView(ListView):
@@ -74,16 +71,16 @@ class BookDoView(ListView):
         ait_id = request.POST.get('id','')
         if not ait_id:
             # 新建账目条目
-            #book=Book.objects.get_or_create(id=1,name=u'默认账户')
-            #book,created=Book.objects.get_or_create(id=1)
-            instance = BookItem(book=book)
+            #book=AccountBook.objects.get_or_create(id=1,name=u'默认账户')
+            #book,created=AccountBook.objects.get_or_create(id=1)
+            instance = AccountBookItem(book=book)
             #instance.book_id = 1
             category_id = request.POST.get('categoryId','0')
             subcategory_id = request.POST.get('subCategoryId','0')
             if subcategory_id=='0':
-                category, created = BookCategory.objects.get_or_create(id=category_id, parent_id=None)
+                category, created = AccountBookCategory.objects.get_or_create(id=category_id, parent_id=None)
             else:
-                category, created = BookCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
+                category, created = AccountBookCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
             instance.category = category
             instance.summary = request.POST.get('note','')
             #instance.summary = request.POST.get('subCategoryId','0')
@@ -96,14 +93,14 @@ class BookDoView(ListView):
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         else:
-            #book,created=Book.objects.get_or_create(id=1)
-            instance = BookItem.objects.get(id=ait_id, book=book)
+            #book,created=AccountBook.objects.get_or_create(id=1)
+            instance = AccountBookItem.objects.get(id=ait_id, book=book)
             category_id = request.POST.get('categoryId','0')
             subcategory_id = request.POST.get('subCategoryId','0')
             if subcategory_id=='0':
-                category, created = BookCategory.objects.get_or_create(id=category_id, parent_id=None)
+                category, created = AccountBookCategory.objects.get_or_create(id=category_id, parent_id=None)
             else:
-                category, created = BookCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
+                category, created = AccountBookCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
             instance.category = category
             instance.summary = request.POST.get('note','')
             #instance.summary = request.POST.get('subCategoryId','0')
@@ -133,7 +130,7 @@ class BookDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__month=month)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__month=month)
         last_balance = 0
         income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -155,9 +152,9 @@ class BookDoView(ListView):
         book = kwargs.get('book')
         book_list = kwargs.get('book_list')
         pk = request.GET.get('id','1')
-        bookitem = BookItem.objects.get(pk=pk)
-        income_category_list = BookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
-        outcome_category_list = BookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
+        bookitem = AccountBookItem.objects.get(pk=pk)
+        income_category_list = AccountBookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
+        outcome_category_list = AccountBookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
         return render(request,
                       self.template_name,
                       {
@@ -170,10 +167,10 @@ class BookDoView(ListView):
 
     def get(self, request, bookid=1, *args, **kwargs):
         try:
-            book = Book.objects.get(id=bookid)
-        except Book.DoesNotExist:
-            raise Http404("Book does not exist")
-        book_list = Book.objects.all()
+            book = AccountBook.objects.get(id=bookid)
+        except AccountBook.DoesNotExist:
+            raise Http404("AccountBook does not exist")
+        book_list = AccountBook.objects.all()
         kwargs.update({
             'book':book,
             'book_list':book_list,
@@ -202,10 +199,10 @@ class BookDoView(ListView):
 
     def post(self, request, bookid=1, *args, **kwargs):
         try:
-            book = Book.objects.get(id=bookid)
-        except Book.DoesNotExist:
-            raise Http404("Book does not exist")
-        book_list = Book.objects.all()
+            book = AccountBook.objects.get(id=bookid)
+        except AccountBook.DoesNotExist:
+            raise Http404("AccountBook does not exist")
+        book_list = AccountBook.objects.all()
         kwargs.update({
             'book':book,
             'book_list':book_list,
@@ -234,8 +231,8 @@ class BookDoView(ListView):
     def append(self, request, *args, **kwargs):
         book = kwargs.get('book')
         book_list = kwargs.get('book_list')
-        income_category_list = BookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
-        outcome_category_list = BookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
+        income_category_list = AccountBookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
+        outcome_category_list = AccountBookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
 
         return render(request,
                       self.template_name,
@@ -261,7 +258,7 @@ class BookDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
         last_balance = 0
         income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -308,8 +305,8 @@ class BookDoView(ListView):
             year,month = now.year, now.month
 
         if request.method == 'GET':
-            income_category_list = BookCategory.objects.filter(tx_type=1, parent=None).all()
-            outcome_category_list = BookCategory.objects.filter(tx_type=0, parent=None).all()
+            income_category_list = AccountBookCategory.objects.filter(tx_type=1, parent=None).all()
+            outcome_category_list = AccountBookCategory.objects.filter(tx_type=0, parent=None).all()
             return render(request, self.template_name, {
                 'book': book,
                 'book_list': book_list,
@@ -325,11 +322,11 @@ class BookDoView(ListView):
                 })
 
         if fromRecDate:
-            bookitem_list = BookItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
+            bookitem_list = AccountBookItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
             if toRecDate:
                 bookitem_list= bookitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
         else:
-            bookitem_list = BookItem.objects.select_related('category')
+            bookitem_list = AccountBookItem.objects.select_related('category')
             if toRecDate:
                 bookitem_list= bookitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
 
@@ -343,7 +340,7 @@ class BookDoView(ListView):
         else:
             #否则过滤父分类和所有的子分类
             if categoryId:
-                subCategoryIds= list(BookCategory.objects.filter(parent__id=categoryId).values_list('id', flat=True).all())
+                subCategoryIds= list(AccountBookCategory.objects.filter(parent__id=categoryId).values_list('id', flat=True).all())
                 subCategoryIds.insert(0, categoryId)
                 bookitem_list= bookitem_list.filter(category__id__in = subCategoryIds)
 
@@ -354,8 +351,8 @@ class BookDoView(ListView):
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
 
-        income_category_list = BookCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = BookCategory.objects.filter(tx_type=0, parent=None).all()
+        income_category_list = AccountBookCategory.objects.filter(tx_type=1, parent=None).all()
+        outcome_category_list = AccountBookCategory.objects.filter(tx_type=0, parent=None).all()
         return render(request, self.template_name, {
             'book':book,
             'bookitem_list': bookitem_list,
@@ -378,7 +375,7 @@ class BookDoView(ListView):
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
         workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
@@ -412,8 +409,8 @@ class BookDoView(ListView):
           last_month = 12
         else:
           year_of_last_month = year
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
-        #bookitem_list = BookItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
+        #bookitem_list = AccountBookItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -433,7 +430,7 @@ class BookDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year_of_last_month, tx_date__month=month)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year_of_last_month, tx_date__month=month)
         for i, item  in enumerate(bookitem_list):
             worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
@@ -522,7 +519,7 @@ class BookDoView(ListView):
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
         workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
@@ -551,8 +548,8 @@ class BookDoView(ListView):
 
 
         year_of_last_month = year-1
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
-        #bookitem_list = BookItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        #bookitem_list = AccountBookItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -572,7 +569,7 @@ class BookDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        bookitem_list = BookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
         for i, item  in enumerate(bookitem_list):
             worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
@@ -656,7 +653,7 @@ class BookDoView(ListView):
             response['result']['message']=u"无效的id"
         else:
             try:
-                item = BookItem.objects.get(pk=ait_id)
+                item = AccountBookItem.objects.get(pk=ait_id)
             except:
                 response['result']['message']=u"没有这个id"
             else:
@@ -670,10 +667,10 @@ class BookCategoryDoView(ListView):
 
     def get(self, request, bookid=1, *args, **kwargs):
         try:
-            book = Book.objects.get(id=bookid)
-        except Book.DoesNotExist:
-            raise Http404("Book does not exist")
-        book_list = Book.objects.all()
+            book = AccountBook.objects.get(id=bookid)
+        except AccountBook.DoesNotExist:
+            raise Http404("AccountBook does not exist")
+        book_list = AccountBook.objects.all()
         kwargs.update({
             'book':book,
             'book_list':book_list,
@@ -691,9 +688,9 @@ class BookCategoryDoView(ListView):
 
     def post(self, request, bookid=1, *args, **kwargs):
         try:
-            book = Book.objects.get(id=bookid)
-        except Book.DoesNotExist:
-            raise Http404("Book does not exist")
+            book = AccountBook.objects.get(id=bookid)
+        except AccountBook.DoesNotExist:
+            raise Http404("AccountBook does not exist")
         method=request.GET.get('method', 'list')
         self.template_name = 'mybook/category_%s.html' % method
         if method == 'addOrUpdate':
@@ -734,11 +731,11 @@ class BookCategoryDoView(ListView):
             tx_type = request.POST.get('type','0')
             parent_id = request.POST.get('parentId','0')
             if parent_id=='0':
-                category, created = BookCategory.objects.get_or_create(parent_id=None, name=name, tx_type=tx_type)
+                category, created = AccountBookCategory.objects.get_or_create(parent_id=None, name=name, tx_type=tx_type)
             else:
-                category, created = BookCategory.objects.get_or_create(parent_id=parent_id, name=name, tx_type=tx_type)
+                category, created = AccountBookCategory.objects.get_or_create(parent_id=parent_id, name=name, tx_type=tx_type)
         else:
-            category=BookCategory.objects.get(id=category_id)
+            category=AccountBookCategory.objects.get(id=category_id)
             if parent_id=='0':
               category.parent_id = None
               category.tx_type = tx_type
@@ -754,8 +751,8 @@ class BookCategoryDoView(ListView):
     def listall(self, request, *args, **kwargs):
         book = kwargs.get('book')
         book_list = kwargs.get('book_list')
-        income_category_list = BookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
-        outcome_category_list = BookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
+        income_category_list = AccountBookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
+        outcome_category_list = AccountBookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
 
         return render(request, self.template_name, {
             'book': book,
@@ -767,8 +764,8 @@ class BookCategoryDoView(ListView):
     def append(self, request, *args, **kwargs):
         book = kwargs.get('book')
         book_list = kwargs.get('book_list')
-        income_category_list = BookCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = BookCategory.objects.filter(tx_type=0, parent=None).all()
+        income_category_list = AccountBookCategory.objects.filter(tx_type=1, parent=None).all()
+        outcome_category_list = AccountBookCategory.objects.filter(tx_type=0, parent=None).all()
 
         return render(request,
                       self.template_name,
