@@ -1,0 +1,147 @@
+*{ margin:0; padding:0; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; list-style-type:none}
+body{ overflow-x:hidden; overflow-y:auto;}
+a{text-decoration:none; color:#0068b7}
+a:hover{ text-decoration:underline}
+img,table{border:0;border-collapse:collapse}
+.hide{ display:none}
+.clear{ clear:both; font-size:0; height:1px}
+.clear0{ clear:both; font-size:0; height:1px}
+.fLe{ float:left}
+.fRi{ float:right}
+.f14{ font-size:14px!important}
+.impTxt{ font-weight:bold; color:#B72A00}
+.tipTxt{ color:#888}
+.udl{ text-decoration:underline}
+.fbu{ color:#0066FF!important}
+.fgn{ color:#009900!important}
+.frd{ color:#B72A00!important}
+
+.lnk1{ font-weight:normal; color:#06c; text-decoration:underline}
+
+.eNav{ height:40px; position:absolute; top:11px; left:14px;}
+	.eNav li{ background-image:url(/static/mybill/images/nav.gif); background-repeat:no-repeat; width:97px; height:40px; float:left; text-align:center;}
+	.eNav li.on{ background-image:url(/static/mybill/images/navOn.gif); background-repeat:no-repeat}
+	.eNav li a{ display:block;width:97px; height:36px; line-height:36px; color:#898989; font-weight:bold; text-decoration:none;}
+	.eNav li a:hover{text-decoration:none;}
+	.eNav li.on a{ color:#515151}
+
+.eMain{ width:693px;padding-top:42px; margin-left:10px;}
+.eMain .eMtop{ height:17px; font-size:0; background-image:url(/static/mybill/images/bgTop.gif)}
+.eMain .eMbdy{ background-image:url(/static/mybill/images/bg.gif); padding:1px 15px}
+.eMain .eMbot{ height:3px; font-size:0; background-image:url(/static/mybill/images/bgBot.gif); margin-bottom:10px;}
+
+	.btnFnt{ height:22px; border:1px solid #85b3d6; background-image:url(/static/mybill/images/btn_bg.gif); background-repeat:repeat-x; background-color:#d8efff; padding-left:7px; padding-right:7px; cursor:pointer}
+	.eIpt{ height:15px; padding:1px 2px 1px 1px}
+
+	.line1{ height:10px; font-size:0; background-image:url(/static/mybill/images/line1.gif); background-repeat:no-repeat; background-position:50% 50%}
+
+	.eWel h2{color:#515151; font-size:14px; margin:0 0 10px 10px}
+	.eWel h3{color:#515151;margin:15px 0 7px 10px}
+
+	.eWimg{ float:left; margin:0 15px 0 5px}
+	.eWintro{line-height:170%; color:#828282; float:left}
+
+	.eWelLst{ margin-left:15px; margin-bottom:15px}
+		.eWelLst li{ background-image:url(/static/mybill/images/ico_lst.gif); background-repeat:no-repeat; background-position:0 5px; color:#828282; padding:3px 2px 3px 15px}
+		.eWelLst li span{ color:#333}
+
+
+	.sFrm li{margin:3px 0 8px 0;}
+		.sFrm li b{ float:left; width:120px; font-weight:normal; display:block; margin:5px 3px 0 5px; text-align:right; color:#444; white-space:nowrap}
+		.sFrm li .itemFm{ float:left; }
+		.sFrm li.bar{ margin-top:11px}
+		.sFrm li.tip{ color:#666}
+			.sFrm li.tip b{ margin-top:2px}
+			.sFrm li.tip .itemFm{}
+
+			.sIpt{ border:1px solid #768EA3; padding:3px 1px 3px 2px; font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif; width:130px}
+			.sIpt2{ border:1px solid #768EA3; padding:3px 1px 3px 2px; font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif; width:180px}
+			.sIpt3{ border:1px solid #768EA3; padding:3px 1px 3px 2px; font-size:12px; font-family:Verdana, Arial, Helvetica, sans-serif; width:70px}
+			.sTxa{ border:1px solid #768EA3; width:320px; height:100px; padding:3px 2px }
+			.sSel{ width:135px; text-align:center}
+
+
+		.expBox{ background-image:url(/static/mybill/images/expboxbg.gif); background-repeat:no-repeat; background-position:0 0; padding-top:5px; margin-top:-5px}
+			.expBdy{border:1px solid #A0A09E; background-color:#FFFFCD; border-top:0; padding:4px 0}
+
+		.icoImp{background-image:url(/static/mybill/images/ico_imp.gif); background-repeat:no-repeat; background-position:6px 2px}
+		.icoCal{background-image:url(/static/mybill/images/ico_cal.gif); background-repeat:no-repeat}
+		.icoLst{background-image:url(/static/mybill/images/ico_eye.gif); background-repeat:no-repeat; background-position:2px 2px}
+		.icoChart{background-image:url(/static/mybill/images/ico_chart.gif); background-repeat:no-repeat}
+
+		.icoMax{background-image:url(/static/mybill/images/ico_max.gif); background-repeat:no-repeat; background-position:1px 1px}
+		.icoMin{background-image:url(/static/mybill/images/ico_min.gif); background-repeat:no-repeat; background-position:1px 1px}
+
+		.eInfo{height:19px; line-height:19px; margin:0 5px 10px 0;background-color:#fffbca; border:1px solid #e6ce6f;}
+		.icoInfo{background-image:url(/static/mybill/images/ico_info.gif); background-repeat:no-repeat}
+
+	.eSubNav{ margin-bottom:20px; border-bottom:1px dotted #CCC; height:24px; line-height:24px; font-weight:bold}
+		.spline{ font-size:10px; color:#999}
+	.eSubNav .on{font-weight:bold; color:#515151;}
+
+	.icoEdt{background-image:url(/static/mybill/images/ico_pen.gif); background-repeat:no-repeat}
+	.icoDel{background-image:url(/static/mybill/images/ico_del.gif); background-repeat:no-repeat}
+
+	.SummaryTxt{text-align:right; margin:20px 0; color:#999; font-weight:bold; height:18px}
+	.SummaryTxt,.SummaryTxt *{ font-size:13px}
+
+	.eTb{ table-layout:fixed; width:100%}
+		.eTb th,.eTb td{ text-align:center; padding:8px 2px}
+		.eTb th{ color:#8e8e8e; border-bottom:1px solid #dcdcdc; padding:4px 2px}
+		.eTb td{ color:#444}
+		.tr1{ background-color:#ebf2f7}
+		.tr1 td{border-top:1px solid #FFF}
+		.tr2{ background-color:#f2f6f9}
+		.tr2 td{border-top:1px solid #FFF}
+		.trlev1{background-color:#ebf2f7}
+		tr.trlev1 td{ border-top:1px solid #dcdcdc; font-weight:bold}
+		.trlev2{background-color:#f2f6f9}
+		.trlev2 td{border-top:1px solid #FFF}
+		.trlev1 .td1{ text-align:left!important; padding-left:5px}
+		.trlev1 .td2{ font-weight:normal!important}
+		.td3{ text-align:left!important}
+		td.tdCutL{ white-space:nowrap; overflow:hidden;text-overflow:ellipsis }
+
+	.inTb,.smyIn{ width:270px; float:left; margin:0 0 0 20px}
+		.inTb .tr1{ background-color:#e9f4d3}
+		.inTb .trlev1{ background-color:#e9f4d3}
+		.inTb .tr2{ background-color:#f2f7e7}
+		.inTb .trlev2{ background-color:#f2f7e7}
+
+	.outTb,.smyOut{width:270px; float:right; margin:0 20px 0 0}
+		.outTb .tr1{ background-color:#fee4e2}
+		.outTb .trlev1{ background-color:#fee4e2}
+		.outTb .tr2{ background-color:#feeeed}
+		.outTb .trlev2{ background-color:#feeeed}
+
+	.inTb a,.outTb a{ color:#666}
+
+	.smyIn,.smyOut{ text-align:center; margin-top:10px; font-weight:bold; font-size:13px}
+	.smyIn{ color:#009900!important}
+	.smyOut{ color:#B72A00!important}
+
+		.anyBar{ margin-top:-10px; margin-bottom:25px}
+			.aB1{height:22px}
+			.anyBar .on{background-color:#fffbca; border:1px solid #e6ce6f; padding-right:3px}
+
+	.bmSt{border-bottom:1px dotted #CCC}
+	.bmSt2{border-top:1px dotted #CCC; padding-top:3px}
+		.SummaryTxt .fLe{ color:#666}
+
+	.srhFm{margin:15px 0 20px 0; color:#444; border:1px solid #dcdcdc; background-color:#f4f4f4; padding:10px 0}
+
+			.tdCutL{ text-align:center!important; padding-left:10px!important}
+
+	.al_Tit{text-align:center; font-weight:bold; color:#555; font-size:13px}
+	.disable,.disable *{ color:#999}
+
+		.eInfo2{position:relative; height:60px; width:300px; margin:40px auto; border:1px solid #e6ce6f; background-color:#fffbca}
+			.eInfo2 img{position:absolute; top:10px; left:15px}
+			.eInfo2 p{position:absolute; left:60px; top:10px; line-height:170%; color:#444}
+
+/*Wayhome 2008-5-7*/
+.Bar_SelPage{ text-align:right; width:400px; font-weight:normal; padding:2px; color:#777; font-size:13px;}
+	.Bar_SelPage,.Bar_SelPage a{ font-size:13px;}
+	.B_SP_Top{ position:absolute; top:0; right:0;}
+	.B_SP_Btm{width:auto; margin-top:10px;}
+	.Bar_SelPage b{color: #930; background:#FFFFCC; border:1px solid #D9CA8E; padding:1px; line-height:14px;}
