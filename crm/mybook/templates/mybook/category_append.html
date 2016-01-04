@@ -1,0 +1,112 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+
+
+
+<link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742736270"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/manage_add.js?1444742736270"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+
+	<div class="Top">
+		<a	href="/mybook/"	class="a_INDEX">百宝箱</a><b	class="Top_B_arr"></b>
+		<span>
+			<strong>理财易</strong>
+			<select	onchange='document.location.href=this.options[this.selectedIndex].value;'>
+				{% for acc in	account_list %}<option value="/mybook/{{acc.id}}/" {%ifequal acc.id	account.id %}	selected="selected"{%endifequal%}>{{acc.name}}</option>{%	endfor%}
+			</select>
+		</span>
+	</div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybook/{{book.id}}/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybook/{{book.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar on"><a href="/mybook/{{book.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+	<!--操作或系统提示通用区域-->
+	<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="/mybook/{{book.id}}/category.do?method=list">收支项目管理</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/category.do?method=append" class="on">新增收支项目</a> </div>
+
+		<div>
+		<style>.expBdy .sFrm li b{width:80px}/*调整对齐修改此数值*/</style>
+									<ul class="sFrm">
+
+									     <input   type='hidden' name='sid' class='categoryData' value='nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD' />
+									    <input id='hdnId' type='hidden' name='id' class='categoryData' value='0' />
+									    <input id='hdnType' type='hidden' name='type' class='categoryData' value='1' />
+										<input id='hdnParentId' type='hidden' name='parentId' class='categoryData' value='0' />
+										<li><b><span class="icoImp">　</span> 性质：</b><div class="itemFm"><input id='rdoTypeIn' type="radio" name="r1" value='1' class='chkType' checked="checked"/>收入&nbsp;&nbsp;<input id='rdoTypeOut' value='0' class='chkType' type="radio" name="r1"/>支出</div><div class="clear0"></div></li>
+										<li><b><span class="icoImp">　</span> 收支项目名称：</b><input id='txtCategoryName' maxlength='8' name='categoryName' type="text" class="sIpt2 itemFm categoryData" maxlength='20'/><div class="clear0"></div></li>
+										<li><b><span class="icoImp">　</span> 从属收支项目：</b>
+											<div class="itemFm">
+												<input id='rdoFirstLevel' type="radio" name="r2" checked="checked"/>一级收支项目<br/>
+												<input id='rdoSubLevel' type="radio" name="r2"/>从属于
+
+												<select id='selInCategories' style="width:100px">
+													{% for category in income_category_list %}
+													<option value='1|{{category.id}}' >{{category.name}}</option>
+													{%endfor%}
+												</select>
+
+
+												<select id='selOutCategories' style="width:100px">
+													{% for category in outcome_category_list %}
+													<option value='0|{{category.id}}' >{{category.name}}</option>
+													{%endfor%}
+												</select>
+
+
+											</div><div class="clear0"></div>
+
+										</li>
+										<li class="bar"><b></b><input id='btnSave' type="button" class="btnFnt" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input type="button" class="btnFnt" onclick="javascript:location='/mybook/{{book.id}}/category.do?method=list'" value="关闭"/></li>
+									</ul>
+		</div>
+
+
+		<br/>
+		<br/>
+
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+
+</body>
+</html>

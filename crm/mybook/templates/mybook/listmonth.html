@@ -1,0 +1,130 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript">
+	var account_id={{book.id}};
+</script>
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_month.js?1444742024987"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+	<div class="Top">
+		<a	href="/mybook/"	class="a_INDEX">百宝箱</a><b	class="Top_B_arr"></b>
+		<span>
+			<strong>理财易</strong>
+			<select	onchange='document.location.href=this.options[this.selectedIndex].value;'>
+				{% for acc in	account_list %}<option value="/mybook/{{acc.id}}/" {%ifequal acc.id	account.id %}	selected="selected"{%endifequal%}>{{acc}}</option>{%	endfor%}
+			</select>
+		</span>
+	</div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybook/{{book.id}}/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybook/{{book.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybook/{{book.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="/mybook/{{book.id}}/bill.do?method=list">本月收支</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/bill.do?method=listmonth" class="on">按月份查看</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/bill.do?method=listsort">按收支项目查看</a> </div>
+		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybook/{{book.id}}/bill.do" >
+		<div style="margin-bottom:15px">
+		<input type=hidden name='method' value='listmonth'/>
+		月份：<input id='txtStrMonth' name="strMonth" type="text" style=" width:65px" value="{{year}}-{{month}}" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
+
+			<div id='divSelectMonth' class="expBox hide" style="width:240px;margin:0;background-position:-210px 0">
+				<div class="expBdy">
+					&nbsp;&nbsp;<select id='selYear'><option value='2015' selected='true'>2015</option><option value='2014' >2014</option><option value='2013' >2013</option><option value='2012' >2012</option><option value='2011' >2011</option><option value='2010' >2010</option><option value='2009' >2009</option><option value='2008' >2008</option><option value='2007' >2007</option><option value='2006' >2006</option><option value='2005' >2005</option><option value='2004' >2004</option><option value='2003' >2003</option><option value='2002' >2002</option><option value='2001' >2001</option></select> 年 <select id='selMonth'><option value='1' >1</option><option value='2' >2</option><option value='3' >3</option><option value='4' >4</option><option value='5' >5</option><option value='6' >6</option><option value='7' >7</option><option value='8' >8</option><option value='9' >9</option><option value='10' selected='true'>10</option><option value='11' >11</option><option value='12' >12</option></select> 月 <input id='btnEnterMonth' type="button" value="确定"/> <input id='btnCancelMonth' type="button" value="关闭"/>
+				</div>
+			</div>
+		</div>
+		</form>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
+
+		{%if not accountitem_list%}
+		<!--没有记录时候显示-->
+		<div class="eInfo2">
+			<img src="/static/mybook/images/ico_info2.gif"/>
+			<p>本月暂无收支记录，<br/>请点击“<a href="/mybook/bill.do?method=append">新增记录</a>”添加。</p>
+		</div>
+		{%endif%}
+
+		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
+		<col width="" />
+		<col width="85" />
+		<col width="140" />
+		<col width="100" />
+		<col width="100" />
+		<col width="90" />
+			<tr>
+				<th>收支项目</th>
+				<th>日期</th>
+				<th>说明</th>
+				<th>收入金额</th>
+				<th>支出金额</th>
+				<th>操作</th>
+			</tr>
+
+			{% for accountitem in accountitem_list %}
+
+			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
+				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
+				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
+				<td><a href="/mybook/{{book.id}}/bill.do?method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+			{% endfor %}
+
+		</table>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
+
+		<br/>
+
+		<div class="SummaryTxt bmSt"><a href="/mybook/{{book.id}}/bill.do?method=export&strMonth={{year}}-{{month}}">导出{{year}}年{{month}}月数据</a></div>
+
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "admin/base_site.html" %}
+{% load i18n l10n %}
+
+{% block content %}
+<h1>批量修改选中项目的Account</h1>
+<h2>此项操作将会影响如下条目：</h2>
+{% for link in links %}
+[origin category:{{ link.account }}]
+<ul>
+    <li>title:{{ link.summary }}</li>
+    <li>url: {{ link.amount }}</li>
+</ul>{% endfor %}
+<p>Choose a new category for the selected link{{ links|pluralize }}:</p>
+<form method="post" action="{{ path }}"> {% csrf_token %}
+    <table>
+    {{ form }}
+    </table>
+    <p>
+        <input type="hidden" name="action" value="changeAccount" />
+        <input type="submit" name="cancel" value="Cancel" />
+        <input type="submit" name="categorize" value="Categorize" />
+    </p>
+</form>
+{% endblock %}

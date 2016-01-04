@@ -1,0 +1,130 @@
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444741376679"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/manage.js?1444741376679"></script>
+</head>
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+	<div class="Top">
+		<a	href="/mybook/"	class="a_INDEX">百宝箱</a><b	class="Top_B_arr"></b>
+		<span>
+			<strong>理财易</strong>
+			<select	onchange='document.location.href=this.options[this.selectedIndex].value;'>
+				{% for acc in	account_list %}<option value="/mybook/{{acc.id}}/" {%ifequal acc.id	account.id %}	selected="selected"{%endifequal%}>{{acc.name}}</option>{%	endfor%}
+			</select>
+		</span>
+	</div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybook/{{book.id}}/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybook/{{book.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar on"><a href="/mybook/{{book.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="/mybook/{{book.id}}/category.do?method=list" class="on">收支项目管理</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/category.do?method=append">新增收支项目</a> </div>
+
+		<!--没有记录时候显示-->
+		<div id='divNoList' class="eInfo2" style='display:none'>
+			<img src="/static/mybook/images/ico_info2.gif"/>
+			<p>暂时没有收支项目记录，<br/>请点击“<a href="/mybook/{{book.id}}/category.do?method=append">新增收支项目</a>”添加。</p>
+		</div>
+
+		<div id='divCList' >
+
+			<table class="eTb  inTb" style="width:320px; float:left; margin:0">
+			<col width="240" />
+			<col width="80" />
+				<tr>
+					<th>收入项目</th>
+					<th>操作</th>
+				</tr>
+				{% for category in income_category_list %}
+				<tr class="trlev1  trCategory_{{category.id}}">
+					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; {{category.name}} </td>
+					<td><a href="/mybook/{{book.id}}/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+					{% for subcategory in category.child_category_set.all %}
+					<tr id='trSubCategory_{{subcategory.id}}' class="trlev2 trCategory_{{category.id}} trSubCategory_{{subcategory.id}}" cId="{{category.id}}" subCId="{{subcategory.id}}">
+						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
+						<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+					</tr>
+					{%endfor%}
+
+				{%endfor%}
+
+			</table>
+
+			<table class="eTb  outTb" style="width:320px; float:right; margin:0">
+			<col width="240" />
+			<col width="80" />
+				<tr>
+					<th>支出项目</th>
+					<th>操作</th>
+				</tr>
+
+				{% for category in outcome_category_list %}
+				<tr class="trlev1  trCategory_{{category.id}}">
+					<td class="td1"><a id='aCategory{{forloop.counter}}' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="{{category.id}}">&nbsp;&nbsp;&nbsp;&nbsp;</a> {{category.name}} </td>
+					<td><a href="/mybook/{{book.id}}/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+				</tr>
+
+					{% for subcategory in category.child_category_set.all %}
+					<tr id='trSubCategory_{{subcategory.id}}' class="trlev2 trCategory_{{category.id}} trSubCategory_{{subcategory.id}}" cId="{{category.id}}" subCId="{{subcategory.id}}">
+						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
+						<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+					</tr>
+
+					{%endfor%}
+
+				{%endfor%}
+
+			</table>
+			<div class="clear"></div>
+		</div>
+		<br/>
+		<br/>
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+
+
+</body>
+</html>

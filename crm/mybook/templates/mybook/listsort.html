@@ -1,0 +1,143 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>理财易</title>
+
+  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
+	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" lang="Javascript">
+	var account_id={{book.id}};
+</script>
+
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_sort.js?1444742024987"></script>
+</head>
+
+<body>
+
+
+
+
+
+
+<!--增加代码 lemon start-->
+	<div class="Top">
+		<a	href="/mybook/"	class="a_INDEX">百宝箱</a><b	class="Top_B_arr"></b>
+		<span>
+			<strong>理财易</strong>
+			<select	onchange='document.location.href=this.options[this.selectedIndex].value;'>
+				{% for acc in	account_list %}<option value="/mybook/{{acc.id}}/" {%ifequal acc.id	account.id %}	selected="selected"{%endifequal%}>{{acc.name}}</option>{%	endfor%}
+			</select>
+		</span>
+	</div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybook/{{book.id}}/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybook/{{book.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybook/{{book.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=myfunds">股票基金</a></li>
+	</ul>
+
+	<div class="eMain">
+		<div class="eMtop"></div>
+		<div class="eMbdy">
+
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="/mybook/{{book.id}}/bill.do?method=list">本月收支</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/bill.do?method=listmonth">按月份查看</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/bill.do?method=listsort" class="on">按收支项目查看</a> </div>
+
+		<form id='frmBillSort' name='billSortForm' method="post" action="/mybook/{{book.id}}/bill.do">
+		<div style="margin-bottom:15px">
+		<input name='method' value='listsort' type='hidden'/>
+		<input id='hdnType' name='type' type='hidden' value='0' />
+		<input id='hdnCategoryId' name='categoryId' type='hidden' value='0' />
+		<input id='hdnSubCategoryId' name='subCategoryId' type='hidden' value='0' />
+		<select id='selCategoryIds' class='sSel'>
+
+		  	{% for category in income_category_list %}
+				<option value='{{category.tx_type}}|{{category.id}}|0'{%ifequal category.id category_id%} selected='true' {%endifequal%}>{{category.name}}</option>
+
+					{% for subcategory in category.child_category_set.all %}
+					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' {%ifequal subcategory.id category_id%} selected='true' {%endifequal%}>　　{{subcategory.name}}</option>
+					{%endfor%}
+
+				{%endfor%}
+
+				{% for category in outcome_category_list %}
+				<option value='{{category.tx_type}}|{{category.id}}|0'>{{category.name}}</option>
+
+					{% for subcategory in category.child_category_set.all %}
+					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' >　　{{subcategory.name}}</option>
+					{%endfor%}
+
+				{%endfor%}
+
+		</select>&nbsp;&nbsp;&nbsp;从<input id='txtFromRecDate' name='fromRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;至&nbsp; <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
+
+		</div>
+		</form>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b> <b class="frd">支出:{{outcome}}￥</b></div>
+
+		<!--没有记录时候显示-->
+		<div class="eInfo2"  style='display:none'>
+			<img src="/static/mybook/images/ico_info2.gif"/>
+			<p>本收支项目下没有记录，<br/>请点击“<a href="/mybook/bill.do?method=append">新增记录</a>”添加。</p>
+		</div>
+
+		<table class="eTb" >
+		<col width="" />
+		<col width="85" />
+		<col width="140" />
+		<col width="100" />
+		<col width="100" />
+		<col width="90" />
+			<tr>
+				<th>收支项目</th>
+				<th>日期</th>
+				<th>说明</th>
+				<th>收入金额</th>
+				<th>支出金额</th>
+				<th>操作</th>
+			</tr>
+
+			{% for accountitem in accountitem_list %}
+			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+				<td class="tdCutL" title="上级 - {{accountitem.category.name}}">{{accountitem.category.name}}</td>
+				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
+				<td class="fgn">{%if accountitem.tx_type%}{{accountitem.amount}}￥{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}{{accountitem.amount}}￥{%endif%}</td>
+				<td><a href="/mybook/bill.do?method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+			</tr>
+			{% endfor %}
+
+		</table>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>  <b class="frd">支出:{{outcome}}￥</b></div>
+
+		<br/><br/>
+
+
+
+
+
+	</div>
+	<div class="eMbot"></div>
+</div>
+
+
+</body>
+</html>
