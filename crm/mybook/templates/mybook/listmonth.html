@@ -40,12 +40,12 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybook/{{book.id}}/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar on" ><a href="/mybook/{{book.id}}/bill.do?method=list">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybook/{{book.id}}/book.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybook/{{book.id}}/book.do?method=append">新增记录</a></li>
 		<li id='liTop3' class="topbar "><a href="/mybook/{{book.id}}/category.do?method=list">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=analytics">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=search">搜索账目</a></li>
-	    <li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/bill.do?method=myfunds">股票基金</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybook/{{book.id}}/book.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/book.do?method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/book.do?method=myfunds">股票基金</a></li>
 	</ul>
 
 	<div class="eMain">
@@ -56,8 +56,8 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybook/{{book.id}}/bill.do?method=list">本月收支</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/bill.do?method=listmonth" class="on">按月份查看</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/bill.do?method=listsort">按收支项目查看</a> </div>
-		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybook/{{book.id}}/bill.do" >
+		<div class="eSubNav"> <a href="/mybook/{{book.id}}/book.do?method=list">本月收支</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/book.do?method=listmonth" class="on">按月份查看</a> <span class="spline">|</span> <a href="/mybook/{{book.id}}/book.do?method=listsort">按收支项目查看</a> </div>
+		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybook/{{book.id}}/book.do" >
 		<div style="margin-bottom:15px">
 		<input type=hidden name='method' value='listmonth'/>
 		月份：<input id='txtStrMonth' name="strMonth" type="text" style=" width:65px" value="{{year}}-{{month}}" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
@@ -76,7 +76,7 @@
 		<!--没有记录时候显示-->
 		<div class="eInfo2">
 			<img src="/static/mybook/images/ico_info2.gif"/>
-			<p>本月暂无收支记录，<br/>请点击“<a href="/mybook/bill.do?method=append">新增记录</a>”添加。</p>
+			<p>本月暂无收支记录，<br/>请点击“<a href="/mybook/book.do?method=append">新增记录</a>”添加。</p>
 		</div>
 		{%endif%}
 
@@ -104,7 +104,7 @@
 				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
 				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
 				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
-				<td><a href="/mybook/{{book.id}}/bill.do?method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+				<td><a href="/mybook/{{book.id}}/book.do?method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
 			</tr>
 			{% endfor %}
 
@@ -114,7 +114,7 @@
 
 		<br/>
 
-		<div class="SummaryTxt bmSt"><a href="/mybook/{{book.id}}/bill.do?method=export&strMonth={{year}}-{{month}}">导出{{year}}年{{month}}月数据</a></div>
+		<div class="SummaryTxt bmSt"><a href="/mybook/{{book.id}}/book.do?method=export&strMonth={{year}}-{{month}}">导出{{year}}年{{month}}月数据</a></div>
 
 
 
