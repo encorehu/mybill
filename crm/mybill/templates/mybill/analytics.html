@@ -28,19 +28,19 @@
 		<span>
 			<strong>理财易</strong>
 			<select	onchange='document.location.href=this.options[this.selectedIndex].value;'>
-				{% for acc in	account_list %}<option value="/mybill/{{acc.id}}/" {%ifequal acc.id	account.id %}	selected="selected"{%endifequal%}>{{acc.name}}</option>{%	endfor%}
+				{% for acc in	account_list %}<option value="/mybill/{{acc.id}}/" {%ifequal acc.id	book.id %}	selected="selected"{%endifequal%}>{{acc.name}}</option>{%	endfor%}
 			</select>
 		</span>
 	</div>
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
-		<li id='liTop0' class="topbar " ><a href="/mybill/{{account.id}}/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
-		<li id='liTop3' class="topbar "><a href="/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
-		<li id='liTop4' class="topbar on"><a href="/mybill/{{account.id}}/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
-	    <li id='liTop6' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=myfunds">股票基金</a></li>
+		<li id='liTop0' class="topbar " ><a href="/mybill/{{book.id}}/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/{{book.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/{{book.id}}/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/{{book.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
+		<li id='liTop4' class="topbar on"><a href="/mybill/{{book.id}}/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/{{book.id}}/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/{{book.id}}/bill.do?method=myfunds">股票基金</a></li>
 	</ul>
 
 	<div class="eMain">
