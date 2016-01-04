@@ -13,6 +13,7 @@ from django.db.models import Q
 from django.views.generic import ListView
 from django.conf import settings
 
+from mybill.models import Account
 from mybill.models import AccountBook
 
 from django.core.servers.basehttp import FileWrapper
@@ -258,17 +259,15 @@ class BookDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        bookaccount_list = Account.objects.filter(accountbook=book)
         last_balance = 0
-        income = bookitem_list.filter(tx_type=1).aggregate(
-                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
-        outcome = bookitem_list.filter(~Q(tx_type=1)).aggregate(
-                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
-        balance = last_balance + income - outcome
+        income = 0
+        outcome = 0
+        balance = 0
         return render(request, self.template_name, {
             'book': book,
             'book_list': book_list,
-            'bookitem_list': bookitem_list,
+            'bookaccount_list': bookaccount_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,

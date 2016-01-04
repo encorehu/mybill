@@ -64,7 +64,7 @@
 		</div>
     {%endif%}
 
-		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
+		<table class="eTb" {% if not bookaccount_list %}style='display:none'{%endif%}>
 		<col width="" />
 		<col width="85" />
 		<col width="140" />
@@ -80,15 +80,15 @@
 				<th>操作</th>
 			</tr>
 
-			{% for accountitem in accountitem_list %}
+			{% for account in bookaccount_list %}
 
 			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
-				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
-				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
-				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
-				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
-				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}{{accountitem.amount}}￥{%endif%}</td>
-				<td><a href="/mybook/{{book.id}}/bill.do?method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+				<td class="tdCutL" title="饮食 - 工作餐">{{account}}</td>
+				<td>{{account.tx_date|date:'Y-m-d'}}</td>
+				<td class="tdCutL" title=""><nobr>{{account.summary}}</nobr></nobr></td>
+				<td class="fgn">{%if account.tx_type%}￥{{account.amount}}{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if account.tx_type%}&nbsp;{%else%}{{account.amount}}￥{%endif%}</td>
+				<td><a href="/mybook/{{book.id}}/bill.do?method=edit&id={{account.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
 			</tr>
 			{% endfor %}
 
