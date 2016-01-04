@@ -33,7 +33,7 @@
 		<span>
 			<strong>理财易</strong>
 			<select	onchange='document.location.href=this.options[this.selectedIndex].value;'>
-				{% for acc in	book_list %}<option value="/mybook/{{acc.id}}/" {%ifequal acc.id	account.id %}	selected="selected"{%endifequal%}>{{acc}}</option>{%	endfor%}
+				{% for acc in	book_list %}<option value="/mybook/{{acc.id}}/" {%ifequal acc.id	book.id %}	selected="selected"{%endifequal%}>{{acc}}</option>{%	endfor%}
 			</select>
 		</span>
 	</div>
