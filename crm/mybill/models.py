@@ -18,7 +18,7 @@ class AccountBook(models.Model):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'{0}({1})'.format(self.name, self.balance)
+		return u'{0}(余额{1}, 现金{2}, 存款{3})'.format(self.name, self.balance, self.balance_cash, self.balance_deposit)
 
 class Account(models.Model):
 	accountbook = models.ForeignKey(AccountBook, null=True, blank=True, default=None, related_name='account_book_set')
