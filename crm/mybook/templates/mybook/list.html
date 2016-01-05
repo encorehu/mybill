@@ -72,11 +72,11 @@
 		<col width="100" />
 		<col width="90" />
 			<tr>
-				<th>收支项目</th>
-				<th>日期</th>
-				<th>说明</th>
-				<th>收入金额</th>
-				<th>支出金额</th>
+				<th>账户名称</th>
+				<th>现金</th>
+				<th>存款</th>
+				<th>流动资产(现金+存款)</th>
+				<th>应收</th>
 				<th>操作</th>
 			</tr>
 
@@ -85,7 +85,7 @@
 			<tr id='trBill_{{account.id}}' class="tr1 trBillList">
 				<td class="tdCutL" title="饮食 - 工作餐">{{account}}</td>
 				<td>{{account.tx_date|date:'Y-m-d'}}</td>
-				<td class="tdCutL" title=""><nobr>{{account.summary}}</nobr></nobr></td>
+				<td class="tdCutL" title=""><nobr>{{account.ammount}}</nobr></nobr></td>
 				<td class="fgn">{%if account.tx_type%}￥{{account.amount}}{%else%}&nbsp;{%endif%}</td>
 				<td class="frd">{%if account.tx_type%}&nbsp;{%else%}{{account.amount}}￥{%endif%}</td>
 				<td><a href="/mybook/{{book.id}}/book.do?method=edit&id={{account.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
