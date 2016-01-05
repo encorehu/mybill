@@ -64,7 +64,7 @@
 		</div>
     {%endif%}
 
-		<table class="eTb" {% if not bookaccount_list %}style='display:none'{%endif%}>
+		<table class="eTb" {% if not account_list %}style='display:none'{%endif%}>
 		<col width="" />
 		<col width="85" />
 		<col width="140" />
@@ -80,7 +80,7 @@
 				<th>操作</th>
 			</tr>
 
-			{% for account in bookaccount_list %}
+			{% for account in account_list %}
 
 			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
 				<td class="tdCutL" title="饮食 - 工作餐">{{account}}</td>

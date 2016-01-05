@@ -259,7 +259,7 @@ class BookDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        bookaccount_list = Account.objects.filter(accountbook=book)
+        account_list = Account.objects.filter(accountbook=book)
         last_balance = 0
         income = 0
         outcome = 0
@@ -267,7 +267,7 @@ class BookDoView(ListView):
         return render(request, self.template_name, {
             'book': book,
             'book_list': book_list,
-            'bookaccount_list': bookaccount_list,
+            'account_list': account_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
