@@ -22,7 +22,7 @@ from .models import AccountCategory
 from .models import AccountItemDetail
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display=('accountbook','name')
+    list_display=('name', 'accountbook')
 
 class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','summary','tx_type','amount')
