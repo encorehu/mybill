@@ -184,8 +184,6 @@ class BookDoView(ListView):
             return self.listmonth(request, *args, **kwargs)
         elif method == 'edit':
             return self.edit(request, *args, **kwargs)
-        elif method == 'append':
-            return self.append(request, *args, **kwargs)
         elif method == 'list':
             return self.listall(request, *args, **kwargs)
         elif method == 'listsort':
