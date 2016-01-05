@@ -31,7 +31,7 @@
 	</div>
 	<!--增加代码 lemon end-->
 
-
+{% block header.nav %}
 	<ul class="eNav">
 		<li id='liTop0' class="topbar on" ><a href="/mybook/{{book.id}}/user.do?method=wel">理财易首页</a></li>
 		<li id='liTop1' class="topbar " ><a href="/mybook/{{book.id}}/book.do?method=list">我的账本</a></li>
@@ -41,7 +41,7 @@
 		<li id='liTop5' class="topbar "><a href="/mybook/{{book.id}}/book.do?method=search">搜索账目</a></li>
 		<li id='liTop6' class="topbar "><a href="/mybook/{{book.id}}/book.do?method=myfunds">股票基金</a></li>
 	</ul>
-
+{% endblock %}
 	<div class="eMain">
 		<div class="eMtop"></div>
 		<div class="eMbdy">
