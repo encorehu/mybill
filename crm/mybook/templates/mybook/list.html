@@ -56,7 +56,7 @@
 
 		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
-    {% if not accountitem_list %}
+    {% if not account_list %}
 		<!--没有记录时候显示-->
 		<div class="eInfo2"  >
 			<img src="/static/mybook/images/ico_info2.gif"/>
@@ -82,7 +82,7 @@
 
 			{% for account in account_list %}
 
-			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+			<tr id='trBill_{{account.id}}' class="tr1 trBillList">
 				<td class="tdCutL" title="饮食 - 工作餐">{{account}}</td>
 				<td>{{account.tx_date|date:'Y-m-d'}}</td>
 				<td class="tdCutL" title=""><nobr>{{account.summary}}</nobr></nobr></td>
