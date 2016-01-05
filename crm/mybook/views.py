@@ -15,6 +15,7 @@ from django.conf import settings
 
 from mybill.models import Account
 from mybill.models import AccountBook
+from mybill.models import AccountItem
 
 from django.core.servers.basehttp import FileWrapper
 
@@ -29,6 +30,8 @@ def file_download(request, filename, displayname):
 # Create your views here.
 class BookIndexView(ListView):
     template_name = 'mybook/index.html'
+    year = 2015
+    month = 12
 
     def get_queryset(self):
         return []
@@ -38,6 +41,23 @@ class BookIndexView(ListView):
             book = AccountBook.objects.get(id=bookid)
         except AccountBook.DoesNotExist:
             raise Http404("AccountBook does not exist")
+
+        year = self.year
+        month = self.month
+
+        book_accounts = Account.objects.filter(accountbook=book)
+
+        #accountitem_list = AccountItem.objects.filter(account__in=book_accounts, tx_date__year=year, tx_date__month=month)
+        account_list = AccountItem.objects.filter(account__in=book_accounts, tx_date__year=year, tx_date__month=month)
+
+        last_balance = 0
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        book.balance_cash =
+
         return render(request, self.template_name, {
                 'book': book,
                 'book_list':  AccountBook.objects.all(),
@@ -74,7 +94,7 @@ class BookDoView(ListView):
             # 新建账目条目
             #book=AccountBook.objects.get_or_create(id=1,name=u'默认账户')
             #book,created=AccountBook.objects.get_or_create(id=1)
-            instance = AccountBookItem(book=book)
+            instance = AccountItem(book=book)
             #instance.book_id = 1
             category_id = request.POST.get('categoryId','0')
             subcategory_id = request.POST.get('subCategoryId','0')
@@ -95,7 +115,7 @@ class BookDoView(ListView):
             instance.save()
         else:
             #book,created=AccountBook.objects.get_or_create(id=1)
-            instance = AccountBookItem.objects.get(id=ait_id, book=book)
+            instance = AccountItem.objects.get(id=ait_id, book=book)
             category_id = request.POST.get('categoryId','0')
             subcategory_id = request.POST.get('subCategoryId','0')
             if subcategory_id=='0':
@@ -131,7 +151,7 @@ class BookDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__month=month)
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__month=month)
         last_balance = 0
         income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -153,7 +173,7 @@ class BookDoView(ListView):
         book = kwargs.get('book')
         book_list = kwargs.get('book_list')
         pk = request.GET.get('id','1')
-        bookitem = AccountBookItem.objects.get(pk=pk)
+        bookitem = AccountItem.objects.get(pk=pk)
         income_category_list = AccountBookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
         outcome_category_list = AccountBookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
         return render(request,
@@ -301,11 +321,11 @@ class BookDoView(ListView):
                 })
 
         if fromRecDate:
-            bookitem_list = AccountBookItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
+            bookitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
             if toRecDate:
                 bookitem_list= bookitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
         else:
-            bookitem_list = AccountBookItem.objects.select_related('category')
+            bookitem_list = AccountItem.objects.select_related('category')
             if toRecDate:
                 bookitem_list= bookitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
 
@@ -354,7 +374,7 @@ class BookDoView(ListView):
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
         workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
@@ -388,8 +408,8 @@ class BookDoView(ListView):
           last_month = 12
         else:
           year_of_last_month = year
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
-        #bookitem_list = AccountBookItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
+        #bookitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -409,7 +429,7 @@ class BookDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year_of_last_month, tx_date__month=month)
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year_of_last_month, tx_date__month=month)
         for i, item  in enumerate(bookitem_list):
             worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
@@ -498,7 +518,7 @@ class BookDoView(ListView):
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year)
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
         workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
@@ -527,8 +547,8 @@ class BookDoView(ListView):
 
 
         year_of_last_month = year-1
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
-        #bookitem_list = AccountBookItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        #bookitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = bookitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -548,7 +568,7 @@ class BookDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        bookitem_list = AccountBookItem.objects.select_related('category').filter(book=book, tx_date__year=year)
+        bookitem_list = AccountItem.objects.select_related('category').filter(book=book, tx_date__year=year)
         for i, item  in enumerate(bookitem_list):
             worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
@@ -632,7 +652,7 @@ class BookDoView(ListView):
             response['result']['message']=u"无效的id"
         else:
             try:
-                item = AccountBookItem.objects.get(pk=ait_id)
+                item = AccountItem.objects.get(pk=ait_id)
             except:
                 response['result']['message']=u"没有这个id"
             else:
