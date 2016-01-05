@@ -20,6 +20,37 @@ class AccountBook(models.Model):
 	def __unicode__(self):
 		return u'{0}(余额{1}, 现金{2}, 存款{3})'.format(self.name, self.balance, self.balance_cash, self.balance_deposit)
 
+ACCOUNT_TYPE=(
+	(1, u'现金'),
+	(2, u'存款'),
+	(2, u'应收账款'),
+	(2, u'应付账款'),
+)
+
+DEBIT_CREDIT_SYMBOL=(
+    ('+', u'借方符号'),
+	('-', u'贷方符号')
+)
+
+class AccountType(models.Model):
+	name = models.CharField(max_length=20)
+	debit_symbol = models.CharField(u'借方符号', max_length=1, choices=DEBIT_CREDIT_SYMBOL, default='+') # 你拥有的, 记为借方, 记在左边
+	credit_symbol = models.CharField(u'贷方符号', max_length=1, choices=DEBIT_CREDIT_SYMBOL, default='-') # 你欠别人的, 记为贷方, 记在右边
+	code = models.CharField(u'代码', max_length=2, default="10") # 10代表左升右降
+	debit_increase = models.BooleanField(u'借方记增加',default=True) # 欠别人的增加
+
+	class Meta:
+		verbose_name = u'账户类型'
+		verbose_name_plural =u'账户类型'
+		ordering = ('id',)
+
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		return u'{0}({1})'.format(self.name, self.code)
+
 class Account(models.Model):
 	accountbook = models.ForeignKey(AccountBook, null=True, blank=True, default=None, related_name='account_book_set')
 	number = models.CharField(max_length=20)
