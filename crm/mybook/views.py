@@ -218,8 +218,6 @@ class BookDoView(ListView):
             return self.listmonth(request, *args, **kwargs)
         elif method == 'edit':
             return self.edit(request, *args, **kwargs)
-        elif method == 'append':
-            return self.append(request, *args, **kwargs)
         elif method == 'list':
             return self.listall(request, *args, **kwargs)
         elif method == 'listsort':
@@ -228,22 +226,6 @@ class BookDoView(ListView):
             return self.delete(request)
         else:
             return render(request, self.template_name, {'form': ''})
-
-    def append(self, request, *args, **kwargs):
-        book = kwargs.get('book')
-        book_list = kwargs.get('book_list')
-        income_category_list = AccountBookCategory.objects.filter(book=book, tx_type=1, parent=None).all()
-        outcome_category_list = AccountBookCategory.objects.filter(book=book, tx_type=0, parent=None).all()
-
-        return render(request,
-                      self.template_name,
-                      {
-                      'book':book,
-                      'book_list':book_list,
-                      'servertime':datetime.datetime.now(),
-                      'income_category_list': income_category_list,
-                      'outcome_category_list': outcome_category_list,
-                      })
 
     def listall(self, request, *args, **kwargs):
         book = kwargs.get('book')
