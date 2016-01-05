@@ -20,6 +20,7 @@ from .models import AccountBook
 from .models import AccountItem
 from .models import AccountCategory
 from .models import AccountItemDetail
+from .models import AccountStat
 
 class AccountAdmin(admin.ModelAdmin):
     list_display=('name', 'accountbook')
@@ -135,9 +136,12 @@ class AccountItemDetailAdmin(admin.ModelAdmin):
 class AccountBookAdmin(admin.ModelAdmin):
     pass
 
+class AccountStatAdmin(admin.ModelAdmin):
+    list_display=('name',)
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountBook, AccountBookAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
 admin.site.register(AccountCategory, AccountCategoryAdmin)
 admin.site.register(AccountItemDetail, AccountItemDetailAdmin)
+admin.site.register(AccountStat, AccountStatAdmin)

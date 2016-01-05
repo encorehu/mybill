@@ -44,6 +44,28 @@ TX_TYPE=(
 	(0, u'支出')
 )
 
+class AccountStat(models.Model):
+	account	= models.ForeignKey(Account, null=True, blank=True, default=None, related_name='stat_account_set')
+	name =  models.CharField(max_length=255, blank=True)
+	display_name = models.CharField(max_length=255, null=True, blank=True, default=u'')
+	tx_type =  models.IntegerField(u'收支类型', default=0, choices=TX_TYPE)
+	year =  models.IntegerField(u'年', default=0)
+	month =  models.IntegerField(u'月', default=0)
+	day =  models.IntegerField(u'日', default=0)
+	level =  models.IntegerField(u'级别', default=0)
+	levelname =  models.CharField(u'级别名称', max_length=32, default=u'')
+	amount =   models.DecimalField(u'金额', max_digits=10, decimal_places=2, default=0.00)
+
+	class Meta:
+		verbose_name = u'收支统计'
+		verbose_name_plural =u'收支统计'
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		return u'{0}: {1}'.format(self.get_tx_type_display(), self.name)
+
 class AccountCategory(models.Model):
 	account	= models.ForeignKey(Account, null=True, blank=True, default=None, related_name='category_account_set')
 	name =  models.CharField(max_length=255, blank=True)
