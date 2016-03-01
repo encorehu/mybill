@@ -124,11 +124,14 @@ class BillDoView(ListView):
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
+        year_list=[x for x in xrange(year, year-15, -1)]
         return render(request, self.template_name, {'accountitem_list': accountitem_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
             'year': year,
+            'year_list': year_list,
+            'month_list': [x for x in xrange(13)],
             'month': month,
             })
 
