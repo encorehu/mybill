@@ -56,11 +56,11 @@
 		</style>
 			<ul class="sFrm">
 			   <input  name='sid' type='hidden' value='nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD' class='categoryData' />
-				<input id='hdnId' name='id' type='hidden' value='50529755' class='categoryData' />
-				<input id='hdnType' name='type' type='hidden' value='1' class='categoryData' />
-				<input id='hdnParentId' name='parentId' type='hidden' value='0' class='categoryData' />
-				<li><b><span class="icoImp">　</span> 一级收支项目名：</b><input id='txtCategoryName' maxlength='8' name='categoryName' type="text" class="sIpt2 itemFm categoryData" maxlength='20' value="工资" /><div class="clear0"></div></li>
-				<li><b><span class="icoImp">　</span> 性质：</b><div class="itemFm"><input type="radio" name="rdotype" value="1" checked='true'/>收入&nbsp;&nbsp;<input type="radio" name="rdotype" value='0' />支出</div><div class="clear0"></div></li>
+				<input id='hdnId' name='id' type='hidden' value='{{accountcategory.id}}' class='categoryData' />
+				<input id='hdnType' name='type' type='hidden' value='{{accountcategory.tx_type}}' class='categoryData' />
+				<input id='hdnParentId' name='parentId' type='hidden' value='{% if accountcategory.parent %}{{accountcategory.parent.id}}{%else%}0{%endif%}' class='categoryData' />
+				<li><b><span class="icoImp">　</span> 一级收支项目名：</b><input id='txtCategoryName' maxlength='8' name='categoryName' type="text" class="sIpt2 itemFm categoryData" maxlength='20' value="{{accountcategory.name}}" /><div class="clear0"></div></li>
+				<li><b><span class="icoImp">　</span> 性质：</b><div class="itemFm"><input type="radio" name="rdotype" value="1" {%if accountcategory.tx_type %}checked='true'{%endif%}/>收入&nbsp;&nbsp;<input type="radio" name="rdotype" value='0' {%if not accountcategory.tx_type %}checked='true'{%endif%}/>支出</div><div class="clear0"></div></li>
 
 				<li class="bar"><b></b><input id='btnSaveCategory' type="button" class="btnFnt" value="保 存"/>&nbsp;&nbsp;&nbsp;<input type="button" class="btnFnt" value="取 消" onclick='return history.back();'/></li>
 			</ul>

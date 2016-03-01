@@ -473,6 +473,8 @@ class BillCategoryDoView(ListView):
             return self.addOrUpdate(request)
         elif method == 'list':
             return self.listall(request)
+        elif method == 'edit':
+            return self.edit(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -481,6 +483,8 @@ class BillCategoryDoView(ListView):
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
+        elif method == 'edit':
+            return self.edit(request)
         return render(request, self.template_name, {'form': ''})
 
     def addOrUpdate(self, request, *args, **kwargs):
@@ -540,3 +544,35 @@ class BillCategoryDoView(ListView):
             'income_category_list': income_category_list,
             'outcome_category_list': outcome_category_list,
             })
+
+    def edit(self, request, *args, **kwargs):
+        '''
+        {"result":{
+            "success":"true",
+            "message":"已经成功保存收支项目信息!",
+            "totalCount":"0",
+            "data":{
+                "@class":"categoryform",
+                "id":"57845394",
+                "categoryName":"大笑1",
+                "parentId":"0",
+                "type":"0"
+            },
+            "pageIndex":"0",
+            "pageSize":"100"}
+        }
+        '''
+
+        pk = request.GET.get('id',None)
+        try:
+            accountcategory = AccountCategory.objects.get(pk=pk)
+        except AccountCategory.DoesNotExist:
+            return Http404()
+
+        print accountcategory
+        print accountcategory.name
+        return render(request,
+                      self.template_name,
+                      {
+                          'accountcategory': accountcategory,
+                      })
