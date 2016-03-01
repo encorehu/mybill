@@ -534,6 +534,13 @@ class BillCategoryDoView(ListView):
               category.tx_type = tx_type
               category.name = name
               category.save()
+            response['result']['data']={
+                    "@class":"categoryform",
+                    "id":category_id,
+                    "categoryName":name,
+                    "parentId":"0" if not category.parent else str(category.parent.id),
+                    "type":tx_type,
+                }
         return HttpResponse(json.dumps(response))
 
     def listall(self, request, *args, **kwargs):
