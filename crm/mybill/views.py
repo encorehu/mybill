@@ -17,11 +17,11 @@ from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
 
-from django.core.servers.basehttp import FileWrapper
+from django.core.files.base import ContentFile
 
 def file_download(request, filename, displayname):
     filepath = filename
-    wrapper = FileWrapper(open(filepath,'rb'))
+    wrapper = ContentFile(open(filepath,'rb'))
     response = HttpResponse(wrapper, content_type='application/octet-stream')
     response['Content-Length'] = os.path.getsize(filepath)
     response['Content-Disposition'] = (u'attachment; filename=%s' % displayname).encode('utf-8')
