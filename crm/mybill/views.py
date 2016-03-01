@@ -509,15 +509,15 @@ class BillCategoryDoView(ListView):
         response={}
         response['result']={}
         response['result']['success']='true'
-        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
+        response['result']['message']=u"已经成功保存收支项目信息!"
         response['result']['totalCount']='0'
         response['result']['pageSize']='100'
 
         category_id = request.POST.get('id','')
+        name = request.POST.get('categoryName','无名')
+        tx_type = request.POST.get('type','0')
+        parent_id = request.POST.get('parentId','0')
         if category_id=='0':
-            name = request.POST.get('categoryName','无名')
-            tx_type = request.POST.get('type','0')
-            parent_id = request.POST.get('parentId','0')
             if parent_id=='0':
                 category, created = AccountCategory.objects.get_or_create(parent_id=None, name=name, tx_type=tx_type)
             else:
@@ -562,17 +562,15 @@ class BillCategoryDoView(ListView):
             "pageSize":"100"}
         }
         '''
-
         pk = request.GET.get('id',None)
         try:
             accountcategory = AccountCategory.objects.get(pk=pk)
         except AccountCategory.DoesNotExist:
             return Http404()
 
-        print accountcategory
-        print accountcategory.name
-        return render(request,
-                      self.template_name,
-                      {
-                          'accountcategory': accountcategory,
-                      })
+        if request.method == 'GET':
+            return render(request,
+                   self.template_name,
+                   {
+                       'accountcategory': accountcategory,
+                   })
