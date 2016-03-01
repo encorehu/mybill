@@ -21,7 +21,7 @@ class Account(models.Model):
 		return u'{0}({1})'.format(self.name, self.number)
 
 TX_TYPE=(
-	(1,u'收入'),
+	(1, u'收入'),
 	(0, u'支出')
 )
 
