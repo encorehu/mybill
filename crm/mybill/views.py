@@ -524,6 +524,13 @@ class BillCategoryDoView(ListView):
                 category, created = AccountCategory.objects.get_or_create(parent_id=None, name=name, tx_type=tx_type)
             else:
                 category, created = AccountCategory.objects.get_or_create(parent_id=parent_id, name=name, tx_type=tx_type)
+            response['result']['data']={
+                    "@class":"categoryform",
+                    "id":category.id,
+                    "categoryName":name,
+                    "parentId":"0" if not category.parent else str(category.parent.id),
+                    "type":tx_type,
+                }
         else:
             category=AccountCategory.objects.get(id=category_id)
             if parent_id=='0':
