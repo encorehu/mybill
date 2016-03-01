@@ -13,7 +13,7 @@
 	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
-<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_sort.js?1444742024987"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_year.js?1444742024987"></script>
 </head>
 
 <body>
@@ -45,48 +45,34 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listyear&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按年份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按收支项目查看</a> </div>
-
-		<form id='frmBillSort' name='billSortForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
+		<div class="eSubNav"> <a href="/mybill/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listyear&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  class="on">按年份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按收支项目查看</a> </div>
+		<form id="frmBillYear" name='billYearForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" >
 		<div style="margin-bottom:15px">
-		<input name='method' value='listsort' type='hidden'/>
-		<input id='hdnType' name='type' type='hidden' value='0' />
-		<input id='hdnCategoryId' name='categoryId' type='hidden' value='0' />
-		<input id='hdnSubCategoryId' name='subCategoryId' type='hidden' value='0' />
-		<select id='selCategoryIds' class='sSel'>
+		<input type=hidden name='method' value='listyear'/>
+		年份：<input id='txtStrYear' name="strYear" type="text" style=" width:65px" value="{{year}}" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
 
-		  	{% for category in income_category_list %}
-				<option value='{{category.tx_type}}|{{category.id}}|0'{%ifequal category.id category_id%} selected='true' {%endifequal%}>{{category.name}}</option>
-
-					{% for subcategory in category.child_category_set.all %}
-					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' {%ifequal subcategory.id category_id%} selected='true' {%endifequal%}>　　{{subcategory.name}}</option>
-					{%endfor%}
-
-				{%endfor%}
-
-				{% for category in outcome_category_list %}
-				<option value='{{category.tx_type}}|{{category.id}}|0'>{{category.name}}</option>
-
-					{% for subcategory in category.child_category_set.all %}
-					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' >　　{{subcategory.name}}</option>
-					{%endfor%}
-
-				{%endfor%}
-
-		</select>&nbsp;&nbsp;&nbsp;从<input id='txtFromRecDate' name='fromRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;至&nbsp; <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
-
+			<div id='divSelectYear' class="expBox hide" style="width:240px;margin:0;background-position:-210px 0">
+				<div class="expBdy">
+					&nbsp;&nbsp;<select id='selYear'>
+						{%for y in year_list %}<option value='{{y}}'{%ifequal y year%} selected='true'{%endifequal%}>{{y}}</option>{%endfor%}
+				</select> 年
+				<input id='btnEnterYear' type="button" value="确定"/> <input id='btnCancelYear' type="button" value="关闭"/>
+				</div>
+			</div>
 		</div>
 		</form>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b> <b class="frd">支出:{{outcome}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
+		{%if not accountitem_list%}
 		<!--没有记录时候显示-->
-		<div class="eInfo2"  style='display:none'>
+		<div class="eInfo2">
 			<img src="/static/mybill/images/ico_info2.gif"/>
-			<p>本收支项目下没有记录，<br/>请点击“<a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a>”添加。</p>
+			<p>本月暂无收支记录，<br/>请点击“<a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a>”添加。</p>
 		</div>
+		{%endif%}
 
-		<table class="eTb" >
+		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
 		<col width="" />
 		<col width="85" />
 		<col width="140" />
@@ -103,8 +89,9 @@
 			</tr>
 
 			{% for accountitem in accountitem_list %}
+
 			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
-				<td class="tdCutL" title="上级 - {{accountitem.category.name}}">{{accountitem.category.name}}</td>
+				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
 				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
 				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
 				<td class="fgn">{%if accountitem.tx_type%}{{accountitem.amount}}￥{%else%}&nbsp;{%endif%}</td>
@@ -115,9 +102,9 @@
 
 		</table>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>  <b class="frd">支出:{{outcome}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:{{outcome}}￥</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:{{balance}}￥</b></div>
 
-		<br/><br/>
+		<br/>
 
 
 
@@ -126,6 +113,7 @@
 	</div>
 	<div class="eMbot"></div>
 </div>
+
 
 
 </body>

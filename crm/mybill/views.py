@@ -135,6 +135,35 @@ class BillDoView(ListView):
             'month': month,
             })
 
+    def listyear(self, request, *args, **kwargs):
+        print request.method
+        if request.method == 'GET':
+            strYear=request.GET.get('strYear','')
+        else:
+            strYear=request.POST.get('strYear','')
+
+        if strYear:
+            year =  int(strYear)
+        else:
+            now = datetime.datetime.now()
+            year = now.year
+
+        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year)
+        last_balance = 0
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        year_list=[x for x in xrange(year+5, year-10, -1)]
+        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+            'income': income,
+            'outcome': outcome,
+            'balance': balance,
+            'year': year,
+            'year_list': year_list,
+            })
+
     def edit(self, request, *args, **kwargs):
         pk = request.GET.get('id',None)
         try:
@@ -156,6 +185,8 @@ class BillDoView(ListView):
         self.template_name = 'mybill/%s.html' % method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request)
+        elif method == 'listyear':
+            return self.listyear(request)
         elif method == 'listmonth':
             return self.listmonth(request)
         elif method == 'edit':
@@ -180,6 +211,8 @@ class BillDoView(ListView):
             return self.addOrUpdate(request)
         elif method == 'listmonth':
             return self.listmonth(request)
+        elif method == 'listyear':
+            return self.listyear(request)
         elif method == 'edit':
             return self.edit(request)
         elif method == 'append':
