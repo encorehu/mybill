@@ -60,25 +60,18 @@
 										<input id='hdnParentId' type='hidden' name='parentId' class='categoryData' value='0' />
 										<li><b><span class="icoImp">　</span> 性质：</b><div class="itemFm"><input id='rdoTypeIn' type="radio" name="r1" value='1' class='chkType' checked="checked"/>收入&nbsp;&nbsp;<input id='rdoTypeOut' value='0' class='chkType' type="radio" name="r1"/>支出</div><div class="clear0"></div></li>
 										<li><b><span class="icoImp">　</span> 收支项目名称：</b><input id='txtCategoryName' maxlength='8' name='categoryName' type="text" class="sIpt2 itemFm categoryData" maxlength='20'/><div class="clear0"></div></li>
-										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoFirstLevel' type="radio" name="r2" checked="checked"/>一级收支项目<br/><input id='rdoSubLevel' type="radio" name="r2"/>从属于<select id='selInCategories' style="width:100px"><option value='1|50529755' >工资</option>
-<option value='1|50529756' >奖金</option>
-<option value='1|50529757' >分红</option>
-<option value='1|50529758' >投资收入</option>
-<option value='1|50529759' >礼金</option>
-<option value='1|50529760' >兼职</option>
-<option value='1|50529761' >其他收入</option>
-</select><select id='selOutCategories' style="width:100px"><option value='0|50529762' >交通</option>
-<option value='0|50529768' >饮食</option>
-<option value='0|50529772' >服饰美容</option>
-<option value='0|50529777' >日常开支</option>
-<option value='0|50529784' >教育培训</option>
-<option value='0|50529785' >通讯电话费</option>
-<option value='0|50529786' >文化/娱乐</option>
-<option value='0|50529787' >卫生医疗费</option>
-<option value='0|50529788' >孝敬父母</option>
-<option value='0|50529789' >子女培养</option>
-<option value='0|50529790' >人情往来</option>
-<option value='0|50529791' >其他开支</option>
+										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoFirstLevel' type="radio" name="r2" checked="checked"/>一级收支项目<br/><input id='rdoSubLevel' type="radio" name="r2"/>从属于<select id='selInCategories' style="width:100px">
+
+											{% for category in income_category_list %}
+											<option value='{{category.tx_type}}|{{category.id}}' >{{category.name}}</option>
+											{%endfor%}
+
+</select>
+<select id='selOutCategories' style="width:100px">
+		{% for category in outcome_category_list %}
+		<option value='{{category.tx_type}}|{{category.id}}' >{{category.name}}</option>
+		{%endfor%}
+
 </select></div><div class="clear0"></div></li>
 										<li class="bar"><b></b><input id='btnSave' type="button" class="btnFnt" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input type="button" class="btnFnt" onclick="javascript:location='/mybill/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD'" value="关闭"/></li>
 									</ul>

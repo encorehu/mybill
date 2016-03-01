@@ -475,6 +475,8 @@ class BillCategoryDoView(ListView):
             return self.listall(request)
         elif method == 'edit':
             return self.edit(request)
+        elif method == 'append':
+            return self.append(request)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -581,3 +583,15 @@ class BillCategoryDoView(ListView):
                    {
                        'accountcategory': accountcategory,
                    })
+
+    def append(self, request, *args, **kwargs):
+        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+
+        return render(request,
+                      self.template_name,
+                      {
+                      'servertime':datetime.datetime.now(),
+                      'income_category_list': income_category_list,
+                      'outcome_category_list': outcome_category_list,
+                      })
