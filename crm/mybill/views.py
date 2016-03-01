@@ -132,7 +132,7 @@ class BillDoView(ListView):
             })
 
     def edit(self, request, *args, **kwargs):
-        pk = request.GET.get('id','1')
+        pk = request.GET.get('id',None)
         accountitem = AccountItem.objects.get(pk=pk)
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
