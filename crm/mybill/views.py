@@ -5,6 +5,7 @@ import datetime
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import Http404
 
 from django.db.models import Sum, Value as V
 from django.db.models.functions import Coalesce
@@ -133,7 +134,10 @@ class BillDoView(ListView):
 
     def edit(self, request, *args, **kwargs):
         pk = request.GET.get('id',None)
-        accountitem = AccountItem.objects.get(pk=pk)
+        try:
+            accountitem = AccountItem.objects.get(pk=pk)
+        except AccountItem.DoesNotExist:
+            return Http404()
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
         return render(request,
