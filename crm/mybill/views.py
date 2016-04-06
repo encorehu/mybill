@@ -19,6 +19,16 @@ from .models import AccountCategory
 
 from django.core.files.base import ContentFile
 
+from django.conf import settings
+
+def get_default_account():
+    if settings.DEFAULT_ACCOUNT_NUMBER:
+        account, created=Account.objects.get_or_create(number=str(settings.DEFAULT_ACCOUNT_NUMBER))
+    else:
+        print 'settings.DEFAULT_ACCOUNT_CODE DO NOT SET!!!'
+        account, created=Account.objects.get_or_create(pk=1)
+    return account
+
 def file_download(request, filename, displayname):
     filepath = filename
     wrapper = ContentFile(open(filepath,'rb').read())
@@ -61,7 +71,7 @@ class BillDoView(ListView):
         ait_id = request.POST.get('id','')
         if not ait_id:
             #account=Account.objects.get_or_create(id=1,name=u'默认账户')
-            account,created=Account.objects.get_or_create(id=1)
+            account = get_default_account()
             instance = AccountItem(account=account)
             #instance.account_id = 1
             category_id = request.POST.get('categoryId','0')
@@ -83,7 +93,7 @@ class BillDoView(ListView):
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         else:
-            account,created=Account.objects.get_or_create(id=1)
+            account = get_default_account()
             instance = AccountItem.objects.get(id=ait_id, account=account)
             category_id = request.POST.get('categoryId','0')
             subcategory_id = request.POST.get('subCategoryId','0')
