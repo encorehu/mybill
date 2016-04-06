@@ -3,6 +3,14 @@ from django.db import models
 from django.utils import timezone
 
 # Create your models here.
+
+ACCOUNT_TYPE=(
+	(1, u'现金'), #资产Cash
+	(2, u'存款'), #资产Bank
+	(3, u'负债'), #应付债务
+    (4, u'权益'), #应收债权, 报销款
+)
+
 class Account(models.Model):
 	number = models.CharField(max_length=20)
 	account_type = models.CharField(max_length=10, null=True, blank=True)
