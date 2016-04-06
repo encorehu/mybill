@@ -71,6 +71,7 @@ class BillDoView(ListView):
             else:
                 category, created = AccountCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
             instance.category = category
+            instance.title = request.POST.get('title','')
             instance.summary = request.POST.get('note','')
             #instance.summary = request.POST.get('subCategoryId','0')
             instance.amount = request.POST.get('amount','')
@@ -91,6 +92,7 @@ class BillDoView(ListView):
             else:
                 category, created = AccountCategory.objects.get_or_create(id=subcategory_id, parent_id=category_id)
             instance.category = category
+            instance.title = request.POST.get('title','')
             instance.summary = request.POST.get('note','')
             #instance.summary = request.POST.get('subCategoryId','0')
             instance.amount = request.POST.get('amount','')
