@@ -292,25 +292,37 @@ class BillDoView(ListView):
         if request.method == 'GET':
             income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
             outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+            fromRecDate = None #datetime.datetime(year=year, month=month, day=1)
+            toRecDate = datetime.datetime.now()
             return render(request, self.template_name, {'accountitem_list': [],
                 'income': 0,
                 'outcome': 0,
                 'balance': 0,
                 'year': year,
                 'month': month,
+                'fromRecDate':fromRecDate,
+                'toRecDate':toRecDate,
                 'category_id': category_id,
                 'income_category_list': income_category_list,
                 'outcome_category_list': outcome_category_list,
                 })
 
         if fromRecDate:
-            accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=datetime.datetime.strptime(fromRecDate, '%Y-%m-%d'))
+            fromRecDate = datetime.datetime.strptime(fromRecDate, '%Y-%m-%d')
+            accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=fromRecDate)
             if toRecDate:
-                accountitem_list= accountitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
+                toRecDate=datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
+                accountitem_list= accountitem_list.filter(tx_date__lte=toRecDate)
+            else:
+                toRecDate=datetime.datetime.now()
         else:
+            fromRecDate = None #datetime.datetime(year=year, month=month, day=1)
             accountitem_list = AccountItem.objects.select_related('category')
             if toRecDate:
-                accountitem_list= accountitem_list.filter(tx_date__lte=datetime.datetime.strptime(toRecDate, '%Y-%m-%d'))
+                toRecDate = datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
+                accountitem_list = accountitem_list.filter(tx_date__lte=toRecDate)
+            else:
+                toRecDate = datetime.datetime.now()
 
         if tx_type:
             accountitem_list= accountitem_list.filter(tx_type = tx_type)
@@ -341,6 +353,8 @@ class BillDoView(ListView):
             'balance': balance,
             'year': year,
             'month': month,
+            'fromRecDate':fromRecDate,
+            'toRecDate':toRecDate,
             'category_id': category_id,
             'income_category_list': income_category_list,
             'outcome_category_list': outcome_category_list,

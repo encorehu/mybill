@@ -65,15 +65,15 @@
 				{%endfor%}
 
 				{% for category in outcome_category_list %}
-				<option value='{{category.tx_type}}|{{category.id}}|0'>{{category.name}}</option>
+				<option value='{{category.tx_type}}|{{category.id}}|0'{%ifequal category.id category_id%} selected='true' {%endifequal%}>{{category.name}}</option>
 
 					{% for subcategory in category.child_category_set.all %}
-					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' >　　{{subcategory.name}}</option>
+					<option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' {%ifequal subcategory.id category_id%} selected='true' {%endifequal%}>　　{{subcategory.name}}</option>
 					{%endfor%}
 
 				{%endfor%}
 
-		</select>&nbsp;&nbsp;&nbsp;从<input id='txtFromRecDate' name='fromRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;至&nbsp; <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px" value="" readonly="readonly" /> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
+		</select>&nbsp;&nbsp;&nbsp;从<input id='txtFromRecDate' name='fromRecDate' type="text" style=" width:75px" value="{%if fromRecDate%}{{fromRecDate}}{%endif%}" readonly="readonly" /> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;至&nbsp; <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px" value="{%if toRecDate%}{{toRecDate}}{%endif%}" readonly="readonly" /> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
 
 		</div>
 		</form>
