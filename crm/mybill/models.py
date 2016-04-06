@@ -13,9 +13,9 @@ ACCOUNT_TYPE=(
 
 class Account(models.Model):
 	number = models.CharField(max_length=20)
-	account_type = models.CharField(max_length=10, null=True, blank=True)
-	name = models.CharField(max_length=20, null=True, blank=True)
-	display_name = models.CharField(max_length=20, null=True, blank=True)
+	account_type = models.CharField(max_length=10, null=True, blank=True, default='')
+	name = models.CharField(max_length=20, null=True, blank=True, default='')
+	display_name = models.CharField(max_length=20, null=True, blank=True, default='')
 
 	class Meta:
 		verbose_name = u'科目（账户）'
