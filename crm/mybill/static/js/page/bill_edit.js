@@ -138,6 +138,7 @@ function handleCategoryData(b){
 }
 
 function reset(){
+	$("#txtTitle").val("");
 	$("#txtNote").val("");
 	$("#txtAmount").val("")
 }
