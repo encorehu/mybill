@@ -25,7 +25,7 @@ def get_default_account():
     if settings.DEFAULT_ACCOUNT_NUMBER:
         account, created=Account.objects.get_or_create(number=str(settings.DEFAULT_ACCOUNT_NUMBER))
     else:
-        print 'settings.DEFAULT_ACCOUNT_CODE DO NOT SET!!!'
+        print 'settings.DEFAULT_ACCOUNT_NUMBER DO NOT SET!!!'
         account, created=Account.objects.get_or_create(pk=1)
     return account
 
