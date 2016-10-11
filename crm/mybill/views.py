@@ -44,6 +44,9 @@ class BillIndexView(ListView):
     def get_queryset(self):
         return []
 
+    def get(self, request, *args, **kwargs):
+        return render(request, self.template_name, {'account_list': Account.objects.all()})
+
 class BillDoView(ListView):
     def get_queryset(self):
         return []

@@ -21,12 +21,10 @@
 			<h3>理财易的优点</h3>
 
 			<ul class="eWelLst">
-				<li><span>在线记帐：</span> 无论何时何地，登录126邮箱就能管好自己的帐</li>
-				<li><span>收支类别：</span> 100％由您自定义，灵活易用</li>
-				<li><span>统计分析：</span> 收支报表，图文并茂，明白花钱，一目了然</li>
-				<li><span>数据安全：</span> 独立服务器保存数据，安全无忧</li>
+			    {%for account in account_list%}
+			    <li><span>{{account.name}}：</span> <a href="bill.do?accountid={{account.id}}">开始记账</a></li>
+			    {%endfor%}
 			</ul>
 
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;想了解更多理财易使用技巧,请点击<a href="http://help.mail.163.com/faq.do?m=list&categoryID=117" target="_blank">帮助中心</a>.
 
 {%endblock%}
