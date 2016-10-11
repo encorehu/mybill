@@ -1,36 +1,9 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>理财易</title>
+{% extends "mybill/base_mybill.html" %}
 
-	<link href="/static/css/style.css" rel="stylesheet" type="text/css" />
-	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
-
-</head>
-<body>
+{%block title%}理财易{%endblock%}
 
 
-<!--增加代码 lemon start-->
-
-	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
-	<!--增加代码 lemon end-->
-	<ul class="eNav">
-		<li id='liTop0' class="topbar on" ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append">新增记录</a></li>
-		<li id='liTop3' class="topbar "><a href="/mybill/category.do?method=list">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?method=analytics">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search">搜索账目</a></li>
-	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
-	</ul>
-
-	<div class="eMain">
-		<div class="eMtop"></div>
-		<div class="eMbdy">
-
-		<div class="eWel">
-
+{%block main.content %}
 			<div style=" height:110px; margin:15px 0 10px 0">
 				<img src="/static/mybill/images/pic_wei.gif" class="eWimg"/>
 				<h2>理财易，您个人理财的好帮手！</h2>
@@ -56,28 +29,4 @@
 
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;想了解更多理财易使用技巧,请点击<a href="http://help.mail.163.com/faq.do?m=list&categoryID=117" target="_blank">帮助中心</a>.
 
-		</div>
-
-
-
-
-	</div>
-	<div class="eMbot"></div>
-</div>
-
-	<!--增加代码 lemon start-->
-	<div class="bot_back_btn">
-
-		<input type="button" value="<< 百宝箱首页" class="Back_IND" onclick="javascript:location.href='http://mimg.126.com/assist/index.htm'"/>
-	</div>
-	<!--增加代码 lemon end-->
-<script type="text/javascript">
-//<!-- 免费邮兼容外部百宝箱 -->
-try{
-	if(top.frames["index"])document.getElementById("spnLockLink").style.display="";
-}catch(e){
-}
-</script>
-
-</body>
-</html>
+{%endblock%}
