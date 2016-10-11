@@ -1,29 +1,15 @@
+{% extends "mybill/base_mybill.html" %}
 
+{%block title%}理财易{%endblock%}
 
-
-
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>理财易</title>
-
-  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
-	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
-
+{%block js.custom%}
 <script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
 <script type="text/javascript" lang="Javascript" src="/static/js/page/bill_month.js?1444742024987"></script>
-</head>
-
-<body>
+{%endblock%}
 
 
-
-
-
-
-<!--增加代码 lemon start-->
+{%block header %}
+    <!--增加代码 lemon start-->
 
 	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
 	<!--增加代码 lemon end-->
@@ -37,9 +23,10 @@
 	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
 	</ul>
 
-	<div class="eMain">
-		<div class="eMtop"></div>
-		<div class="eMbdy">
+{%endblock%}
+
+
+{%block main.content %}
 
 
 		<!--操作或系统提示通用区域-->
@@ -108,14 +95,4 @@
 
     <div class="SummaryTxt bmSt"><a href="/mybill/bill.do?method=export&strMonth={{year}}-{{month}}" target="_blank">导出{{year}}年{{month}}月数据</a></div>
 
-
-
-
-	</div>
-	<div class="eMbot"></div>
-</div>
-
-
-
-</body>
-</html>
+{%endblock%}

@@ -1,25 +1,15 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>理财易</title>
+{% extends "mybill/base_mybill.html" %}
+
+{%block title%}理财易{%endblock%}
+
+{%block js.custom%}
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444741569247"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/search.js?1444741569247"></script>
+{%endblock%}
 
 
-  <link href="/static/css/style.css" rel="stylesheet" type="text/css" />
-	<link href="/static/css/add_lcy.css" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444740001119"></script>
-<script type="text/javascript" lang="Javascript" src="/static/js/page/bill.js?1444740001119"></script>
-</head>
-
-<body>
-
-
-
-
-
-
-<!--增加代码 lemon start-->
+{%block header %}
+    <!--增加代码 lemon start-->
 
 	<div class="Top"><a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a><b class="Top_B_arr"></b><span><strong>理财易</strong></span></div>
 	<!--增加代码 lemon end-->
@@ -33,23 +23,12 @@
 	    <li id='liTop6' class="topbar on"><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
 	</ul>
 
-	<div class="eMain">
-		<div class="eMtop"></div>
-		<div class="eMbdy">
+{%endblock%}
 
-<div class="eWel">
+
+{%block main.content %}
+
 		<iframe src='http://money.163.com/special/00251MNR/licainew686.html?1217843380613' name='ifrMyFunds' height='300' width='663' scrolling='no' frameborder='no'></iframe>
-		</div>
 
+{%endblock%}
 
-
-
-
-
-	</div>
-	<div class="eMbot"></div>
-</div>
-
-
-</body>
-</html>
