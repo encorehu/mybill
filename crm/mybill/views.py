@@ -4,7 +4,8 @@ import json
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
+from django.http import Http404
 
 from django.db.models import Sum, Value as V
 from django.db.models.functions import Coalesce
@@ -16,7 +17,6 @@ from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
 
-#from django.core.servers.basehttp import FileWrapper
 from django.core.files.base import ContentFile
 
 def file_download(request, filename, displayname):
