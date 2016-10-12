@@ -34,7 +34,7 @@
 	<!--操作或系统提示通用区域-->
 	<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/category.do?method=list">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/category.do?method=append" class="on">新增收支项目</a> </div>
+		<div class="eSubNav"> <a href="/mybill/category.do?accountid={{account.id}}&method=list">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/category.do?accountid={{account.id}}&method=append" class="on">新增收支项目</a> </div>
 
 		<div>
 		<style>.expBdy .sFrm li b{width:80px}/*调整对齐修改此数值*/</style>
@@ -44,6 +44,7 @@
 									    <input id='hdnId' type='hidden' name='id' class='categoryData' value='0' />
 									    <input id='hdnType' type='hidden' name='type' class='categoryData' value='1' />
 										<input id='hdnParentId' type='hidden' name='parentId' class='categoryData' value='0' />
+										<input id='hdnAccountId' type='hidden' name='accountId' class='categoryData' value='{{account.id}}' />
 										<li><b><span class="icoImp">　</span> 性质：</b><div class="itemFm"><input id='rdoTypeIn' type="radio" name="r1" value='1' class='chkType' checked="checked"/>收入&nbsp;&nbsp;<input id='rdoTypeOut' value='0' class='chkType' type="radio" name="r1"/>支出</div><div class="clear0"></div></li>
 										<li><b><span class="icoImp">　</span> 收支项目名称：</b><input id='txtCategoryName' maxlength='8' name='categoryName' type="text" class="sIpt2 itemFm categoryData" maxlength='20'/><div class="clear0"></div></li>
 										<li><b><span class="icoImp">　</span> 从属收支项目：</b><div class="itemFm"><input id='rdoFirstLevel' type="radio" name="r2" checked="checked"/>一级收支项目<br/><input id='rdoSubLevel' type="radio" name="r2"/>从属于<select id='selInCategories' style="width:100px">

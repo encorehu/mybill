@@ -756,6 +756,7 @@ class BillCategoryDoView(ListView):
         accountid = request.GET.get('accountid', None)
         if not accountid:
             #js ajax accountId, in a attrs
+            accountid = request.POST.get('accountId', None)
             if not accountid:
                 raise Http404(u"Account does not exist")
 
