@@ -121,6 +121,8 @@ class BillDoView(ListView):
         return HttpResponse(json.dumps(response))
 
     def listmonth(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         if request.method == 'GET':
             strMonth=request.GET.get('strMonth','')
         else:
@@ -140,7 +142,10 @@ class BillDoView(ListView):
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
         year_list=[x for x in xrange(year, year-15, -1)]
-        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+        return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
+            'accountitem_list': accountitem_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
@@ -263,12 +268,16 @@ class BillDoView(ListView):
             return render(request, self.template_name, {'form': ''})
 
     def append(self, request, *args, **kwargs):
-        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
         return render(request,
                       self.template_name,
                       {
+                      'account':account,
+                      'account_list':account_list,
                       'servertime':datetime.datetime.now(),
                       'income_category_list': income_category_list,
                       'outcome_category_list': outcome_category_list,
@@ -285,7 +294,7 @@ class BillDoView(ListView):
 
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -409,13 +418,15 @@ class BillDoView(ListView):
             })
 
     def export(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         strMonth = request.GET.get('strMonth','')
         if strMonth:
             year,month = map(int, strMonth.split('-'))
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
-        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
         workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
