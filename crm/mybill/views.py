@@ -460,7 +460,7 @@ class BillDoView(ListView):
           last_month = 12
         else:
           year_of_last_month = year
-        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         #accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
@@ -481,7 +481,7 @@ class BillDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year_of_last_month, tx_date__month=month)
         for i, item  in enumerate(accountitem_list):
             worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
