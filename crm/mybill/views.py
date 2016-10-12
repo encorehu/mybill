@@ -900,3 +900,30 @@ class BillCategoryDoView(ListView):
                       'income_category_list': income_category_list,
                       'outcome_category_list': outcome_category_list,
                       })
+
+class BillAccountDoView(ListView):
+    def get_queryset(self):
+        return []
+
+    def get(self, request, *args, **kwargs):
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/account_%s.html' % method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request, *args, **kwargs)
+        elif method == 'edit':
+            return self.edit(request, *args, **kwargs)
+        elif method == 'append':
+            return self.append(request, *args, **kwargs)
+        elif method == 'list':
+            return self.listall(request, *args, **kwargs)
+        else:
+            kwargs.update({'account_list': Account.objects.all()})
+            return render(request, self.template_name, kwargs)
+        return render(request, self.template_name, {'account_list': Account.objects.all()})
+
+    def append(self, request, *args, **kwargs):
+        return render(request,
+                      self.template_name,
+                      {
+                      'servertime':datetime.datetime.now(),
+                      })
