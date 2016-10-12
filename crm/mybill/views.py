@@ -4,7 +4,8 @@ import json
 import datetime
 
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
+from django.http import Http404
 
 from django.db.models import Sum, Value as V
 from django.db.models.functions import Coalesce
