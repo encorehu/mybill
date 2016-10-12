@@ -36,11 +36,11 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/{{account.id}}/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
-		<li id='liTop3' class="topbar on"><a href="/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/{{account.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar on"><a href="/mybill/{{account.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search">搜索账目</a></li>
 	    <li id='liTop6' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=myfunds">股票基金</a></li>
 	</ul>
 
@@ -52,12 +52,12 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/category.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增收支项目</a> </div>
+		<div class="eSubNav"> <a href="/mybill/{{account.id}}/category.do?method=list" class="on">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/category.do?method=append">新增收支项目</a> </div>
 
 		<!--没有记录时候显示-->
 		<div id='divNoList' class="eInfo2" style='display:none'>
 			<img src="/static/mybill/images/ico_info2.gif"/>
-			<p>暂时没有收支项目记录，<br/>请点击“<a href="/mybill/{{account.id}}/category.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增收支项目</a>”添加。</p>
+			<p>暂时没有收支项目记录，<br/>请点击“<a href="/mybill/{{account.id}}/category.do?method=append">新增收支项目</a>”添加。</p>
 		</div>
 
 		<div id='divCList' >
@@ -72,13 +72,13 @@
 				{% for category in income_category_list %}
 				<tr class="trlev1  trCategory_{{category.id}}">
 					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; {{category.name}} </td>
-					<td><a href="/mybill/{{account.id}}/category.do?method=edit&id={{category.id}}&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+					<td><a href="/mybill/{{account.id}}/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#"   x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
 				</tr>
 
 					{% for subcategory in category.child_category_set.all %}
 					<tr id='trSubCategory_{{subcategory.id}}' class="trlev2 trCategory_{{category.id}} trSubCategory_{{subcategory.id}}" cId="{{category.id}}" subCId="{{subcategory.id}}">
-						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
-						<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory'  subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
+						<td><a  id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#"  class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
 					</tr>
 					{%endfor%}
 
@@ -97,13 +97,13 @@
 				{% for category in outcome_category_list %}
 				<tr class="trlev1  trCategory_{{category.id}}">
 					<td class="td1"><a id='aCategory{{forloop.counter}}' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="{{category.id}}">&nbsp;&nbsp;&nbsp;&nbsp;</a> {{category.name}} </td>
-					<td><a href="/mybill/{{account.id}}/category.do?method=edit&id={{category.id}}&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+					<td><a href="/mybill/{{account.id}}/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
 				</tr>
 
 					{% for subcategory in category.child_category_set.all %}
 					<tr id='trSubCategory_{{subcategory.id}}' class="trlev2 trCategory_{{category.id}} trSubCategory_{{subcategory.id}}" cId="{{category.id}}" subCId="{{subcategory.id}}">
-						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
-						<td><a sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
+						<td><a id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
 					</tr>
 
 					{%endfor%}

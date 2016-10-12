@@ -40,11 +40,11 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/{{account.id}}/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar on" ><a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
-		<li id='liTop3' class="topbar "><a href="/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybill/{{account.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/{{account.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search">搜索账目</a></li>
 	    <li id='liTop6' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=myfunds">股票基金</a></li>
 	</ul>
 
@@ -56,9 +56,9 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">本月收支</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listmonth&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">按月份查看</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listsort&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">按收支项目查看</a> </div>
+		<div class="eSubNav"> <a href="/mybill/{{account.id}}/bill.do?method=list">本月收支</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listmonth">按月份查看</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/bill.do?method=listsort" class="on">按收支项目查看</a> </div>
 
-		<form id='frmBillSort' name='billSortForm' method="post" action="/mybill/{{account.id}}/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
+		<form id='frmBillSort' name='billSortForm' method="post" action="/mybill/{{account.id}}/bill.do">
 		<div style="margin-bottom:15px">
 		<input name='method' value='listsort' type='hidden'/>
 		<input id='hdnType' name='type' type='hidden' value='0' />
@@ -94,7 +94,7 @@
 		<!--没有记录时候显示-->
 		<div class="eInfo2"  style='display:none'>
 			<img src="/static/mybill/images/ico_info2.gif"/>
-			<p>本收支项目下没有记录，<br/>请点击“<a href="/mybill/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a>”添加。</p>
+			<p>本收支项目下没有记录，<br/>请点击“<a href="/mybill/bill.do?method=append">新增记录</a>”添加。</p>
 		</div>
 
 		<table class="eTb" >
@@ -120,7 +120,7 @@
 				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
 				<td class="fgn">{%if accountitem.tx_type%}{{accountitem.amount}}￥{%else%}&nbsp;{%endif%}</td>
 				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}{{accountitem.amount}}￥{%endif%}</td>
-				<td><a href="/mybill/bill.do?method=edit&id={{accountitem.id}}&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
+				<td><a href="/mybill/bill.do?method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
 			</tr>
 			{% endfor %}
 
