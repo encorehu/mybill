@@ -593,13 +593,13 @@ class BillCategoryDoView(ListView):
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
-            return self.addOrUpdate(request)
+            return self.addOrUpdate(request, *args, **kwargs)
         elif method == 'list':
-            return self.listall(request)
+            return self.listall(request, *args, **kwargs)
         elif method == 'edit':
             return self.edit(request)
         elif method == 'append':
-            return self.append(request)
+            return self.append(request, *args, **kwargs)
         else:
             return render(request, self.template_name, {'form': ''})
 
