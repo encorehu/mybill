@@ -828,15 +828,15 @@ class BillCategoryDoView(ListView):
         else:
             category=AccountCategory.objects.get(id=category_id)
             if parent_id=='0':
-              category.parent_id = None
-              category.tx_type = tx_type
-              category.name = name
-              category.save()
+                category.parent_id = None
+                category.tx_type = tx_type
+                category.name = name
+                category.save()
             else:
-              category.parent_id = parent_id
-              category.tx_type = tx_type
-              category.name = name
-              category.save()
+                category.parent_id = parent_id
+                category.tx_type = tx_type
+                category.name = name
+                category.save()
             response['result']['data']={
                     "@class":"categoryform",
                     "id":category_id,
