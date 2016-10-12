@@ -347,8 +347,8 @@ class BillDoView(ListView):
             year,month = now.year, now.month
 
         if request.method == 'GET':
-            income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
-            outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+            income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+            outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
             fromRecDate = None #datetime.datetime(year=year, month=month, day=1)
             toRecDate = datetime.datetime.now()
             return render(request, self.template_name, {
@@ -405,8 +405,8 @@ class BillDoView(ListView):
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
 
-        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
         return render(request, self.template_name, {
             'account':account,
             'account_list': account_list,
@@ -943,3 +943,58 @@ class BillAccountDoView(ListView):
                       {
                       'servertime':datetime.datetime.now(),
                       })
+
+    def addOrUpdate(self, request, *args, **kwargs):
+        '''
+        {"result":
+            {
+                "success":"true",
+                "message":"已经成功保存收支项目信息!",
+                "totalCount":"0",
+                "data":{
+                    "@class":"categoryform",
+                    "id":"12345",
+                    "categoryName":"租金",
+                    "parentId":"0",
+                    "type":"1"
+                },
+                "pageIndex":"0",
+                "pageSize":"100"
+            }
+        }
+        '''
+        response={}
+        response['result']={}
+        response['result']['success']='true'
+        response['result']['message']=u"已经成功保存账户信息!"
+        response['result']['totalCount']='0'
+        response['result']['pageSize']='100'
+
+        account_id = request.POST.get('id','0')
+        name = request.POST.get('accountName','无名')
+        number = request.POST.get('accountNumber','无名')
+        account_type = request.POST.get('accountType','无名')
+        display_name = request.POST.get('accountDisplayname','无名')
+        tx_type = request.POST.get('type','0')
+        parent_id = request.POST.get('parentId','0')
+        if account_id=='0':
+            account, created = Account.objects.get_or_create(number=number, name=name, account_type=account_type, display_name=display_name)
+            response['result']['data']={
+                    "@class":"categoryform",
+                    "id":account.id,
+                    "accountName":name,
+                    "type":account_type,
+                }
+        else:
+            account=AccountCategory.objects.get(id=account_id)
+            account.display_name = display_name
+            account.account_type = account_type
+            account.name = name
+            account.save()
+            response['result']['data']={
+                    "@class":"categoryform",
+                    "id":account_id,
+                    "accountName":name,
+                    "type":account_type,
+                }
+        return HttpResponse(json.dumps(response))
