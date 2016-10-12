@@ -72,13 +72,13 @@
 				{% for category in income_category_list %}
 				<tr class="trlev1  trCategory_{{category.id}}">
 					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; {{category.name}} </td>
-					<td><a href="/mybill/{{account.id}}/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#"   x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+					<td><a href="/mybill/{{account.id}}/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
 				</tr>
 
 					{% for subcategory in category.child_category_set.all %}
 					<tr id='trSubCategory_{{subcategory.id}}' class="trlev2 trCategory_{{category.id}} trSubCategory_{{subcategory.id}}" cId="{{category.id}}" subCId="{{subcategory.id}}">
-						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory'  subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
-						<td><a  id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#"  class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
+						<td class="tdCutL">{{category.name}} - <span id='spnViewSubCategoryName_{{subcategory.id}}'>{{subcategory.name}}</span><span id='spnEditSubCategoryName_{{subcategory.id}}' style='display:none'><input id='iptSubCategoryName_{{subcategory.id}}' type="text" value="{{subcategory.name}}" style="width:80px" /> <input type="button" value="保存" class='iptSaveSubCategory' subCId="{{subcategory.id}}" cId="{{category.id}}" cType="0"/> <input type="button" value="取消" class='iptCancelSubCategory' subCId='{{subcategory.id}}'/></span></td>
+						<td><a id='aEditSubCategory_{{subcategory.id}}' href="#" class="icoEdt aEditSubCategory" subCId='{{subcategory.id}}' title="改名">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel  aDelSubCategory"  subCId='{{subcategory.id}}' title="删除该收支项目">&nbsp;&nbsp;&nbsp;</a></td>
 					</tr>
 					{%endfor%}
 
