@@ -34,6 +34,7 @@ TX_TYPE=(
 )
 
 class AccountCategory(models.Model):
+	account	= models.ForeignKey(Account, null=True, blank=True, default=None, related_name='category_account_set')
 	name =  models.CharField(max_length=255, blank=True)
 	display_name = models.CharField(max_length=255, null=True, blank=True, default=u'')
 	parent = models.ForeignKey('self', null=True, blank=True, related_name='child_category_set')
