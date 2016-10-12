@@ -196,6 +196,18 @@ class BillDoView(ListView):
                       })
 
     def get(self, request, *args, **kwargs):
+        accountid = request.GET.get('accountid', None)
+        if not accountid:
+            raise Http404(u"Account 不存在")
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404(u"Account 不存在")
+        account_list = Account.objects.all()
+        kwargs.update({
+            'account':account,
+            'account_list':account_list,
+        })
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/%s.html' % method
         if method == 'addOrUpdate':
@@ -255,6 +267,7 @@ class BillDoView(ListView):
                       })
 
     def listall(self, request, *args, **kwargs):
+
         strMonth=request.GET.get('strMonth','')
         if strMonth:
             year,month = map(int, strMonth.split('-'))
@@ -262,6 +275,8 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
@@ -270,6 +285,8 @@ class BillDoView(ListView):
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
         return render(request, self.template_name, {'accountitem_list': accountitem_list,
+            'account': account,
+            'account_list': account_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
