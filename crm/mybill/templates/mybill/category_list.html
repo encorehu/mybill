@@ -53,7 +53,7 @@
 				{% for category in income_category_list %}
 				<tr class="trlev1  trCategory_{{category.id}}">
 					<td class="td1">&nbsp;&nbsp;&nbsp;&nbsp; {{category.name}} </td>
-					<td><a href="/mybill/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+					<td><a href="/mybill/category.do?accountid={{account.id}}&method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD"  x="y" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
 				</tr>
 
 					{% for subcategory in category.child_category_set.all %}
@@ -78,7 +78,7 @@
 				{% for category in outcome_category_list %}
 				<tr class="trlev1  trCategory_{{category.id}}">
 					<td class="td1"><a id='aCategory{{forloop.counter}}' href="#" class="icoMin aFolder" title="折叠"  state='min' cId="{{category.id}}">&nbsp;&nbsp;&nbsp;&nbsp;</a> {{category.name}} </td>
-					<td><a href="/mybill/category.do?method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
+					<td><a href="/mybill/category.do?accountid={{account.id}}&method=edit&id={{category.id}}" class="icoEdt" title="修改">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" sid="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="icoDel aDelCategory" title="删除该收支项目" cId="{{category.id}}">&nbsp;&nbsp;&nbsp;</a></td>
 				</tr>
 
 					{% for subcategory in category.child_category_set.all %}

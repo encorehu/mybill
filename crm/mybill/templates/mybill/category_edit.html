@@ -45,6 +45,7 @@
 				<input id='hdnId' name='id' type='hidden' value='{{accountcategory.id}}' class='categoryData' />
 				<input id='hdnType' name='type' type='hidden' value='{{accountcategory.tx_type}}' class='categoryData' />
 				<input id='hdnParentId' name='parentId' type='hidden' value='{% if accountcategory.parent %}{{accountcategory.parent.id}}{%else%}0{%endif%}' class='categoryData' />
+				<input id='hdnAccountId' name='accountId' type='hidden' value='{{account.id}}' class='categoryData' />
 				<li><b><span class="icoImp">　</span> 一级收支项目名：</b><input id='txtCategoryName' maxlength='8' name='categoryName' type="text" class="sIpt2 itemFm categoryData" maxlength='20' value="{{accountcategory.name}}" /><div class="clear0"></div></li>
 				<li><b><span class="icoImp">　</span> 性质：</b><div class="itemFm"><input type="radio" name="rdotype" value="1" {%if accountcategory.tx_type %}checked='true'{%endif%}/>收入&nbsp;&nbsp;<input type="radio" name="rdotype" value='0' {%if not accountcategory.tx_type %}checked='true'{%endif%}/>支出</div><div class="clear0"></div></li>
 

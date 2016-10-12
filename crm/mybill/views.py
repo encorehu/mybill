@@ -872,6 +872,8 @@ class BillCategoryDoView(ListView):
             "pageSize":"100"}
         }
         '''
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         pk = request.GET.get('id',None)
         try:
             accountcategory = AccountCategory.objects.get(pk=pk)
@@ -882,6 +884,8 @@ class BillCategoryDoView(ListView):
             return render(request,
                    self.template_name,
                    {
+                       'account': account,
+                       'account_list': account_list,
                        'accountcategory': accountcategory,
                    })
 
