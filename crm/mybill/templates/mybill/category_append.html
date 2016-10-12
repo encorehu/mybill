@@ -40,11 +40,11 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/{{account.id}}/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/{{account.id}}/bill.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">新增记录</a></li>
-		<li id='liTop3' class="topbar on"><a href="/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=analytics&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">搜索账目</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/{{account.id}}/bill.do?method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar on"><a href="/mybill/{{account.id}}/category.do?method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=search">搜索账目</a></li>
 	    <li id='liTop6' class="topbar "><a href="/mybill/{{account.id}}/bill.do?method=myfunds">股票基金</a></li>
 	</ul>
 
@@ -56,7 +56,7 @@
 	<!--操作或系统提示通用区域-->
 	<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/category.do?method=append&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class="on">新增收支项目</a> </div>
+		<div class="eSubNav"> <a href="/mybill/{{account.id}}/category.do?method=list">收支项目管理</a> <span class="spline">|</span> <a href="/mybill/{{account.id}}/category.do?method=append" class="on">新增收支项目</a> </div>
 
 		<div>
 		<style>.expBdy .sFrm li b{width:80px}/*调整对齐修改此数值*/</style>
@@ -90,7 +90,7 @@
 											</div><div class="clear0"></div>
 
 										</li>
-										<li class="bar"><b></b><input id='btnSave' type="button" class="btnFnt" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input type="button" class="btnFnt" onclick="javascript:location='/mybill/{{account.id}}/category.do?method=list&sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD'" value="关闭"/></li>
+										<li class="bar"><b></b><input id='btnSave' type="button" class="btnFnt" value="新增收支项目"/>&nbsp;&nbsp;&nbsp;<input type="button" class="btnFnt" onclick="javascript:location='/mybill/{{account.id}}/category.do?method=list'" value="关闭"/></li>
 									</ul>
 		</div>
 
