@@ -11,7 +11,7 @@ class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','title','summary','tx_type','amount')
 
 class AccountCategoryAdmin(admin.ModelAdmin):
-    list_display=('tx_type','name')
+    list_display=('account', 'tx_type','name')
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
