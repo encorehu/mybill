@@ -753,6 +753,12 @@ class BillCategoryDoView(ListView):
             return render(request, self.template_name, {'form': ''})
 
     def post(self, request, *args, **kwargs):
+        accountid = request.GET.get('accountid', None)
+        if not accountid:
+            #js ajax accountId, in a attrs
+            if not accountid:
+                raise Http404(u"Account does not exist")
+
         try:
             account = Account.objects.get(id=accountid)
         except Account.DoesNotExist:
@@ -804,9 +810,9 @@ class BillCategoryDoView(ListView):
         parent_id = request.POST.get('parentId','0')
         if category_id=='0':
             if parent_id=='0':
-                category, created = AccountCategory.objects.get_or_create(parent_id=None, name=name, tx_type=tx_type)
+                category, created = AccountCategory.objects.get_or_create(account=account, parent_id=None, name=name, tx_type=tx_type)
             else:
-                category, created = AccountCategory.objects.get_or_create(parent_id=parent_id, name=name, tx_type=tx_type)
+                category, created = AccountCategory.objects.get_or_create(account=account, parent_id=parent_id, name=name, tx_type=tx_type)
             response['result']['data']={
                     "@class":"categoryform",
                     "id":category.id,
