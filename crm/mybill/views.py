@@ -289,7 +289,11 @@ class BillDoView(ListView):
 
     def listall(self, request, *args, **kwargs):
 
-        strMonth=request.GET.get('strMonth','')
+        if request.method == 'GET':
+            strMonth=request.GET.get('strMonth','')
+        else:
+            strMonth=request.POST.get('strMonth','')
+
         if strMonth:
             year,month = map(int, strMonth.split('-'))
         else:
