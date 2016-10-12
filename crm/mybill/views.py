@@ -119,7 +119,7 @@ class BillDoView(ListView):
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         year,month = instance.tx_date.year, instance.tx_date.month
-        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?accountid=%s&method=listmonth&strMonth=%s-%s' class='udl fbu'>该月账本</a>" % ({{account.id}}, year, month)
+        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?accountid=%s&method=listmonth&strMonth=%s-%s' class='udl fbu'>该月账本</a>" % (account.id, year, month)
         return HttpResponse(json.dumps(response))
 
     def listmonth(self, request, *args, **kwargs):
@@ -737,6 +737,10 @@ class BillCategoryDoView(ListView):
         return []
 
     def get(self, request, *args, **kwargs):
+        accountid = request.GET.get('accountid', None)
+        if not accountid:
+            raise Http404(u"Account 不存在")
+
         try:
             account = Account.objects.get(id=accountid)
         except Account.DoesNotExist:
