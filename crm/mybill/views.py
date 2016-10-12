@@ -151,7 +151,6 @@ class BillDoView(ListView):
             })
 
     def listyear(self, request, *args, **kwargs):
-        print request.method
         if request.method == 'GET':
             strYear=request.GET.get('strYear','')
         else:
@@ -163,6 +162,8 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year = now.year
 
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
@@ -171,7 +172,10 @@ class BillDoView(ListView):
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
         year_list=[x for x in xrange(year+5, year-10, -1)]
-        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+        return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
+            'accountitem_list': accountitem_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
@@ -384,7 +388,10 @@ class BillDoView(ListView):
 
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
-        return render(request, self.template_name, {'accountitem_list': accountitem_list,
+        return render(request, self.template_name, {
+            'account':account,
+            'account_list': account_list,
+            'accountitem_list': accountitem_list,
             'income': income,
             'outcome': outcome,
             'balance': balance,
