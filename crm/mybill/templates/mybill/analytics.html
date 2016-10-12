@@ -15,20 +15,20 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append">新增记录</a></li>
-		<li id='liTop3' class="topbar "><a href="/mybill/category.do?method=list">收支项目管理</a></li>
-		<li id='liTop4' class="topbar on"><a href="/mybill/bill.do?method=analytics">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search">搜索账目</a></li>
-	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?accountid={{account.id}}&method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/category.do?accountid={{account.id}}&method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar on"><a href="/mybill/bill.do?accountid={{account.id}}&method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=myfunds">股票基金</a></li>
 	</ul>
 
 {%endblock%}
 
 
 {%block main.content %}
-		<div class="eSubNav"> <a href="/mybill/bill.do?method=analytics&type=-1" class='on' >收支对比分析</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=analytics&type=1" >收入分配分析</a> <span class="spline">|</span> <a href="/mybill/bill.do?method=analytics&type=0" >支出分配分析</a> </div>
-		<form id='frmAnalytics' name='analyticsForm' method="post" action="/mybill/bill.do?sid=nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD">
+		<div class="eSubNav"> <a href="/mybill/bill.do?accountid={{account.id}}&method=analytics&type=-1" class='on' >收支对比分析</a> <span class="spline">|</span> <a href="/mybill/bill.do?accountid={{account.id}}&method=analytics&type=1" >收入分配分析</a> <span class="spline">|</span> <a href="/mybill/bill.do?accountid={{account.id}}&method=analytics&type=0" >支出分配分析</a> </div>
+		<form id='frmAnalytics' name='analyticsForm' method="post" action="/mybill/bill.do?accountid={{account.id}}">
 		<input id='hdnLoadData' name='loadData' value='1' type='hidden'/>
 		<div class="anyBar">
 			<div id='divButtonContainer' class="aB1">

@@ -15,12 +15,12 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append">新增记录</a></li>
-		<li id='liTop3' class="topbar on"><a href="/mybill/category.do?method=list">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?method=analytics">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?method=search">搜索账目</a></li>
-	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?accountid={{account.id}}&method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar on"><a href="/mybill/category.do?accountid={{account.id}}&method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=myfunds">股票基金</a></li>
 	</ul>
 
 {%endblock%}
