@@ -687,10 +687,14 @@ class BillCategoryDoView(ListView):
         return HttpResponse(json.dumps(response))
 
     def listall(self, request, *args, **kwargs):
-        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
         return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
             'income_category_list': income_category_list,
             'outcome_category_list': outcome_category_list,
             })
@@ -726,12 +730,16 @@ class BillCategoryDoView(ListView):
                    })
 
     def append(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
 
         return render(request,
                       self.template_name,
                       {
+                      'account':account,
+                      'account_list':account_list,
                       'servertime':datetime.datetime.now(),
                       'income_category_list': income_category_list,
                       'outcome_category_list': outcome_category_list,
