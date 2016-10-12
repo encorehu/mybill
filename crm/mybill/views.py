@@ -132,7 +132,7 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -164,7 +164,7 @@ class BillDoView(ListView):
 
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-        accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -184,6 +184,8 @@ class BillDoView(ListView):
             })
 
     def edit(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         pk = request.GET.get('id',None)
         try:
             accountitem = AccountItem.objects.get(pk=pk)
@@ -194,6 +196,8 @@ class BillDoView(ListView):
         return render(request,
                       self.template_name,
                       {
+                          'account':account,
+                          'account_list':account_list,
                           'accountitem': accountitem,
                           'income_category_list': income_category_list,
                           'outcome_category_list': outcome_category_list,
