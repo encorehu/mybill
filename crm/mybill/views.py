@@ -304,6 +304,8 @@ class BillDoView(ListView):
         fromRecDate:
         toRecDate:
         '''
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
         fromRecDate=request.POST.get('fromRecDate','')
         toRecDate=request.POST.get('toRecDate','')
         tx_type=request.POST.get('type','')
@@ -326,7 +328,10 @@ class BillDoView(ListView):
             outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
             fromRecDate = None #datetime.datetime(year=year, month=month, day=1)
             toRecDate = datetime.datetime.now()
-            return render(request, self.template_name, {'accountitem_list': [],
+            return render(request, self.template_name, {
+                'account': account,
+                'account_list': account_list,
+                'accountitem_list': [],
                 'income': 0,
                 'outcome': 0,
                 'balance': 0,
