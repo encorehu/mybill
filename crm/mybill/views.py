@@ -248,6 +248,15 @@ class BillDoView(ListView):
             return render(request, self.template_name, kwargs)
 
     def post(self, request, *args, **kwargs):
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404("Account does not exist")
+        account_list = Account.objects.all()
+        kwargs.update({
+            'account':account,
+            'account_list':account_list,
+        })
         method=request.POST.get('method', '')
         if not method:
             method = request.GET.get('method', 'list')
