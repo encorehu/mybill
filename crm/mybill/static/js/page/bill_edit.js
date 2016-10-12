@@ -58,7 +58,7 @@ $(document).ready(function(){
 		var a=$(".categoryData").input2Json();
 		if(validateCategory("in")){
 			$.ajax({
-				url:"/mybill/category.do?method=addOrUpdate",
+				url:"/mybill/category.do?accountid="+accountid+"&method=addOrUpdate",
 				data:$(".categoryData").input2Json(),
 				success:function(b){
 					showMessage(b.result.message);
@@ -74,7 +74,7 @@ $(document).ready(function(){
 	$("#btnSubmitOutCategory").click(function(){
 		if(validateCategory("out")){
 			$.ajax({
-				url:"/mybill/category.do?method=addOrUpdate",
+				url:"/mybill/category.do?accountid="+accountid+"&method=addOrUpdate",
 				data:$(".categoryData").input2Json(),
 				success:function(a){
 					showMessage(a.result.message);
@@ -90,7 +90,7 @@ $(document).ready(function(){
 	$("#btnAdd,#btnUpdate").click(function(){
 		if(validate()){
 			$.ajax({
-				url:"/mybill/bill.do?method=addOrUpdate",
+				url:"/mybill/bill.do?accountid="+accountid+"&method=addOrUpdate",
 				data:$(".billdata").input2Json(),
 				success:function(a){
 					showMessage(a.result.message);

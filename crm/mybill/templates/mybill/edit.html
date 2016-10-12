@@ -3,6 +3,9 @@
 {%block title%}理财易{%endblock%}
 
 {%block js.custom%}
+<script type="text/javascript" lang="Javascript">
+    var accountid = {{account.id}};
+</script>
 <script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
 <script type="text/javascript" lang="Javascript" src="/static/js/page/bill_edit.js?1444742024987"></script>
 {%endblock%}
@@ -72,6 +75,7 @@
 						<input id='hdnCId' type='hidden' name='id' value='0' class='categoryData'/>
 						<input id='hdnCCategoryName' type='hidden' name='categoryName' class='categoryData'/>
 						<input id='hdnCParentId' type='hidden' value='0' name='parentId' class='categoryData'/>
+						<input id='hdnCAccountId' type='hidden' value='{{account.id}}' name='accountId' class='categoryData'/>
 						<li id='liAddInCategory' class='hide'>
 							<b></b>
 							<div class="expBox itemFm" style="width:310px; background-position:-160px 0; margin:0 0 0 53px">
