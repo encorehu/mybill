@@ -49,8 +49,8 @@ $(document).ready(function(){
 	$("#btnAdd,#btnUpdate").click(function(){
 		if(validate()){
 			$.ajax({
-				url:"/mybill/bill.do?method=addOrUpdate",
-				data:$(".billdata").input2Json(),
+				url:"/mybill/account.do?method=addOrUpdate",
+				data:$(".accountdata").input2Json(),
 				success:function(a){
 					showMessage(a.result.message);
 					if(!$("#hdnId").val()||$("#hdnId").val()==0){
@@ -97,9 +97,10 @@ function handleCategoryData(b){
 }
 
 function reset(){
-	$("#txtTitle").val("");
-	$("#txtNote").val("");
-	$("#txtAmount").val("")
+	$("#txtAccountName").val("");
+	$("#txtAccountNumber").val("");
+	$("#txtAccountDisplayName").val("");
+	$("#txtAccountType").val("");
 }
 
 function resetCategory(){
@@ -108,58 +109,34 @@ function resetCategory(){
 }
 
 function validate(){
-	if(!$("#txtRecDate").val()){showMessage("必须输入日期!");
-		$("#txtRecDate").focus();
+	if(!$("#txtAccountName").val()){
+	    showMessage("必须输入账户名称!");
+		$("#txtAccountName").focus();
 		return false
 	}
 
-	if($("#rdoTypeIn").is(":checked")){
-		$("#hdnType").val("1");
-		if(!$("#selInCategory").val()){showMessage("必须选择对应的收支项目!");
-			$("#selInCategory").focus();
-			return false
-		}
-
-		try{
-			var c=$("#selInCategory").val().split("|")[1];
-			var a=$("#selInCategory").val().split("|")[2];
-			$("#hdnCategoryId").val(c);
-			$("#hdnSubCategoryId").val(a)
-		}catch(d){
-			showMessage("收支项目数据读取出错,请刷新页面后再试!");
-			return false
-		}
-	}else{
-		$("#hdnType").val("0");
-		if(!$("#selOutCategory").val()){
-			showMessage("必须选择对应的收支项目!");
-			$("#selOutCategory").focus();
-			return false
-		}
-
-		try{
-			var c=$("#selOutCategory").val().split("|")[1];
-			var a=$("#selOutCategory").val().split("|")[2];
-			$("#hdnCategoryId").val(c);
-			$("#hdnSubCategoryId").val(a)
-		}catch(d){
-			showMessage("收支项目数据读取出错,请刷新页面后再试!");
-			return false
-		}
-	}
-
-	if(!$("#txtAmount").val()){
-		showMessage("必须输入金额");
-		$("#txtAmount").focus();
+	if(!$("#txtAccountNumber").val()){
+	    showMessage("必须输入账户号码!");
+		$("#txtAccountNumber").focus();
 		return false
 	}
 
-	var b=new RegExp("^\\d{1,8}(\\.\\d{0,2})?$","gi");
-	if(!b.test($("#txtAmount").val())){
-		showMessage("金额格式输入错误!");
-		$("#txtAmount").focus();
+
+	if(!$("#selAccountType").val()){showMessage("选择账户类型!");
+		$("#selAccountType").focus();
 		return false
 	}
+
+	try{
+		var a=$("#selAccountType").val();
+		$("#hdnAccountType").val(a);
+	}catch(d){
+		showMessage("收支项目数据读取出错,请刷新页面后再试!");
+		return false
+	}
+
+
+
 	return true
 }
 
