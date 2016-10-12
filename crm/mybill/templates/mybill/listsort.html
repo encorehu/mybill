@@ -66,7 +66,7 @@
 		</div>
 		</form>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b> <b class="frd">支出:{{outcome}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b> <b class="frd">支出:￥{{outcome}}</b></div>
 
 		<!--没有记录时候显示-->
 		<div class="eInfo2"  style='display:none'>
@@ -95,15 +95,15 @@
 				<td class="tdCutL" title="上级 - {{accountitem.category.name}}">{{accountitem.category.name}}</td>
 				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
 				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
-				<td class="fgn">{%if accountitem.tx_type%}{{accountitem.amount}}￥{%else%}&nbsp;{%endif%}</td>
-				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}{{accountitem.amount}}￥{%endif%}</td>
+				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
 				<td><a href="/mybill/bill.do?accountid={{account.id}}&method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp; <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a></td>
 			</tr>
 			{% endfor %}
 
 		</table>
 
-		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:{{income}}￥</b>  <b class="frd">支出:{{outcome}}￥</b></div>
+		<div class="SummaryTxt bmSt"><b class="fLe">至今总计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>  <b class="frd">支出:￥{{outcome}}</b></div>
 
 		<br/><br/>
 
