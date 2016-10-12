@@ -255,7 +255,7 @@ class BillDoView(ListView):
         elif method == 'listmonth':
             return self.listmonth(request, *args, **kwargs)
         elif method == 'listyear':
-            return self.listyear(request)
+            return self.listyear(request, *args, **kwargs)
         elif method == 'edit':
             return self.edit(request, *args, **kwargs)
         elif method == 'append':
@@ -265,7 +265,7 @@ class BillDoView(ListView):
         elif method == 'listsort':
             return self.listsort(request, *args, **kwargs)
         elif method == 'del':
-            return self.delete(request)
+            return self.delete(request, *args, **kwargs)
         else:
             return render(request, self.template_name, {'form': ''})
 
