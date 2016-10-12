@@ -604,6 +604,15 @@ class BillCategoryDoView(ListView):
             return render(request, self.template_name, {'form': ''})
 
     def post(self, request, *args, **kwargs):
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            raise Http404("Account does not exist")
+        account_list = Account.objects.all()
+        kwargs.update({
+            'account':account,
+            'account_list':account_list,
+        })
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/category_%s.html' % method
         if method == 'addOrUpdate':
