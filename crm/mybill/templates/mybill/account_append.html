@@ -1,0 +1,66 @@
+{% extends "mybill/base_mybill.html" %}
+
+{%block title%}理财易{%endblock%}
+
+{%block js.custom%}
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/account_edit.js"></script>
+{%endblock%}
+
+
+{%block header %}
+	<!--增加代码 lemon start-->
+	<div class="Top">
+		<a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a>
+		<b class="Top_B_arr"></b><span><strong>理财易</strong></span>
+		<b class="Top_B_arr"></b><span><strong>添加账户</strong></span>
+	</div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar"><a href="/mybill/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybill/account.do?method=append">添加账户</a></li>
+	</ul>
+
+{%endblock%}
+
+
+{%block main.content %}
+
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+
+
+					<style>
+					.sFrm li b{width:80px}/*调整对齐修改此数值*/
+					</style>
+					<input type='hidden' name='sid'  value="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class='accountdata'/>
+					<input type='hidden' id='hdnId' name='id' class='accountdata' value="0" />
+					<input type='hidden' id='hdnAccountType' name='accountType' class='accountdata' value="1" />
+  					<ul class="sFrm">
+						<li><b><span class="icoImp">　</span> 账户名称：</b><div class="itemFm" style="padding-top:2px"><input id='txtAccountName' name='accountName' type="text"  class="sIpt3 accountdata" style="width:187px" value=""/>&nbsp;&nbsp;&nbsp;</div><div class="clear0"></div></li>
+						<li><b><span class="icoImp">　</span> 账户号码：</b><input id='txtAccountNumber' maxlength='30' name='accountNumber' type="text" class="itemFm sIpt3 accountdata" style="width:187px" value=''/><div class="clear0"></div></li>
+						<li><b>账户简称：</b><input id='txtAccountDisplayName' maxlength='30' name='accountDisplayname' type="text" class="itemFm sIpt3 accountdata" style="width:187px" value=''/><div class="clear0"></div></li>
+						<li id='liInOption'>
+							<b>账户类型：</b>
+							<div class="itemFm">
+							    <select id='selAccountType' class="sSel" style="text-align:left">
+                                	<option value='' ></option>
+                                	<option value='1' >现金</option>
+                                	<option value='2' >银行存款</option>
+                                </select>
+                            </div>
+							<div class="clear0"></div>
+						</li>
+
+
+
+
+
+
+
+						<li class="bar"><b></b><input  id='btnAdd' type="button" value="提 交" class="btnFnt"/></li>
+
+					</ul>
+
+{%endblock%}
