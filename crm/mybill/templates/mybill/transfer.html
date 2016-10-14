@@ -1,0 +1,93 @@
+{% extends "mybill/base_mybill.html" %}
+
+{%block title%}理财易{%endblock%}
+
+{%block js.custom%}
+<script type="text/javascript" lang="Javascript">
+    var accountid = {{account.id}};
+</script>
+<script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444742024987"></script>
+<script type="text/javascript" lang="Javascript" src="/static/js/page/bill_transfer.js?1444742024987"></script>
+{%endblock%}
+
+
+{%block header %}
+	<!--增加代码 lemon start-->
+	<div class="Top">
+		<a href="http://mimg.126.com/assist/index.htm" class="a_INDEX">百宝箱</a>
+		<b class="Top_B_arr"></b><span><strong>理财易</strong></span>
+		<b class="Top_B_arr"></b><span><strong>{{account.name}}</strong></span>
+	</div>
+	<!--增加代码 lemon end-->
+	<ul class="eNav">
+		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
+		<li id='liTop1' class="topbar on" ><a href="/mybill/bill.do?accountid={{account.id}}&method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/category.do?accountid={{account.id}}&method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=search">搜索账目</a></li>
+	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=transfer">转账</a></li>
+	</ul>
+
+{%endblock%}
+
+
+{%block main.content %}
+		<!--操作或系统提示通用区域-->
+		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
+
+		<div class="eSubNav"> <a href="javascript:history.back();location.reload(true);">&laquo;返回</a> <span class="spline">|</span> <b class="on">修改本记录账单</b> </div>
+
+					<style>
+					.sFrm li b{width:80px}/*调整对齐修改此数值*/
+					</style>
+					<input type='hidden' name='sid'  value="nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD" class='transferData'/>
+					<input id='hdnMethod' name='method' type='hidden' class='transferData' value="tranfer" />
+					<input id='hdnAccountId' name='accountId' type='hidden' class='transferData' value='{{account.id}}'/>
+  				<ul class="sFrm">
+						<li>
+							<b><span class="icoImp">　</span> 收支日期：</b>
+							<div class="itemFm" style="padding-top:2px">
+								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 billdata" style="width:80px" readonly='readonly' value="{{servertime|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+							</div><div class="clear0"></div>
+						</li>
+						<li>
+							<b>单位(个人)：</b>
+							<input id='txtTitle' maxlength='30' name='title' type="text" class="itemFm sIpt3 billdata" style="width:187px"  value='{{accountitem.title}}'/><div class="clear0"></div>
+						</li>
+
+						<li>
+							<b>说明：</b>
+							<input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 billdata" style="width:187px" value='{{accountitem.summary}}'/><div class="clear0"></div>
+						</li>
+
+						<li id='liInOption' {%if accountitem.tx_type%}{%else%} class='disable'{%endif%} >
+							<b><span class="icoImp">　</span> 交易账户：</b>
+							<div class="itemFm">转出账户：<input id='txtFromAccount' name='fromAccount' type="text"  class="sIpt3 billdata" style="width:150px" readonly='readonly' value="{{account}}"/></div>
+							<div class="clear0"></div>
+						</li>
+
+						<li id='liOutOption' {%if accountitem.tx_type%} class='disable'{%else%}{%endif%} style="margin-top:-3px">
+							<b></b>
+							<div class="itemFm">转入账户：
+								<select id='selOutCategory' class="sSel"  style="text-align:left">
+									<option value=''}>请选择账户!</option>
+									{% for toaccount in account_list %}
+										{%ifnotequal toaccount.id account.id%}
+										<option value='{{toaccount.id}}'}>{{toaccount.name}}</option>
+										{%endifnotequal%}
+									{%endfor%}
+
+								</select>
+							</div>
+							<div class="clear0"></div>
+						</li>
+
+						<li><b><span class="icoImp">　</span> 金额：</b><div class="itemFm"><input id='txtAmount'name='amount' maxlength='11' type="text" class="sIpt3 billdata" value='{{accountitem.amount}}' /> 元</div><div class="clear0"></div></li>
+
+
+						<li class="bar"><b></b><input id='btnUpdate' type="button" value="保 存" class="btnFnt"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="取消" onclick='javascript:history.back();' class="btnFnt"/></li>
+
+					</ul>
+
+{%endblock%}
