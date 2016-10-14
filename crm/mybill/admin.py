@@ -86,7 +86,7 @@ class AccountItemAdmin(admin.ModelAdmin):
 
 
 class AccountCategoryAdmin(admin.ModelAdmin):
-    list_display=('account', 'tx_type','name')
+    list_display=('account', 'tx_type', 'parent', 'name')
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
