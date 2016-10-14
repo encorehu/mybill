@@ -18,8 +18,9 @@ class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','title','summary','tx_type','amount')
     list_filter=('tx_type', 'account','category')
     search_fields = ('summary',)
-    actions = ['change_tx_type0','change_tx_type1', 'changeCategory']
+    actions = ['change_tx_type0','change_tx_type1', 'changeCategory', 'changeAccount']
     categorySuccess = Template('{{ count }} item{{ count|pluralize }}`s category changed to {{ category.name }}')
+    accountSuccess = Template('{{ count }} item{{ count|pluralize }}`s account changed to {{ account.name }}')
 
     class CategoryForm(forms.Form):
         _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
@@ -45,6 +46,33 @@ class AccountItemAdmin(admin.ModelAdmin):
                                   {'objects': queryset, 'form': form, 'path':request.get_full_path()},
                                   context_instance=RequestContext(request))
     changeCategory.short_description = 'change category'
+
+    class AccountForm(forms.Form):
+        _selected_action = forms.CharField(widget=forms.MultipleHiddenInput)
+        account = forms.ModelChoiceField(Account.objects)
+
+    def changeAccount(self, request, queryset):
+        form = None
+        if 'cancel' in request.POST:
+            self.message_user(request, 'Canceled change item account')
+            return
+        elif 'newaccount' in request.POST:
+            #do the categorization
+            form = self.AccountForm(request.POST)
+            if form.is_valid():
+                account = form.cleaned_data['account']
+                queryset.update(account=account)
+            else:
+                print form.errors
+            self.message_user(request, self.accountSuccess.render(Context({'count':queryset.count(), 'account':account})))
+            return HttpResponseRedirect(request.get_full_path())
+
+        if not form:
+            form = self.AccountForm(initial={'_selected_action': request.POST.getlist(admin.ACTION_CHECKBOX_NAME)})
+        return render_to_response('mybill/change_account.html',
+                                  {'objects': queryset, 'form': form, 'path':request.get_full_path()},
+                                  context_instance=RequestContext(request))
+    changeAccount.short_description = u'change Account'
 
     def change_tx_type0(self, request, queryset):
         queryset.update(tx_type=0)
