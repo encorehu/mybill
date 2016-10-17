@@ -318,8 +318,6 @@ class BillDoView(ListView):
             'income': income,
             'outcome': outcome,
             'balance': balance,
-            'year': year,
-            'month': month,
             })
 
     def listsort(self, request, *args, **kwargs):
