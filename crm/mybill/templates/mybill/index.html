@@ -35,7 +35,7 @@
 
 			<ul class="eWelLst">
 			    {%for account in account_list%}
-			    <li><span>{{account.name}}：</span> <a href="bill.do?accountid={{account.id}}&method=list">开始记账</a></li>
+			    <li><span>({{account.number}}){{account.name}}：</span> <a href="bill.do?accountid={{account.id}}&method=list">开始记账</a></li>
 			    {%endfor%}
 			</ul>
 
