@@ -304,7 +304,7 @@ class BillDoView(ListView):
 
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
