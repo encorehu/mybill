@@ -20,13 +20,14 @@ class Account(models.Model):
 	class Meta:
 		verbose_name = u'科目（账户）'
 		verbose_name_plural =u'科目（账户）'
+		ordering = ('number', 'id')
 
 
 	def __str__(self):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'{0}({1})'.format(self.name, self.number)
+		return u'({0}){1}'.format(self.number, self.name)
 
 TX_TYPE=(
 	(1, u'收入'),

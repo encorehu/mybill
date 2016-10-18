@@ -34,7 +34,13 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="/mybill/bill.do?accountid={{account.id}}&method=list">本月收支</a> <span class="spline">|</span> <a href="/mybill/bill.do?accountid={{account.id}}&method=listmonth">按月份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?accountid={{account.id}}&method=listyear"  class="on">按年份查看</a> <span class="spline">|</span> <a href="/mybill/bill.do?accountid={{account.id}}&method=listsort">按收支项目查看</a> </div>
+		<div class="eSubNav">
+			<a href="/mybill/bill.do?accountid={{account.id}}&method=list">全部收支</a> <span class="spline">|</span>
+			<a href="/mybill/bill.do?accountid={{account.id}}&method=listmonth">按月份查看</a> <span class="spline">|</span>
+			<a href="/mybill/bill.do?accountid={{account.id}}&method=listyear" class="on">按年份查看</a> <span class="spline">|</span>
+			<a href="/mybill/bill.do?accountid={{account.id}}&method=listsort">按收支项目查看</a>
+		</div>
+
 		<form id="frmBillYear" name='billYearForm' method="post" action="/mybill/bill.do?accountid={{account.id}}" >
 		<div style="margin-bottom:15px">
 		<input type=hidden name='method' value='listyear'/>

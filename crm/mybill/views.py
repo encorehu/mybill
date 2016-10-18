@@ -290,21 +290,9 @@ class BillDoView(ListView):
                       })
 
     def listall(self, request, *args, **kwargs):
-
-        if request.method == 'GET':
-            strMonth=request.GET.get('strMonth','')
-        else:
-            strMonth=request.POST.get('strMonth','')
-
-        if strMonth:
-            year,month = map(int, strMonth.split('-'))
-        else:
-            now = datetime.datetime.now()
-            year,month = now.year, now.month
-
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -318,8 +306,6 @@ class BillDoView(ListView):
             'income': income,
             'outcome': outcome,
             'balance': balance,
-            'year': year,
-            'month': month,
             })
 
     def listsort(self, request, *args, **kwargs):
