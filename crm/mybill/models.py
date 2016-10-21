@@ -54,7 +54,7 @@ class AccountItem(models.Model):
 	account = models.ForeignKey(Account, related_name='account_set')
 	title =  models.CharField(max_length=255, null=True, blank=True, default=u'')
 	summary =  models.CharField(max_length=255, null=True, blank=True, default=u'餐费')
-	category =  models.ForeignKey(AccountCategory, related_name='account_category_item_set')
+	category =  models.ForeignKey(AccountCategory, related_name='account_category_item_set', null=True)
 	category_verbosename =  models.CharField(max_length=255, null=True, blank=True, default=u'')
 	#debit =   models.DecimalField(u'收入', max_digits=10, decimal_places=2, default=0.00)
 	#credit =   models.DecimalField(u'支出', max_digits=10, decimal_places=2, default=0.00)
