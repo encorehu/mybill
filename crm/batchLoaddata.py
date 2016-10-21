@@ -70,7 +70,7 @@ for line in txt.split('\n'):
              operator='hcz',
              tx_date=created_at,
              tx_type=tx_type,
-             category=None,
+             category=category,
              amount=amount,
              summary=summary,
              transaction=0,
