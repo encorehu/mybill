@@ -49,7 +49,7 @@ class AccountCategory(models.Model):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'{0}: {1}'.format(self.get_tx_type_display(), self.name)
+		return u'{0}: {1}: {2}'.format(self.account, self.get_tx_type_display(), self.name)
 
 class AccountItem(models.Model):
 	account = models.ForeignKey(Account, related_name='account_set')
