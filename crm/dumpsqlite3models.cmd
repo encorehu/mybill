@@ -1,0 +1,1 @@
+python -m pwiz -e sqlite3 db.sqlite3>models.py
