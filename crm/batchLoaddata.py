@@ -17,7 +17,7 @@ for line in txt.split('\n'):
     data=map(lambda s:s.strip(), line.split('\t'))
     created_at, category, title, summary, income, outcome, txtype=(None,)*7
 
-    if len(data)==6:
+    if len(data)==7:
         created_at, category, title, summary, income, outcome, txtype=data
     else:
         print line
