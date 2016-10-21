@@ -177,8 +177,8 @@ class MybillAccounttype(BaseModel):
         db_table = 'mybill_accounttype'
 
 class SqliteSequence(BaseModel):
-    name = UnknownField(null=True)  # 
-    seq = UnknownField(null=True)  # 
+    name = UnknownField()  #
+    seq = UnknownField()  #
 
     class Meta:
         db_table = 'sqlite_sequence'
