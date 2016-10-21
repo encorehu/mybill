@@ -8,20 +8,22 @@ account, created = MybillAccount.get_or_create(id=1, number='')
 
 #
 # each line
-# created_at, category, summary, income, outcome
+# created_at, category, summary, income, outcome, txtype(in or out)
 # split by tab key
 #
 
 for line in txt.split('\n'):
     #line =  line.strip()
     data=line.split('\t')
-    created_at, category, summary, income, outcome=(None,)*5
+    created_at, category, summary, income, outcome, txtype=(None,)*6
 
-    if len(data)==4:
-        created_at, category, summary, income=data
-        outcome=0
-    elif len(data)==5:
-        created_at, category, summary, income, outcome=data
+    if len(data)==6:
+        created_at, category, summary, income, outcome, txtype=data
+    else:
+        print line
+        print 'unrecognize'
+        continue
+
     if created_at:
         created_at=datetime.datetime.strptime(created_at,'%Y-%m-%d')
     else:
