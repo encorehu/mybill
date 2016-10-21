@@ -4,7 +4,7 @@ from decimal import Decimal
 
 txt=open('data.txt','r').read().decode('gb18030')
 # specify the account
-account, created = MybillAccount.get_or_create(id=1, number='')
+account, created = MybillAccount.get_or_create(id=1, number='0011')
 
 #
 # each line
@@ -14,13 +14,14 @@ account, created = MybillAccount.get_or_create(id=1, number='')
 
 for line in txt.split('\n'):
     #line =  line.strip()
-    data=line.split('\t')
+    data=map(lambda s:s.strip(), line.split('\t'))
     created_at, category, summary, income, outcome, txtype=(None,)*6
 
     if len(data)==6:
         created_at, category, summary, income, outcome, txtype=data
     else:
         print line
+        print repr(line)
         print 'unrecognize'
         continue
 
@@ -28,11 +29,13 @@ for line in txt.split('\n'):
         created_at=datetime.datetime.strptime(created_at,'%Y-%m-%d')
     else:
         print line
+        print repr(line)
         print 'created_at is empty'
         break
 
     if income and outcome:
         print line
+        print repr(line)
         print 'ERROR single record cannot have income and outcome value'
         break
     else:
