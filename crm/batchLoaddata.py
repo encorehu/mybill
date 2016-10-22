@@ -71,6 +71,7 @@ for line in txt.split('\n'):
              tx_date=created_at,
              tx_type=tx_type,
              category=category,
+             receipt= receipt,
              title=title,
              amount=amount,
              summary=summary,
