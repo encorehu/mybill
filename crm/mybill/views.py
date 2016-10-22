@@ -10,6 +10,7 @@ from django.http import Http404
 from django.db.models import Sum, Value as V
 from django.db.models.functions import Coalesce
 from django.db.models import Q
+from django.db import transaction
 
 from django.views.generic import ListView
 from django.conf import settings
@@ -718,6 +719,7 @@ class BillDoView(ListView):
                 response['result']['message']=u"删除记录成功"
         return HttpResponse(json.dumps(response))
 
+    @transaction.atomic
     def transfer(self, request, *args, **kwargs):
         if request.method == 'GET':
             account = kwargs.get('account')
