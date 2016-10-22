@@ -719,20 +719,32 @@ class BillDoView(ListView):
         return HttpResponse(json.dumps(response))
 
     def transfer(self, request, *args, **kwargs):
-        account = kwargs.get('account')
-        account_list = kwargs.get('account_list')
-        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
-        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
+        if request.method == 'GET':
+            account = kwargs.get('account')
+            account_list = kwargs.get('account_list')
+            income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+            outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
-        return render(request,
-                      self.template_name,
-                      {
-                      'account':account,
-                      'account_list':account_list,
-                      'servertime':datetime.datetime.now(),
-                      'income_category_list': income_category_list,
-                      'outcome_category_list': outcome_category_list,
-                      })
+            return render(request,
+                          self.template_name,
+                          {
+                          'account':account,
+                          'account_list':account_list,
+                          'servertime':datetime.datetime.now(),
+                          'income_category_list': income_category_list,
+                          'outcome_category_list': outcome_category_list,
+                          })
+        else:
+            account = kwargs.get('account')
+            account_list = kwargs.get('account_list')
+            response={}
+            response['result']={}
+            response['result']['success']='true'
+            response['result']['message']=u"转账成功，点击这里查看<a href='/mybill/bill.do?accountid=%s&method=list' class='udl fbu'>全部收支</a>" % account.id
+            response['result']['totalCount']='0'
+            response['result']['pageSize']='100'
+
+            return HttpResponse(json.dumps(response))
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
