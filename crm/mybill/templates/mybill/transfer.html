@@ -47,22 +47,22 @@
 						<li>
 							<b><span class="icoImp">　</span> 收支日期：</b>
 							<div class="itemFm" style="padding-top:2px">
-								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 billdata" style="width:80px" readonly='readonly' value="{{servertime|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 transferData" style="width:80px" readonly='readonly' value="{{servertime|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
 							</div><div class="clear0"></div>
 						</li>
 						<li>
 							<b>单位(个人)：</b>
-							<input id='txtTitle' maxlength='30' name='title' type="text" class="itemFm sIpt3 billdata" style="width:187px"  value='{{accountitem.title}}'/><div class="clear0"></div>
+							<input id='txtTitle' maxlength='30' name='title' type="text" class="itemFm sIpt3 transferData" style="width:187px"  value='{{accountitem.title}}'/><div class="clear0"></div>
 						</li>
 
 						<li>
 							<b>说明：</b>
-							<input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 billdata" style="width:187px" value='{{accountitem.summary}}'/><div class="clear0"></div>
+							<input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 transferData" style="width:187px" value='{{accountitem.summary}}'/><div class="clear0"></div>
 						</li>
 
 						<li id='liInOption' {%if accountitem.tx_type%}{%else%} class='disable'{%endif%} >
 							<b><span class="icoImp">　</span> 交易账户：</b>
-							<div class="itemFm">转出账户：<input id='txtFromAccount' name='fromAccount' type="text"  class="sIpt3 billdata" style="width:150px" readonly='readonly' value="{{account}}"/></div>
+							<div class="itemFm">转出账户：<input id='txtFromAccount' name='fromAccount' type="text"  class="sIpt3" style="width:150px" readonly='readonly' value="{{account}}"/></div>
 							<div class="clear0"></div>
 						</li>
 
@@ -82,7 +82,7 @@
 							<div class="clear0"></div>
 						</li>
 
-						<li><b><span class="icoImp">　</span> 金额：</b><div class="itemFm"><input id='txtAmount'name='amount' maxlength='11' type="text" class="sIpt3 billdata" value='{{accountitem.amount}}' /> 元</div><div class="clear0"></div></li>
+						<li><b><span class="icoImp">　</span> 金额：</b><div class="itemFm"><input id='txtAmount'name='amount' maxlength='11' type="text" class="sIpt3 transferData" value='{{accountitem.amount}}' /> 元</div><div class="clear0"></div></li>
 
 
 						<li class="bar"><b></b><input id='btnTransfer' type="button" value="保 存" class="btnFnt"/>&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="取消" onclick='javascript:history.back();' class="btnFnt"/></li>
