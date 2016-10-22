@@ -74,7 +74,7 @@
 									<option value=''>请选择账户!</option>
 									{% for toaccount in account_list %}
 										{%ifnotequal toaccount.id account.id%}
-										<option value='{{toaccount.id}}'}>{{toaccount.name}}</option>
+										<option value='{{toaccount.id}}'>{{toaccount.name}}</option>
 										{%endifnotequal%}
 									{%endfor%}
 
