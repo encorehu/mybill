@@ -43,7 +43,7 @@ class AccountCategory(models.Model):
 	class Meta:
 		verbose_name = u'收支分类'
 		verbose_name_plural =u'收支分类'
-		ordering = ('account', )
+		ordering = ('account', 'tx_type')
 
 	def __str__(self):
 		return self.__unicode__().encode('utf-8')
