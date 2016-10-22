@@ -239,6 +239,8 @@ class BillDoView(ListView):
             return self.export(request, *args, **kwargs)
         elif method == 'exportyear':
             return self.exportyear(request, *args, **kwargs)
+        elif method == 'exportall':
+            return self.exportall(request, *args, **kwargs)
         elif method == 'transfer':
             return self.transfer(request, *args, **kwargs)
         else:
