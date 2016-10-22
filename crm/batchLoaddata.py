@@ -7,18 +7,18 @@ txt=open('data.txt','r').read().decode('gb18030')
 account, created = MybillAccount.get_or_create(id=1, number='0011')
 
 #
-# each line 7 column
-# created_at, category, title, summary, income, outcome, txtype(in or out)
+# each line 8 column
+# created_at, category, title, receipt, summary, income, outcome, txtype(in or out)
 # split by tab key
 #
 
 for line in txt.split('\n'):
     #line =  line.strip()
     data=map(lambda s:s.strip(), line.split('\t'))
-    created_at, category, title, summary, income, outcome, txtype=(None,)*7
+    created_at, category, title, receipt, summary, income, outcome, txtype=(None,)*8
 
-    if len(data)==7:
-        created_at, category, title, summary, income, outcome, txtype=data
+    if len(data)==8:
+        created_at, category, title, receipt, summary, income, outcome, txtype=data
     else:
         print line
         print repr(line)
