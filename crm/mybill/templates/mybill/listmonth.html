@@ -48,7 +48,7 @@
 			<div id='divSelectMonth' class="expBox hide" style="width:240px;margin:0;background-position:-210px 0">
 				<div class="expBdy">
 					&nbsp;&nbsp;<select id='selYear'>
-						{%for y in year_list %}<option value='{{y}}'{%if forloop.first%} selected='true'{%endif%}>{{y}}</option>{%endfor%}
+						{%for y in year_list %}<option value='{{y}}'{%ifequal y year %} selected='true'{%endifequal%}>{{y}}</option>{%endfor%}
 				</select> 年 <select id='selMonth'>{%for m in month_list %}<option value='{{m}}'{%ifequal m month %} selected='true'{%endifequal%}>{{m}}</option>{%endfor%}
 				</select> 月 <input id='btnEnterMonth' type="button" value="确定"/> <input id='btnCancelMonth' type="button" value="关闭"/>
 				</div>
