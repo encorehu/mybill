@@ -82,3 +82,23 @@ class AccountItem(models.Model):
 			return u'{0},{1},收入:{2}'.format(self.account, self.summary, self.amount)
 		else:
 			return u'{0},{1},支出:{2}'.format(self.account, self.summary, self.amount)
+
+class Transaction(models.Model):
+	from_account = models.ForeignKey(Account, related_name='from_account_set')
+	to_account = models.ForeignKey(Account, related_name='to_account_set')
+	from_item = models.ForeignKey(AccountItem, related_name='from_item_set', editable=False)
+	to_item = models.ForeignKey(AccountItem, related_name='to_item_set', editable=False)
+	from_category = models.ForeignKey(AccountCategory, related_name='from_category_set', null=True, blank=True)
+	to_category = models.ForeignKey(AccountCategory, related_name='to_category_set', null=True, blank=True)
+	amount =   models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+	tx_date =  models.DateTimeField(auto_now_add=True)
+
+	class Meta:
+		verbose_name = u'转账条目'
+		verbose_name_plural =u'转账条目'
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		return u'转账金额:{1}'.format(self.amount)
