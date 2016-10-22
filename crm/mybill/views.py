@@ -11,6 +11,7 @@ from django.db.models import Sum, Value as V
 from django.db.models.functions import Coalesce
 from django.db.models import Q
 from django.db import transaction
+from django.db.models import Min,Max
 
 from django.views.generic import ListView
 from django.conf import settings
@@ -694,6 +695,124 @@ class BillDoView(ListView):
 
         filename = strMonth+'.xlsx'
         displayname=  u'%s年.xlsx' % (year, )
+        return file_download(request, filename, displayname)
+
+    def exportall(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
+
+
+        filename = u'%s.xlsx' % account
+
+        import xlsxwriter
+        # Create an new Excel file and add a worksheet.
+        workbook = xlsxwriter.Workbook(filename)
+        worksheet = workbook.add_worksheet()
+        # Widen the first column to make the text clearer.
+        worksheet.set_column('A:A', 10)
+        worksheet.set_column('B:B', 16)
+        worksheet.set_column('C:C', 26)
+        worksheet.set_column('D:D', 10)
+        worksheet.set_column('E:E', 10)
+        worksheet.set_column('F:F', 12)
+
+        # Add a bold format to use to highlight cells.
+        #bold = workbook.add_format({'bold': True})
+        format1 = workbook.add_format()
+        format1.set_border(1)
+
+        worksheet.write('A1', u'日期', format1)
+        worksheet.write('B1', u'收支项目', format1)
+        worksheet.write('C1', u'摘要', format1)
+        worksheet.write('D1', u'收入金额', format1)
+        worksheet.write('E1', u'支出金额', format1)
+        worksheet.write('F1', u'余额', format1)
+
+        min_date= AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
+        min_year= min_date.year
+        last_month_balance = 0
+        worksheet.write('A2', u'%s-01-%02d'  % (min_year, 1), format1)
+        worksheet.write('B2', u'期初余额', format1)
+        worksheet.write('C2', u'期初余额', format1)
+        worksheet.write('D2', u'', format1)
+        worksheet.write('E2', u'', format1)
+        worksheet.write('F2', last_month_balance, format1)
+
+        last_balance=0
+        balance=0
+        total_income = 0
+        total_outcome = 0
+        start_row=3 #start from 3d row, index from 1
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
+        i=0
+        for i, item  in enumerate(accountitem_list):
+            worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
+            if not item.category:
+                category = ''
+            else:
+                category = unicode(item.category.name)
+            worksheet.write('B%s' % (i+start_row), category, format1)
+            if item.title not in ['','None', None]:
+                worksheet.write('C%s' % (i+start_row), item.title+' '+item.summary, format1)
+            else:
+                worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            if item.tx_type:
+                worksheet.write('D%s' % (i+start_row), item.amount, format1)
+                worksheet.write('E%s' % (i+start_row), None, format1)
+                income = item.amount
+                outcome = 0
+                total_income = total_income + income
+            else:
+                worksheet.write('D%s' % (i+start_row), None, format1)
+                worksheet.write('E%s' % (i+start_row), item.amount, format1)
+                income = 0
+                outcome = item.amount
+                total_outcome = total_outcome + outcome
+            balance = last_balance+income-outcome
+            worksheet.write('F%s' % (i+start_row), balance, format1)
+            last_balance= balance
+
+        if i >0:
+            worksheet.write('C%s' % (i+start_row+1), u'合计')
+            worksheet.write('D%s' % (i+start_row+1), total_income)
+            worksheet.write('E%s' % (i+start_row+1), total_outcome)
+            worksheet.write('F%s' % (i+start_row+1), balance)
+
+        left = u'&L\n单位:%s' % settings.ORGNAME
+        center = u'&C%s日记账' % account
+        right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
+        worksheet.set_header(left+center+right, margin=0.6)
+        worksheet.set_footer('&C&P/&N', margin=0.5)
+        worksheet.set_margins(top=1)
+
+        worksheet.repeat_rows(0)
+        #worksheet.hide_gridlines(0)
+
+        workbook.set_properties({
+            'title':    u'%s日记账' % account,
+            'subject':  u'日记账',
+            'author':   settings.AUTHOR,
+            'manager':  settings.MANAGER,
+            'company':  settings.ORGNAME,
+            'category': u'财务日记账',
+            'keywords': u'财务日记账',
+            'comments': u'本日记账由系统自动导出',
+            'status':   'Quo',
+        })
+
+
+
+
+        workbook.close()
+        response={}
+        response['result']={}
+        response['result']['success']='true'
+        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
+        response['result']['totalCount']='0'
+        response['result']['pageSize']='100'
+        #return HttpResponse(json.dumps(response))
+
+        displayname=  u'%s.xlsx' % account
         return file_download(request, filename, displayname)
 
     def delete(self, request, *args, **kwargs):
