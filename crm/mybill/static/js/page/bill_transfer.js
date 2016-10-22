@@ -155,41 +155,6 @@ function validate(){
 		return false
 	}
 
-	if($("#rdoTypeIn").is(":checked")){
-		$("#hdnType").val("1");
-		if(!$("#selInCategory").val()){showMessage("必须选择对应的收支项目!");
-			$("#selInCategory").focus();
-			return false
-		}
-
-		try{
-			var c=$("#selInCategory").val().split("|")[1];
-			var a=$("#selInCategory").val().split("|")[2];
-			$("#hdnCategoryId").val(c);
-			$("#hdnSubCategoryId").val(a)
-		}catch(d){
-			showMessage("收支项目数据读取出错,请刷新页面后再试!");
-			return false
-		}
-	}else{
-		$("#hdnType").val("0");
-		if(!$("#selOutCategory").val()){
-			showMessage("必须选择对应的收支项目!");
-			$("#selOutCategory").focus();
-			return false
-		}
-
-		try{
-			var c=$("#selOutCategory").val().split("|")[1];
-			var a=$("#selOutCategory").val().split("|")[2];
-			$("#hdnCategoryId").val(c);
-			$("#hdnSubCategoryId").val(a)
-		}catch(d){
-			showMessage("收支项目数据读取出错,请刷新页面后再试!");
-			return false
-		}
-	}
-
 	if(!$("#txtAmount").val()){
 		showMessage("必须输入金额");
 		$("#txtAmount").focus();
