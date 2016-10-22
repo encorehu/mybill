@@ -898,8 +898,8 @@ class BillCategoryDoView(ListView):
     def append(self, request, *args, **kwargs):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-        income_category_list = AccountCategory.objects.filter(tx_type=1, parent=None).all()
-        outcome_category_list = AccountCategory.objects.filter(tx_type=0, parent=None).all()
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
         return render(request,
                       self.template_name,
