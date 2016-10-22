@@ -90,8 +90,8 @@ $(document).ready(function(){
 	$("#btnAdd,#btnTransfer").click(function(){
 		if(validate()){
 			$.ajax({
-				url:"/mybill/bill.do?accountid="+accountid+"&method=addOrUpdate",
-				data:$(".billdata").input2Json(),
+				url:"/mybill/bill.do?accountid="+accountid+"&method=transfer",
+				data:$(".transferData").input2Json(),
 				success:function(a){
 					showMessage(a.result.message);
 					if(!$("#hdnId").val()||$("#hdnId").val()==0){
