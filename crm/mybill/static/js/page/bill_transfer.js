@@ -87,7 +87,7 @@ $(document).ready(function(){
 		}
 	});
 
-	$("#btnAdd,#btnUpdate").click(function(){
+	$("#btnAdd,#btnTransfer").click(function(){
 		if(validate()){
 			$.ajax({
 				url:"/mybill/bill.do?accountid="+accountid+"&method=addOrUpdate",
