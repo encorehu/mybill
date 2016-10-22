@@ -689,13 +689,6 @@ class BillDoView(ListView):
 
 
         workbook.close()
-        response={}
-        response['result']={}
-        response['result']['success']='true'
-        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
-        response['result']['totalCount']='0'
-        response['result']['pageSize']='100'
-        #return HttpResponse(json.dumps(response))
 
         filename = strMonth+'.xlsx'
         displayname=  u'%s年.xlsx' % (year, )
