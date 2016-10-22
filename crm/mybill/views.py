@@ -17,6 +17,8 @@ from django.conf import settings
 from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
+from .models import Transaction
+from .models import TX_TYPE
 
 from django.core.files.base import ContentFile
 
@@ -745,6 +747,82 @@ class BillDoView(ListView):
             response['result']['message']=u"转账成功，点击这里查看<a href='/mybill/bill.do?accountid=%s&method=list' class='udl fbu'>全部收支</a>" % account.id
             response['result']['totalCount']='0'
             response['result']['pageSize']='100'
+
+            from_account_id = request.POST.get('fromAccountId','')
+            to_account_id = request.POST.get('toAccountId','')
+
+            from_category_id = request.POST.get('fromCategoryId','')
+            to_category_id = request.POST.get('toCategoryId','')
+
+            ait_id = request.POST.get('id','') # account item id
+
+            if not from_account_id or not to_account_id:
+                raise Http404(u"Account does not exists!")
+
+            try:
+                from_account = Account.objects.get(id=from_account_id)
+                to_account = Account.objects.get(id=to_account_id)
+            except Account.DoesNotExist:
+                raise Http404(u"Account does not exist")
+
+            if not ait_id:
+                if not from_category_id:
+                    from_category = None
+                else:
+                    from_category, created = AccountCategory.objects.get_or_create(id=from_category_id)
+
+                if not to_category_id:
+                    to_category = None
+                else:
+                    to_category, created = AccountCategory.objects.get_or_create(id=to_category_id)
+
+                title = request.POST.get('title','')
+                summary = request.POST.get('note','')
+                amount = request.POST.get('amount','')
+                recDate = request.POST.get('recDate','')
+
+                frInstance = AccountItem(account=from_account)
+                frInstance.category = from_category
+                frInstance.title = title
+                frInstance.summary = summary if summary else u'转出至%s' % to_account
+                frInstance.amount = amount if amount else 0
+                frInstance.tx_date = datetime.datetime.now()
+                if recDate:
+                    try:
+                        frInstance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
+                    except:
+                        pass
+                frInstance.tx_type = TX_TYPE[1][0]
+                frInstance.save()
+
+                toInstance = AccountItem(account=to_account)
+                toInstance.category = to_category
+                toInstance.title = title
+                toInstance.summary = summary if summary else u'%s转入' % from_account
+                toInstance.amount = amount if amount else 0
+                toInstance.tx_date = datetime.datetime.now()
+                if recDate:
+                    try:
+                        toInstance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
+                    except:
+                        pass
+                toInstance.tx_type = TX_TYPE[0][0]
+                toInstance.save()
+
+                tx = Transaction()
+                tx.from_account=from_account
+                tx.to_account=to_account
+                tx.from_item = frInstance
+                tx.to_item = toInstance
+                tx.amount = request.POST.get('amount','0')
+                if request.POST.get('recDate',''):
+                    tx.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
+                tx.save()
+
+                frInstance.transaction_id = tx.id
+                frInstance.save()
+                toInstance.transaction_id = tx.id
+                toInstance.save()
 
             return HttpResponse(json.dumps(response))
 
