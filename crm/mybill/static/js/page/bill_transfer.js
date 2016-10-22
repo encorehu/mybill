@@ -94,7 +94,7 @@ $(document).ready(function(){
 				data:$(".transferData").input2Json(),
 				success:function(a){
 					showMessage(a.result.message);
-					if(!$("#hdnId").val()||$("#hdnId").val()==0){
+					if(!$("#hdnId")||!$("#hdnId").val()||$("#hdnId").val()==0){
 						reset()
 					}
 				}
