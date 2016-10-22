@@ -59,7 +59,7 @@ class AccountItem(models.Model):
 	category_verbosename =  models.CharField(max_length=255, null=True, blank=True, default=u'')
 	#debit =   models.DecimalField(u'收入', max_digits=10, decimal_places=2, default=0.00)
 	#credit =   models.DecimalField(u'支出', max_digits=10, decimal_places=2, default=0.00)
-	#balance =   models.DecimalField(u'余额', max_digits=10, decimal_places=2, default=0.00)
+	balance =   models.DecimalField(u'余额', max_digits=10, decimal_places=2, default=0.00)
 	receipt =  models.CharField(u'票据号码', max_length=32, null=True, blank=True, default=u'')
 	amount =   models.DecimalField(u'金额', max_digits=10, decimal_places=2, default=0.00)
 	tx_date =  models.DateTimeField(u'交易日期', default=timezone.now)
