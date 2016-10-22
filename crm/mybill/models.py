@@ -16,6 +16,7 @@ class Account(models.Model):
 	account_type = models.CharField(max_length=10, null=True, blank=True, default='')
 	name = models.CharField(max_length=20, null=True, blank=True, default='')
 	display_name = models.CharField(max_length=20, null=True, blank=True, default='')
+	balance =   models.DecimalField(u'账户余额', max_digits=10, decimal_places=2, null=True, blank=True, default=0.00)
 
 	class Meta:
 		verbose_name = u'科目（账户）'
