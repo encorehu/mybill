@@ -155,6 +155,20 @@ function validate(){
 		return false
 	}
 
+
+	if(!$("#selToAccount").val()){showMessage("必须选择转入账户!");
+		$("#selToAccount").focus();
+		return false
+	}
+
+	try{
+		var c=$("#selToAccount").val();
+		$("#hdnToAccountId").val(c);
+	}catch(d){
+		showMessage("账户数据读取出错,请刷新页面后再试!");
+		return false
+	}
+
 	if(!$("#txtAmount").val()){
 		showMessage("必须输入金额");
 		$("#txtAmount").focus();
