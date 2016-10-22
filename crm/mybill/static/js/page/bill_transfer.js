@@ -140,7 +140,8 @@ function handleCategoryData(b){
 function reset(){
 	$("#txtTitle").val("");
 	$("#txtNote").val("");
-	$("#txtAmount").val("")
+	$("#txtAmount").val("");
+	$("#selToAccount").val("");
 }
 
 function resetCategory(){

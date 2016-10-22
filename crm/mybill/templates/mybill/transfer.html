@@ -69,8 +69,8 @@
 						<li id='liOutOption' {%if accountitem.tx_type%} class='disable'{%else%}{%endif%} style="margin-top:-3px">
 							<b></b>
 							<div class="itemFm">转入账户：
-								<select id='selOutCategory' class="sSel"  style="text-align:left">
-									<option value=''}>请选择账户!</option>
+								<select id='selToAccount' class="sSel"  style="text-align:left">
+									<option value=''>请选择账户!</option>
 									{% for toaccount in account_list %}
 										{%ifnotequal toaccount.id account.id%}
 										<option value='{{toaccount.id}}'}>{{toaccount.name}}</option>
