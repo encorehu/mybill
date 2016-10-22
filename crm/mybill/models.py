@@ -28,7 +28,7 @@ class Account(models.Model):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'({0}){1}'.format(self.number, self.name)
+		return u'[{0}]{1}'.format(self.number, self.name)
 
 TX_TYPE=(
 	(1, u'收入'),
