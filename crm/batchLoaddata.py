@@ -22,7 +22,7 @@ for line in txt.split('\n'):
     else:
         print line
         print repr(line)
-        print 'unrecognize'
+        print 'unrecognize, data length is', len(data)
         continue
 
     if created_at:
