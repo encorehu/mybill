@@ -33,8 +33,6 @@ def file_download(request, filename, displayname):
         if hasattr(filename, 'read'):
             wrapper = ContentFile(filename.read())
         else:
-            print  filename
-            print dir(filename)
             raise Http404(u"File does not exists!")
     response = HttpResponse(wrapper, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     #response['Content-Length'] = os.path.getsize(filepath)
@@ -708,8 +706,6 @@ class BillDoView(ListView):
         output.seek(0)
 
         displayname=  u'%s%s年日记账.xlsx' % (account, year, )
-        print output
-        print dir(output)
         return file_download(request, output, displayname)
 
     def exportall(self, request, *args, **kwargs):
