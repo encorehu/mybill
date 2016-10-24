@@ -658,13 +658,6 @@ class BillDoView(ListView):
             worksheet.write('E%s' % (i+start_row+1), total_outcome)
             worksheet.write('F%s' % (i+start_row+1), balance)
 
-
-        # Write some numbers, with row/column notation.
-        #worksheet.write(2, 0, 123)
-        #worksheet.write(3, 0, 123.456)
-
-        # Insert an image.
-        # worksheet.insert_image('B5', 'logo.png')
         left = u'&L\n单位:%s' % settings.ORGNAME
         center = u'&C%s%s年日记账' % (account, year, )
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
@@ -686,9 +679,6 @@ class BillDoView(ListView):
             'comments': u'本日记账由系统自动导出',
             'status':   'Quo',
         })
-
-
-
 
         workbook.close()
         output.seek(0)
