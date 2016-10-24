@@ -445,8 +445,10 @@ class BillDoView(ListView):
             year,month = now.year, now.month
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         import xlsxwriter
+        output = StringIO.StringIO()
+
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
         worksheet.set_column('A:A', 16)
@@ -561,6 +563,7 @@ class BillDoView(ListView):
 
 
         workbook.close()
+        output.seek(0)
         response={}
         response['result']={}
         response['result']['success']='true'
@@ -569,9 +572,8 @@ class BillDoView(ListView):
         response['result']['pageSize']='100'
         #return HttpResponse(json.dumps(response))
 
-        filename = strMonth+'.xlsx'
         displayname=  u'%s%s年%s月.xlsx' % (account, year,month)
-        return file_download(request, filename, displayname)
+        return file_download(request, output, displayname)
 
     def exportyear(self, request, *args, **kwargs):
         account = kwargs.get('account')
@@ -716,8 +718,9 @@ class BillDoView(ListView):
         filename = u'%s.xlsx' % account
 
         import xlsxwriter
+        output = StringIO.StringIO()
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(filename)
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
         worksheet.set_column('A:A', 10)
@@ -815,6 +818,7 @@ class BillDoView(ListView):
 
 
         workbook.close()
+        output.seek(0)
         response={}
         response['result']={}
         response['result']['success']='true'
@@ -824,7 +828,7 @@ class BillDoView(ListView):
         #return HttpResponse(json.dumps(response))
 
         displayname=  u'%s.xlsx' % account
-        return file_download(request, filename, displayname)
+        return file_download(request, output, displayname)
 
     def delete(self, request, *args, **kwargs):
         response={}
