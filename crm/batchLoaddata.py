@@ -4,7 +4,7 @@ from decimal import Decimal
 
 txt=open('data.txt','r').read().decode('gb18030')
 # specify the account
-account, created = MybillAccount.get_or_create(id=1, number='0011')
+account, created = MybillAccount.get_or_create(id=, number='0001') #make syntax error
 
 #
 # each line 8 column
