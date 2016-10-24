@@ -3,6 +3,8 @@ import os
 import json
 import datetime
 
+import StringIO
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
@@ -25,9 +27,17 @@ from django.core.files.base import ContentFile
 
 def file_download(request, filename, displayname):
     filepath = filename
-    wrapper = ContentFile(open(filepath,'rb').read())
-    response = HttpResponse(wrapper, content_type='application/octet-stream')
-    response['Content-Length'] = os.path.getsize(filepath)
+    if isinstance(filename, str):
+        wrapper = ContentFile(open(filepath,'rb').read())
+    else:
+        if hasattr(filename, 'read'):
+            wrapper = ContentFile(filename.read())
+        else:
+            print  filename
+            print dir(filename)
+            raise Http404(u"File does not exists!")
+    response = HttpResponse(wrapper, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #response['Content-Length'] = os.path.getsize(filepath)
     response['Content-Disposition'] = (u'attachment; filename=%s' % displayname).encode('utf-8')
     return response
 
@@ -585,7 +595,9 @@ class BillDoView(ListView):
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
+        output = StringIO.StringIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
         worksheet.set_column('A:A', 16)
@@ -634,7 +646,8 @@ class BillDoView(ListView):
         i=0
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         for i, item  in enumerate(accountitem_list):
-            worksheet.write('A%s' % (i+start_row), u'%s %s' % ('+' if item.tx_type else '-', item.category.name), format1)
+            category = item.category.name if item.category else ''
+            worksheet.write('A%s' % (i+start_row), u'%s %s' % ('+' if item.tx_type else '-', category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
             worksheet.write('C%s' % (i+start_row), item.summary, format1)
             if item.tx_type:
@@ -692,10 +705,12 @@ class BillDoView(ListView):
 
 
         workbook.close()
+        output.seek(0)
 
-        filename = strMonth+'.xlsx'
         displayname=  u'%s%s年日记账.xlsx' % (account, year, )
-        return file_download(request, filename, displayname)
+        print output
+        print dir(output)
+        return file_download(request, output, displayname)
 
     def exportall(self, request, *args, **kwargs):
         account = kwargs.get('account')
