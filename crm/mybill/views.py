@@ -117,7 +117,6 @@ class BillDoView(ListView):
                 instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
             else:
                 instance.tx_date = datetime.datetime.now()
-            #instance.summary = request.POST.get('categoryId','')
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         year,month = instance.tx_date.year, instance.tx_date.month
