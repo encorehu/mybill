@@ -679,7 +679,7 @@ class BillDoView(ListView):
         workbook.close()
         output.seek(0)
 
-        displayname=  u'%s%s年日记账.xlsx' % (account, year, )
+        displayname=  u'%s日记账%s年.xlsx' % (account, year, )
         return file_download(request, output, displayname)
 
     def exportall(self, request, *args, **kwargs):
