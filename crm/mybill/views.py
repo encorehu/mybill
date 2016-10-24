@@ -667,7 +667,7 @@ class BillDoView(ListView):
         # Insert an image.
         # worksheet.insert_image('B5', 'logo.png')
         left = u'&L\n单位:%s' % settings.ORGNAME
-        center = u'&C%s年日记账' % (year, )
+        center = u'&C%s%s年日记账' % (account, year, )
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
         worksheet.set_header(left+center+right, margin=0.6)
         worksheet.set_footer('&C&P/&N', margin=0.5)
@@ -677,7 +677,7 @@ class BillDoView(ListView):
         #worksheet.hide_gridlines(0)
 
         workbook.set_properties({
-            'title':    u'%s年日记账' % (year, ),
+            'title':    u'%s%s年日记账' % (account, year, ),
             'subject':  u'日记账',
             'author':   settings.AUTHOR,
             'manager':  settings.MANAGER,
@@ -694,7 +694,7 @@ class BillDoView(ListView):
         workbook.close()
 
         filename = strMonth+'.xlsx'
-        displayname=  u'%s年.xlsx' % (year, )
+        displayname=  u'%s%s年日记账.xlsx' % (account, year, )
         return file_download(request, filename, displayname)
 
     def exportall(self, request, *args, **kwargs):
