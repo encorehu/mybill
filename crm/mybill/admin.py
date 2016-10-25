@@ -12,7 +12,7 @@ from .models import AccountItem
 from .models import AccountCategory
 
 class AccountAdmin(admin.ModelAdmin):
-    pass
+    list_display=('name','number','account_type')
 
 class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','title','summary','tx_type','amount')
