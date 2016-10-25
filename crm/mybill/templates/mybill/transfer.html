@@ -35,7 +35,7 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<div class="eSubNav"> <a href="javascript:history.back();location.reload(true);">&laquo;返回</a> <span class="spline">|</span> <b class="on">修改本记录账单</b> </div>
+		<div class="eSubNav"> <a href="javascript:history.back();location.reload(true);">&laquo;返回</a> <span class="spline">|</span> <b class="on">账单转账</b> </div>
 
 					<style>
 					.sFrm li b{width:80px}/*调整对齐修改此数值*/
@@ -48,7 +48,7 @@
 						<li>
 							<b><span class="icoImp">　</span> 收支日期：</b>
 							<div class="itemFm" style="padding-top:2px">
-								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 transferData" style="width:80px" readonly='readonly' value="{{servertime|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 transferData" style="width:80px" readonly='readonly' value="{{accountitem.tx_date|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
 							</div><div class="clear0"></div>
 						</li>
 						<li>
@@ -58,7 +58,7 @@
 
 						<li>
 							<b>说明：</b>
-							<input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 transferData" style="width:187px" value='{{accountitem.summary}}'/><div class="clear0"></div>
+							<input id='txtNote' maxlength='30' name='note' type="text" class="itemFm sIpt3 transferData" style="width:187px" value='{%ifequal accountitem.account.account_type '1' %}存现{%else%}取现{%endifequal%}'/><div class="clear0"></div>
 						</li>
 
 						<li id='liInOption'>
@@ -67,9 +67,11 @@
 							<div class="clear0"></div>
 						</li>
 
-						<li id='liOutOption' {%if accountitem.tx_type%} class='disable'{%else%}{%endif%} style="margin-top:-3px">
+						<li id='liOutOption' {%if not accountitem.tx_type%} class='disable'{%else%}{%endif%} style="margin-top:-3px">
 							<b></b>
 							<div class="itemFm">转入账户：
+							    {%if not accountitem.tx_type%}只有收入能转账, 支出不能转账!
+							    {%else%}
 								<select id='selToAccount' class="sSel"  style="text-align:left">
 									<option value=''>请选择账户!</option>
 									{% for toaccount in account_list %}
@@ -79,6 +81,7 @@
 									{%endfor%}
 
 								</select>
+								{%endif%}
 							</div>
 							<div class="clear0"></div>
 						</li>

@@ -822,6 +822,12 @@ class BillDoView(ListView):
             account_list = kwargs.get('account_list')
             income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
             outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
+            accountitemid= request.GET.get('id',None)
+            if accountitemid:
+                accountitem = AccountItem.objects.get(id=accountitemid, account=account)
+            else:
+                accountitem = None
+
 
             return render(request,
                           self.template_name,
@@ -831,6 +837,7 @@ class BillDoView(ListView):
                           'servertime':datetime.datetime.now(),
                           'income_category_list': income_category_list,
                           'outcome_category_list': outcome_category_list,
+                          'accountitem':accountitem,
                           })
         else:
             account = kwargs.get('account')
