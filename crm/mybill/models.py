@@ -101,4 +101,4 @@ class Transaction(models.Model):
 		return self.__unicode__().encode('utf-8')
 
 	def __unicode__(self):
-		return u'转账金额:{1}'.format(self.amount)
+		return u'转账金额:{0}'.format(self.amount)
