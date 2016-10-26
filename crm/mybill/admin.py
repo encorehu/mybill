@@ -10,6 +10,7 @@ from django.utils.translation import ungettext, ugettext_lazy as _
 from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
+from .models import Transaction
 
 class AccountAdmin(admin.ModelAdmin):
     list_display=('name','number','account_type')
@@ -89,6 +90,10 @@ class AccountCategoryAdmin(admin.ModelAdmin):
     list_display=('account', 'tx_type', 'parent', 'name')
     list_filter=('account','parent','name','tx_type')
 
+class TransactionAdmin(admin.ModelAdmin):
+    list_display=('from_account','to_account','amount')
+
 admin.site.register(Account, AccountAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
 admin.site.register(AccountCategory, AccountCategoryAdmin)
+admin.site.register(Transaction, TransactionAdmin)
