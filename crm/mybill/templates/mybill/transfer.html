@@ -48,7 +48,7 @@
 						<li>
 							<b><span class="icoImp">　</span> 收支日期：</b>
 							<div class="itemFm" style="padding-top:2px">
-								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 transferData" style="width:80px" readonly='readonly' value="{{accountitem.tx_date|date:'Y-m-d'}}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
+								<input id='txtRecDate' name='recDate' type="text"  class="sIpt3 transferData" style="width:80px" readonly='readonly' value="{%if accountitem %}{{accountitem.tx_date|date:'Y-m-d'}}{%else%}{{servertime|date:'Y-m-d'}}{%endif%}"/>&nbsp;&nbsp;&nbsp;<a id='aRecDate' href="#" class="udl"><span class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</span></a>
 							</div><div class="clear0"></div>
 						</li>
 						<li>
