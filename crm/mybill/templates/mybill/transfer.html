@@ -70,8 +70,20 @@
 						<li id='liOutOption' {%if accountitem%}{%if not accountitem.tx_type%} class='disable'{%endif%}{%endif%} style="margin-top:-3px">
 							<b></b>
 							<div class="itemFm">转入账户：
-							    {%if accountitem %}{%if not accountitem.tx_type%}只有收入能转账, 支出不能转账!{%endif%}
-							    {%else%}
+									{%if accountitem %}
+										{%if not accountitem.tx_type%}
+										只有收入能转账, 支出不能转账!
+										{%else%}
+										<select id='selToAccount' class="sSel"  style="text-align:left">
+											<option value=''>请选择账户!</option>
+											{% for toaccount in account_list %}
+												{%ifnotequal toaccount.id account.id%}
+												<option value='{{toaccount.id}}'>{{toaccount.name}}</option>
+												{%endifnotequal%}
+											{%endfor%}
+										</select>
+										{%endif%}
+									{%else%}
 								<select id='selToAccount' class="sSel"  style="text-align:left">
 									<option value=''>请选择账户!</option>
 									{% for toaccount in account_list %}
