@@ -73,7 +73,7 @@
 			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
 				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
 				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
-				<td class="tdCutL" title=""><nobr>{{accountitem.summary}}</nobr></nobr></td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary_display}}</nobr></nobr></td>
 				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
 				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
 				<td>

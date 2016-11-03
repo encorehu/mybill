@@ -83,6 +83,12 @@ class AccountItem(models.Model):
 		else:
 			return u'{0},{1},支出:{2}'.format(self.account, self.summary, self.amount)
 
+	def summary_display(self):
+	    if self.title:
+	        return u'{0} {1}'.format(self.title, self.summary)
+	    else:
+	        return self.summary
+
 class Transaction(models.Model):
 	from_account = models.ForeignKey(Account, related_name='from_account_set')
 	to_account = models.ForeignKey(Account, related_name='to_account_set')
