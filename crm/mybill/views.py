@@ -500,10 +500,7 @@ class BillDoView(ListView):
         for i, item  in enumerate(accountitem_list):
             worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            if item.title:
-                worksheet.write('C%s' % (i+start_row), item.title+' '+item.summary, format1)
-            else:
-                worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
                 worksheet.write('E%s' % (i+start_row), None, format1)
@@ -631,7 +628,7 @@ class BillDoView(ListView):
             category = item.category.name if item.category else ''
             worksheet.write('A%s' % (i+start_row), u'%s %s' % ('+' if item.tx_type else '-', category), format1)
             worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
                 worksheet.write('E%s' % (i+start_row), None, format1)
@@ -738,10 +735,7 @@ class BillDoView(ListView):
             else:
                 category = unicode(item.category.name)
             worksheet.write('B%s' % (i+start_row), category, format1)
-            if item.title not in ['','None', None]:
-                worksheet.write('C%s' % (i+start_row), item.title+' '+item.summary, format1)
-            else:
-                worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
                 worksheet.write('E%s' % (i+start_row), None, format1)
