@@ -29,7 +29,7 @@ $(document).ready(function(){
 	$("#selOutCategory").change(function(){$("#liAddInCategory").hide();
 		$("#liInOption").addClass("disable");
 		$("#liOutOption").removeClass("disable");
-		$("#rdoTypeOut").attr("checked","true");
+		$("#rdoTypeOut").prop("checked","true");
 		return true
 	});
 	$("#aAddOutCategory").click(function(){$("#liAddOutCategory").toggle();
