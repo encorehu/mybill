@@ -22,7 +22,7 @@ $(document).ready(function(){
 		$("#liAddOutCategory").hide();
 		$("#liOutOption").addClass("disable");
 		$("#liInOption").removeClass("disable");
-		$("#rdoTypeIn").attr("checked","true");
+		$("#rdoTypeIn").prop("checked","true");
 		return true
 		});
 
