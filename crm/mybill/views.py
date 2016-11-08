@@ -653,7 +653,7 @@ class BillDoView(ListView):
             worksheet.write('F%s' % (i+start_row+1), balance)
 
         left = u'&L\n单位:%s' % settings.ORGNAME
-        center = u'&C%s%s年日记账' % (account, year, )
+        center = u'&C%s日记账%s年' % (account, year, )
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
         worksheet.set_header(left+center+right, margin=0.6)
         worksheet.set_footer('&C&P/&N', margin=0.5)
