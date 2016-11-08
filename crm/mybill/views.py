@@ -592,8 +592,8 @@ class BillDoView(ListView):
         format1 = workbook.add_format()
         format1.set_border(1)
 
-        worksheet.write('A1', u'收支项目', format1)
-        worksheet.write('B1', u'日期', format1)
+        worksheet.write('A1', u'日期', format1)
+        worksheet.write('B1', u'收支项目', format1)
         worksheet.write('C1', u'摘要', format1)
         worksheet.write('D1', u'收入金额', format1)
         worksheet.write('E1', u'支出金额', format1)
