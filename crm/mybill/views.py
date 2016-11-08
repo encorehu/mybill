@@ -647,7 +647,7 @@ class BillDoView(ListView):
             last_balance= balance
 
         if i >0:
-            worksheet.write('A%s' % (i+start_row+1), u'合计')
+            worksheet.write('C%s' % (i+start_row+1), u'合计')
             worksheet.write('D%s' % (i+start_row+1), total_income)
             worksheet.write('E%s' % (i+start_row+1), total_outcome)
             worksheet.write('F%s' % (i+start_row+1), balance)
