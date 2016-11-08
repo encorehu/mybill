@@ -483,8 +483,8 @@ class BillDoView(ListView):
         last_month_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         last_month_balance = last_balance + last_month_income - last_month_outcome
-        worksheet.write('A2', u'期初余额', format1)
-        worksheet.write('B2', u'%s-%02d-%02d'  % (year, month, 1), format1)
+        worksheet.write('A2', u'%s-%02d-%02d'  % (year, month, 1), format1)
+        worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'上月底余额', format1)
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
