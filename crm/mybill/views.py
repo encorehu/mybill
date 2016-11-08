@@ -731,11 +731,8 @@ class BillDoView(ListView):
         i=0
         for i, item  in enumerate(accountitem_list):
             worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            if not item.category:
-                category = ''
-            else:
-                category = unicode(item.category.name)
-            worksheet.write('B%s' % (i+start_row), category, format1)
+            category = item.category.name if item.category else ''
+            worksheet.write('B%s' % (i+start_row), u' %s %s' % ('+' if item.tx_type else '-', category), format1)
             worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
