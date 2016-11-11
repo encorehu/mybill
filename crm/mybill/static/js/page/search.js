@@ -38,7 +38,7 @@ function showPage(a){
 function del2(b,a){
     if(confirm("确认要删除该记录?")){
         $.ajax({
-            url:"/mybill/bill.do?method=del",
+            url:"/mybill/bill.do?accountid="+accountid+"method=del",
             type:"post",
             dataType:"json",
             data:{id:b,sid:a},
