@@ -248,6 +248,8 @@ class BillDoView(ListView):
             return self.exportall(request, *args, **kwargs)
         elif method == 'transfer':
             return self.transfer(request, *args, **kwargs)
+        elif method == 'search':
+            return self.search(request, *args, **kwargs)
         else:
             kwargs.update(form=None)
             return render(request, self.template_name, kwargs)
@@ -285,6 +287,8 @@ class BillDoView(ListView):
             return self.delete(request, *args, **kwargs)
         elif method == 'transfer':
             return self.transfer(request, *args, **kwargs)
+        elif method == 'search':
+            return self.search(request, *args, **kwargs)
         else:
             return render(request, self.template_name, {'form': ''})
 
