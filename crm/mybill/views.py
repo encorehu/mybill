@@ -154,7 +154,7 @@ class BillDoView(ListView):
             'balance': balance,
             'year': year,
             'year_list': year_list,
-            'month_list': [x for x in xrange(13)],
+            'month_list': [x for x in xrange(1,13)],
             'month': month,
             })
 
