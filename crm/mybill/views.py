@@ -583,8 +583,8 @@ class BillDoView(ListView):
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
-        worksheet.set_column('A:A', 16)
-        worksheet.set_column('B:B', 10)
+        worksheet.set_column('A:A', 10)
+        worksheet.set_column('B:B', 16)
         worksheet.set_column('C:C', 26)
         worksheet.set_column('D:D', 10)
         worksheet.set_column('E:E', 10)
