@@ -499,7 +499,7 @@ class BillDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year_of_last_month, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
         for i, item  in enumerate(accountitem_list):
             worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
             category = item.category.name if item.category else ''
