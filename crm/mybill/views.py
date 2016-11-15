@@ -950,6 +950,20 @@ class BillDoView(ListView):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
+
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
+
+        servertime = datetime.datetime.now()
+        lastmonth = servertime.month - 1
+        if lastmonth==0:
+            year = servertime.year-1
+            lastmonth = 12
+        else:
+            year = servertime.year
+        monthago = datetime.date(year, lastmonth, servertime.day)
+
+
         key = request.POST.get('keyword', '').strip()
         categoryId = request.POST.get('categoryId', '')
         subCategoryId = request.POST.get('subCategoryId', '')
