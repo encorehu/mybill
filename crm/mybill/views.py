@@ -949,7 +949,6 @@ class BillDoView(ListView):
     def search(self, request, *args, **kwargs):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
 
         income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
@@ -980,6 +979,15 @@ class BillDoView(ListView):
             'balance': 0,
             })
 
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
+        p=re.search('\d+(\.\d{1,2})?', key)
+        n=None
+        if p:
+            n=decimal.Decimal(p.group())
+            accountitem_list = accountitem_list.filter(Q(amount=n))
+        else:
+            accountitem_list = accountitem_list.filter(Q(title__icontains=key) | Q(summary__icontains=key))
+
         categoryId = request.POST.get('categoryId', '')
         subCategoryId = request.POST.get('subCategoryId', '')
         last_balance = 0
@@ -988,12 +996,15 @@ class BillDoView(ListView):
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         balance = last_balance + income - outcome
-        account.balance = balance
-        account.save()
         return render(request, self.template_name, {
             'account': account,
             'account_list': account_list,
             'accountitem_list': accountitem_list,
+            'income_category_list': income_category_list,
+            'outcome_category_list': outcome_category_list,
+            'keyword': key,
+            'monthago':monthago,
+            'servertime':datetime.datetime.now(),
             'income': income,
             'outcome': outcome,
             'balance': balance,
