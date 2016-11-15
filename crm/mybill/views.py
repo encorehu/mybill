@@ -948,10 +948,9 @@ class BillDoView(ListView):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
-        print kwargs
-        keyword = reqeust.POST.get('keyword', '')
-        categoryId = reqeust.POST.get('categoryId', '')
-        subCategoryId = reqeust.POST.get('subCategoryId', '')
+        keyword = request.POST.get('keyword', '')
+        categoryId = request.POST.get('categoryId', '')
+        subCategoryId = request.POST.get('subCategoryId', '')
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
