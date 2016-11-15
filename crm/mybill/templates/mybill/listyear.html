@@ -58,6 +58,7 @@
 
 		<div class="SummaryTxt bmSt"><a href="/mybill/bill.do?accountid={{account.id}}&method=exportyear&strMonth={{year}}">导出{{year}}年数据</a></div>
 		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
+		<div class="SummaryTxt bmSt"><b class="fbu">累积结余:￥{{accumulated_balance}}</b></div>
 
 		{%if not accountitem_list%}
 		<!--没有记录时候显示-->
@@ -102,6 +103,7 @@
 		</table>
 
 		<div class="SummaryTxt bmSt"><b class="fLe">{{year}}年{{month}}月合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
+		<div class="SummaryTxt bmSt"><b class="fbu">累积结余:￥{{accumulated_balance}}</b></div>
 
 		<br/>
 
