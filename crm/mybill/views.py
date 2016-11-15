@@ -4,6 +4,8 @@ import json
 import datetime
 
 import StringIO
+import re
+import decimal
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -948,7 +950,7 @@ class BillDoView(ListView):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
-        keyword = request.POST.get('keyword', '')
+        key = request.POST.get('keyword', '')
         categoryId = request.POST.get('categoryId', '')
         subCategoryId = request.POST.get('subCategoryId', '')
         last_balance = 0
