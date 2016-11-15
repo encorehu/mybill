@@ -76,4 +76,49 @@
 		<br/>
 		</form>
 
+		<div class="SummaryTxt bmSt"><b class="fLe">合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
+
+		{%if not accountitem_list%}
+		<!--没有记录时候显示-->
+		<div class="eInfo2">
+			<img src="/static/mybill/images/ico_info2.gif"/>
+			<p>暂未搜索到收支记录。<br/>请尝试更换搜索关键字。</p>
+		</div>
+		{%endif%}
+
+		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
+		<col width="" />
+		<col width="85" />
+		<col width="140" />
+		<col width="100" />
+		<col width="100" />
+		<col width="90" />
+			<tr>
+				<th>收支项目</th>
+				<th>日期</th>
+				<th>说明</th>
+				<th>收入金额</th>
+				<th>支出金额</th>
+				<th>操作</th>
+			</tr>
+
+			{% for accountitem in accountitem_list %}
+			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+				<td class="tdCutL" title="{{accountitem.category.name}}">{{accountitem.category.name}}</td>
+				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary_display}}</nobr></nobr></td>
+				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
+				<td>
+					<a href="/mybill/bill.do?accountid={{account.id}}&method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
+					<a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a> &nbsp;
+					{%if accountitem.tx_type%}<a href="/mybill/bill.do?accountid={{account.id}}&method=transfer&id={{accountitem.id}}" class="icoTrans" title="转账">&nbsp;&nbsp;&nbsp;</a>{%endif%}
+
+				</td>
+			</tr>
+			{% endfor %}
+
+		</table>
+		<div class="SummaryTxt bmSt"><b class="fLe">合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
+
 {%endblock%}

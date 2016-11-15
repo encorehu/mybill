@@ -965,6 +965,21 @@ class BillDoView(ListView):
 
 
         key = request.POST.get('keyword', '').strip()
+        if not key:
+            return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
+            'accountitem_list': [],
+            'income_category_list': income_category_list,
+            'outcome_category_list': outcome_category_list,
+            'keyword': key,
+            'monthago':monthago,
+            'servertime':servertime,
+            'income': 0,
+            'outcome': 0,
+            'balance': 0,
+            })
+
         categoryId = request.POST.get('categoryId', '')
         subCategoryId = request.POST.get('subCategoryId', '')
         last_balance = 0
