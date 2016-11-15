@@ -137,7 +137,14 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
-        last_balance = 0
+        #calc last balance
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,month,1))
+        last_income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        last_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        last_balance = last_income - last_outcome
+
         #calc current accumulated balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
 
