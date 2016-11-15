@@ -137,6 +137,7 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
+        last_balance = 0
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
