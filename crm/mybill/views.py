@@ -950,7 +950,7 @@ class BillDoView(ListView):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
-        key = request.POST.get('keyword', '')
+        key = request.POST.get('keyword', '').strip()
         categoryId = request.POST.get('categoryId', '')
         subCategoryId = request.POST.get('subCategoryId', '')
         last_balance = 0
