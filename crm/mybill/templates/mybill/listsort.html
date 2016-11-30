@@ -46,7 +46,7 @@
 		<input id='hdnCategoryId' name='categoryId' type='hidden' value='0' />
 		<input id='hdnSubCategoryId' name='subCategoryId' type='hidden' value='0' />
 		<select id='selCategoryIds' class='sSel'>
-
+			<option value='1|0|0'>收入NULL分类</option>
 		  	{% for category in income_category_list %}
 				<option value='{{category.tx_type}}|{{category.id}}|0'{%ifequal category.id category_id%} selected='true' {%endifequal%}>{{category.name}}</option>
 
