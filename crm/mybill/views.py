@@ -434,6 +434,8 @@ class BillDoView(ListView):
                 subCategoryIds= list(AccountCategory.objects.filter(parent__id=categoryId).values_list('id', flat=True).all())
                 subCategoryIds.insert(0, categoryId)
                 accountitem_list= accountitem_list.filter(category__id__in = subCategoryIds)
+            else:
+                accountitem_list= accountitem_list.filter(category=None)
 
         last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
