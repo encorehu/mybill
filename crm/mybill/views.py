@@ -404,7 +404,7 @@ class BillDoView(ListView):
 
         if fromRecDate:
             fromRecDate = datetime.datetime.strptime(fromRecDate, '%Y-%m-%d')
-            accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=fromRecDate)
+            accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__gte=fromRecDate)
             if toRecDate:
                 toRecDate=datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
                 accountitem_list= accountitem_list.filter(tx_date__lte=toRecDate)
@@ -412,7 +412,7 @@ class BillDoView(ListView):
                 toRecDate=datetime.datetime.now()
         else:
             fromRecDate = None #datetime.datetime(year=year, month=month, day=1)
-            accountitem_list = AccountItem.objects.select_related('category')
+            accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
             if toRecDate:
                 toRecDate = datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
                 accountitem_list = accountitem_list.filter(tx_date__lte=toRecDate)
