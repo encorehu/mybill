@@ -81,6 +81,7 @@ img,table{border:0;border-collapse:collapse}
 
 	.icoEdt{background-image:url(/static/mybill/images/ico_pen.gif); background-repeat:no-repeat}
 	.icoDel{background-image:url(/static/mybill/images/ico_del.gif); background-repeat:no-repeat}
+	.icoTrans{background-image:url(/static/mybill/images/ico_trans.gif); background-repeat:no-repeat}
 
 	.SummaryTxt{text-align:right; margin:20px 0; color:#999; font-weight:bold; height:18px}
 	.SummaryTxt,.SummaryTxt *{ font-size:13px}

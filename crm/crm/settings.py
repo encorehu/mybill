@@ -114,3 +114,5 @@ AUTHOR='Mr. Hu'
 ORGNAME='PUBLIC ORG'
 
 DEFAULT_ACCOUNT_NUMBER = '00011'
+
+from local_settings import *

@@ -3,6 +3,9 @@
 {%block title%}理财易{%endblock%}
 
 {%block js.custom%}
+<script type="text/javascript" lang="Javascript">
+    var accountid = {{account.id}};
+</script>
 <script type="text/javascript" lang="Javascript" src="/static/js/lib/include.js?1444741569247"></script>
 <script type="text/javascript" lang="Javascript" src="/static/js/page/search.js?1444741569247"></script>
 {%endblock%}
@@ -17,12 +20,12 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?method=list">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?method=append">新增记录</a></li>
-		<li id='liTop3' class="topbar "><a href="/mybill/category.do?method=list">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?method=analytics">分析报表</a></li>
-		<li id='liTop5' class="topbar on"><a href="/mybill/bill.do?method=search">搜索账目</a></li>
-	    <li id='liTop6' class="topbar "><a href="/mybill/bill.do?method=myfunds">股票基金</a></li>
+		<li id='liTop1' class="topbar " ><a href="/mybill/bill.do?accountid={{account.id}}&method=list">我的账本</a></li>
+		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=append">新增记录</a></li>
+		<li id='liTop3' class="topbar "><a href="/mybill/category.do?accountid={{account.id}}&method=list">收支项目管理</a></li>
+		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=analytics">分析报表</a></li>
+		<li id='liTop5' class="topbar on"><a href="/mybill/bill.do?accountid={{account.id}}&method=search">搜索账目</a></li>
+		<li id='liTop6' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=myfunds">股票基金</a></li>
 	</ul>
 
 {%endblock%}
@@ -32,7 +35,7 @@
 		<!--操作或系统提示通用区域-->
 		<div class="eInfo hide" >&nbsp;<b class="icoInfo">&nbsp;&nbsp;&nbsp;&nbsp;</b><span id='spnMessage'></span></div>
 
-		<form id="frmBillSearch" name='billSearchForm' method="post" action="/mybill/bill.do" >
+		<form id="frmBillSearch" name='billSearchForm' method="post" action="/mybill/bill.do?accountid={{account.id}}" >
 		<div class="srhFm">
 			<input id='hdnPageIndex' type=hidden name='pageIndex' value='0' />
 			<input id='hdnPageSize' type=hidden name='pageSize' value='100' />
@@ -41,45 +44,27 @@
 			<input id='hdnType' name='type' type='hidden' value='0' />
 			<input id='hdnCategoryId' name='categoryId' type='hidden' value='0' />
 			<input id='hdnSubCategoryId' name='subCategoryId' type='hidden' value='0' />
-			&nbsp;&nbsp;关键字：<input id='txtKeyword' name='keyword' type="text" value='' style="width:90px"/>&nbsp;&nbsp;&nbsp;&nbsp;收支项目：<select id='selCategoryIds' class='sSel'><option value='-1|-1|-1'>所有收支项目</option><option value='0|50529762|0' >交通</option>
-<option value='0|50529762|50529763' >　　违章交通</option>
-<option value='0|50529762|50529764' >　　汽油费</option>
-<option value='0|50529762|50529765' >　　公共交通</option>
-<option value='0|50529762|50529766' >　　停车过路</option>
-<option value='0|50529762|50529767' >　　车辆维护</option>
-<option value='0|50529762|57845390' >　　火车票</option>
-<option value='0|50529768|0' >饮食</option>
-<option value='0|50529768|50529769' >　　工作餐</option>
-<option value='0|50529768|50529770' >　　聚餐请客</option>
-<option value='0|50529768|50529771' >　　蔬菜水果</option>
-<option value='0|50529772|0' >服饰美容</option>
-<option value='0|50529772|50529773' >　　衣服</option>
-<option value='0|50529772|50529774' >　　鞋类</option>
-<option value='0|50529772|50529775' >　　护肤品</option>
-<option value='0|50529772|50529776' >　　其他</option>
-<option value='0|50529777|0' >日常开支</option>
-<option value='0|50529777|50529778' >　　水费</option>
-<option value='0|50529777|50529779' >　　电费</option>
-<option value='0|50529777|50529780' >　　房租</option>
-<option value='0|50529777|50529781' >　　燃气费</option>
-<option value='0|50529777|50529782' >　　物业管理费</option>
-<option value='0|50529777|50529783' >　　生活用品</option>
-<option value='0|50529784|0' >教育培训</option>
-<option value='0|50529785|0' >通讯电话费</option>
-<option value='0|50529786|0' >文化/娱乐</option>
-<option value='0|50529787|0' >卫生医疗费</option>
-<option value='0|50529788|0' >孝敬父母</option>
-<option value='0|50529789|0' >子女培养</option>
-<option value='0|50529790|0' >人情往来</option>
-<option value='0|50529791|0' >其他开支</option>
-<option value='1|50529755|0' >工资</option>
-<option value='1|50529756|0' >奖金</option>
-<option value='1|50529757|0' >分红</option>
-<option value='1|50529758|0' >投资收入</option>
-<option value='1|50529759|0' >礼金</option>
-<option value='1|50529760|0' >兼职</option>
-<option value='1|50529761|0' >其他收入</option>
-</select>&nbsp; &nbsp; &nbsp;从 <input id='txtFromRecDate'  readonly='readonly' name='fromRecDate' type="text" style=" width:75px" value="2015-09-13"/> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;至 <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px"  readonly='readonly' value="2015-10-13"/> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;关键字：<input id='txtKeyword' name='keyword' type="text" value='' style="width:90px"/>&nbsp;&nbsp;
+			&nbsp;&nbsp;收支项目：<select id='selCategoryIds' class='sSel'>
+			    <option value='-1|-1|-1'>所有收支项目</option>
+
+                {% for category in outcome_category_list %}
+                <option value='{{category.tx_type}}|{{category.id}}|0' >{{category.name}}</option>
+                {% for subcategory in category.child_category_set.all %}
+                <option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' >　　{{subcategory.name}}</option>
+                {%endfor%}
+                {%endfor%}
+
+                {% for category in income_category_list %}
+                <option value='{{category.tx_type}}|{{category.id}}|0' >{{category.name}}</option>
+                {% for subcategory in category.child_category_set.all %}
+                <option value='{{subcategory.tx_type}}|{{category.id}}|{{subcategory.id}}' >　　{{subcategory.name}}</option>
+                {%endfor%}
+                {%endfor%}
+
+            </select>
+
+			&nbsp; &nbsp; &nbsp;从 <input id='txtFromRecDate'  readonly='readonly' name='fromRecDate' type="text" style=" width:75px" value="2015-09-13"/> <a id='aFromRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;至 <input id='txtToRecDate' name='toRecDate' type="text" style=" width:75px"  readonly='readonly' value="2015-10-13"/> <a id='aToRecDate' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;&nbsp;
 
 			<div style=" margin-top:14px; text-align:center"><input id='btnSearch' type="button" class="btnFnt" value="搜索" style="width:80px"/></div>
 
@@ -90,5 +75,50 @@
 		<br/>
 		<br/>
 		</form>
+
+		<div class="SummaryTxt bmSt"><b class="fLe">合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
+
+		{%if not accountitem_list%}
+		<!--没有记录时候显示-->
+		<div class="eInfo2">
+			<img src="/static/mybill/images/ico_info2.gif"/>
+			<p>暂未搜索到收支记录。<br/>请尝试更换搜索关键字。</p>
+		</div>
+		{%endif%}
+
+		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
+		<col width="" />
+		<col width="85" />
+		<col width="140" />
+		<col width="100" />
+		<col width="100" />
+		<col width="90" />
+			<tr>
+				<th>收支项目</th>
+				<th>日期</th>
+				<th>说明</th>
+				<th>收入金额</th>
+				<th>支出金额</th>
+				<th>操作</th>
+			</tr>
+
+			{% for accountitem in accountitem_list %}
+			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+				<td class="tdCutL" title="{{accountitem.category.name}}">{{accountitem.category.name}}</td>
+				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary_display}}</nobr></nobr></td>
+				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
+				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
+				<td>
+					<a href="/mybill/bill.do?accountid={{account.id}}&method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
+					<a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a> &nbsp;
+					{%if accountitem.tx_type%}<a href="/mybill/bill.do?accountid={{account.id}}&method=transfer&id={{accountitem.id}}" class="icoTrans" title="转账">&nbsp;&nbsp;&nbsp;</a>{%endif%}
+
+				</td>
+			</tr>
+			{% endfor %}
+
+		</table>
+		<div class="SummaryTxt bmSt"><b class="fLe">合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
 
 {%endblock%}

@@ -3,6 +3,10 @@ import os
 import json
 import datetime
 
+import StringIO
+import re
+import decimal
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import Http404
@@ -25,9 +29,15 @@ from django.core.files.base import ContentFile
 
 def file_download(request, filename, displayname):
     filepath = filename
-    wrapper = ContentFile(open(filepath,'rb').read())
-    response = HttpResponse(wrapper, content_type='application/octet-stream')
-    response['Content-Length'] = os.path.getsize(filepath)
+    if isinstance(filename, str):
+        wrapper = ContentFile(open(filepath,'rb').read())
+    else:
+        if hasattr(filename, 'read'):
+            wrapper = ContentFile(filename.read())
+        else:
+            raise Http404(u"File does not exists!")
+    response = HttpResponse(wrapper, content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    #response['Content-Length'] = os.path.getsize(filepath)
     response['Content-Disposition'] = (u'attachment; filename=%s' % displayname).encode('utf-8')
     return response
 
@@ -86,13 +96,11 @@ class BillDoView(ListView):
             instance.category = category
             instance.title = request.POST.get('title','')
             instance.summary = request.POST.get('note','')
-            #instance.summary = request.POST.get('subCategoryId','0')
             instance.amount = request.POST.get('amount','')
             if request.POST.get('recDate',''):
                 instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
             else:
                 instance.tx_date = datetime.datetime.now()
-            #instance.summary = request.POST.get('categoryId','')
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         else:
@@ -106,13 +114,11 @@ class BillDoView(ListView):
             instance.category = category
             instance.title = request.POST.get('title','')
             instance.summary = request.POST.get('note','')
-            #instance.summary = request.POST.get('subCategoryId','0')
             instance.amount = request.POST.get('amount','')
             if request.POST.get('recDate',''):
                 instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
             else:
                 instance.tx_date = datetime.datetime.now()
-            #instance.summary = request.POST.get('categoryId','')
             instance.tx_type = request.POST.get('type','0')
             instance.save()
         year,month = instance.tx_date.year, instance.tx_date.month
@@ -133,13 +139,23 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
 
+        #calc last balance
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,month,1))
+        last_income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        last_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        last_balance = last_income - last_outcome
+
+        #calc current accumulated balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
-        last_balance = 0
+
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
-        balance = last_balance + income - outcome
+        balance = income - outcome
+        accumulated_balance = last_balance + income - outcome
         year_list=[x for x in xrange(year+1, year-3, -1)]
         return render(request, self.template_name, {
             'account': account,
@@ -148,9 +164,10 @@ class BillDoView(ListView):
             'income': income,
             'outcome': outcome,
             'balance': balance,
+            'accumulated_balance': accumulated_balance,
             'year': year,
             'year_list': year_list,
-            'month_list': [x for x in xrange(13)],
+            'month_list': [x for x in xrange(1,13)],
             'month': month,
             })
 
@@ -168,13 +185,23 @@ class BillDoView(ListView):
 
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
+
+        #calc last balance
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,1,1))
+        last_income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        last_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        last_balance = last_income - last_outcome
+
+        #calc current accumulated balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
-        last_balance = 0
         income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
-        balance = last_balance + income - outcome
+        balance = income - outcome
+        accumulated_balance = last_balance + income - outcome
         year_list=[x for x in xrange(year+1, year-3, -1)]
         return render(request, self.template_name, {
             'account': account,
@@ -183,6 +210,7 @@ class BillDoView(ListView):
             'income': income,
             'outcome': outcome,
             'balance': balance,
+            'accumulated_balance': accumulated_balance,
             'year': year,
             'year_list': year_list,
             })
@@ -244,6 +272,8 @@ class BillDoView(ListView):
             return self.exportall(request, *args, **kwargs)
         elif method == 'transfer':
             return self.transfer(request, *args, **kwargs)
+        elif method == 'search':
+            return self.search(request, *args, **kwargs)
         else:
             kwargs.update(form=None)
             return render(request, self.template_name, kwargs)
@@ -281,6 +311,8 @@ class BillDoView(ListView):
             return self.delete(request, *args, **kwargs)
         elif method == 'transfer':
             return self.transfer(request, *args, **kwargs)
+        elif method == 'search':
+            return self.search(request, *args, **kwargs)
         else:
             return render(request, self.template_name, {'form': ''})
 
@@ -372,7 +404,7 @@ class BillDoView(ListView):
 
         if fromRecDate:
             fromRecDate = datetime.datetime.strptime(fromRecDate, '%Y-%m-%d')
-            accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__gte=fromRecDate)
+            accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__gte=fromRecDate)
             if toRecDate:
                 toRecDate=datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
                 accountitem_list= accountitem_list.filter(tx_date__lte=toRecDate)
@@ -380,7 +412,7 @@ class BillDoView(ListView):
                 toRecDate=datetime.datetime.now()
         else:
             fromRecDate = None #datetime.datetime(year=year, month=month, day=1)
-            accountitem_list = AccountItem.objects.select_related('category')
+            accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
             if toRecDate:
                 toRecDate = datetime.datetime.strptime(toRecDate, '%Y-%m-%d')
                 accountitem_list = accountitem_list.filter(tx_date__lte=toRecDate)
@@ -437,12 +469,14 @@ class BillDoView(ListView):
             year,month = now.year, now.month
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         import xlsxwriter
+        output = StringIO.StringIO()
+
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
-        worksheet.set_column('A:A', 16)
-        worksheet.set_column('B:B', 10)
+        worksheet.set_column('A:A', 10)
+        worksheet.set_column('B:B', 16)
         worksheet.set_column('C:C', 26)
         worksheet.set_column('D:D', 10)
         worksheet.set_column('E:E', 10)
@@ -469,16 +503,15 @@ class BillDoView(ListView):
           last_month = 12
         else:
           year_of_last_month = year
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
-        #accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=datetime.datetime(year,month,1))
         last_balance = 0
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
         last_month_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         last_month_balance = last_balance + last_month_income - last_month_outcome
-        worksheet.write('A2', u'期初余额', format1)
-        worksheet.write('B2', u'%s-%02d-%02d'  % (year, month, 1), format1)
+        worksheet.write('A2', u'%s-%02d-%02d'  % (year, month, 1), format1)
+        worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'上月底余额', format1)
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
@@ -490,14 +523,12 @@ class BillDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year_of_last_month, tx_date__month=month)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
         for i, item  in enumerate(accountitem_list):
-            worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
-            worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            if item.title:
-                worksheet.write('C%s' % (i+start_row), item.title+' '+item.summary, format1)
-            else:
-                worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
+            category = item.category.name if item.category else ''
+            worksheet.write('B%s' % (i+start_row), u' %s %s' % ('+' if item.tx_type else '-', category), format1)
+            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
                 worksheet.write('E%s' % (i+start_row), None, format1)
@@ -515,20 +546,13 @@ class BillDoView(ListView):
             last_balance= balance
 
         if i >0:
-            worksheet.write('A%s' % (i+start_row+1), u'合计')
+            worksheet.write('C%s' % (i+start_row+1), u'合计')
             worksheet.write('D%s' % (i+start_row+1), total_income)
             worksheet.write('E%s' % (i+start_row+1), total_outcome)
             worksheet.write('F%s' % (i+start_row+1), balance)
 
-
-        # Write some numbers, with row/column notation.
-        #worksheet.write(2, 0, 123)
-        #worksheet.write(3, 0, 123.456)
-
-        # Insert an image.
-        # worksheet.insert_image('B5', 'logo.png')
         left = u'&L\n单位:%s' % settings.ORGNAME
-        center = u'&C%s%s年%s月日记账' % (account, year, month)
+        center = u'&C%s日记账%s年%s月' % (account, year, month)
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
         worksheet.set_header(left+center+right, margin=0.6)
         worksheet.set_footer('&C&P/&N', margin=0.5)
@@ -553,17 +577,10 @@ class BillDoView(ListView):
 
 
         workbook.close()
-        response={}
-        response['result']={}
-        response['result']['success']='true'
-        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
-        response['result']['totalCount']='0'
-        response['result']['pageSize']='100'
-        #return HttpResponse(json.dumps(response))
+        output.seek(0)
 
-        filename = strMonth+'.xlsx'
         displayname=  u'%s%s年%s月.xlsx' % (account, year,month)
-        return file_download(request, filename, displayname)
+        return file_download(request, output, displayname)
 
     def exportyear(self, request, *args, **kwargs):
         account = kwargs.get('account')
@@ -585,11 +602,13 @@ class BillDoView(ListView):
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         import xlsxwriter
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(strMonth+'.xlsx')
+        output = StringIO.StringIO()
+
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
-        worksheet.set_column('A:A', 16)
-        worksheet.set_column('B:B', 10)
+        worksheet.set_column('A:A', 10)
+        worksheet.set_column('B:B', 16)
         worksheet.set_column('C:C', 26)
         worksheet.set_column('D:D', 10)
         worksheet.set_column('E:E', 10)
@@ -600,8 +619,8 @@ class BillDoView(ListView):
         format1 = workbook.add_format()
         format1.set_border(1)
 
-        worksheet.write('A1', u'收支项目', format1)
-        worksheet.write('B1', u'日期', format1)
+        worksheet.write('A1', u'日期', format1)
+        worksheet.write('B1', u'收支项目', format1)
         worksheet.write('C1', u'摘要', format1)
         worksheet.write('D1', u'收入金额', format1)
         worksheet.write('E1', u'支出金额', format1)
@@ -611,7 +630,7 @@ class BillDoView(ListView):
 
 
         year_of_last_month = year-1
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,1,1))
         #accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
@@ -619,14 +638,14 @@ class BillDoView(ListView):
         last_month_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         last_month_balance = last_balance + last_month_income - last_month_outcome
-        worksheet.write('A2', u'期初余额', format1)
-        worksheet.write('B2', u'%s-01-%02d'  % (year, 1), format1)
+        worksheet.write('A2', u'%s-01-%02d'  % (year, 1), format1)
+        worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'上月底余额', format1)
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_month_balance, format1)
 
-        last_balance=0
+        last_balance=last_month_balance
         balance=0
         total_income = 0
         total_outcome = 0
@@ -634,9 +653,10 @@ class BillDoView(ListView):
         i=0
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         for i, item  in enumerate(accountitem_list):
-            worksheet.write('A%s' % (i+start_row), unicode(item.category), format1)
-            worksheet.write('B%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            category = item.category.name if item.category else ''
+            worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
+            worksheet.write('B%s' % (i+start_row), u' %s %s' % ('+' if item.tx_type else '-', category), format1)
+            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
                 worksheet.write('E%s' % (i+start_row), None, format1)
@@ -654,20 +674,13 @@ class BillDoView(ListView):
             last_balance= balance
 
         if i >0:
-            worksheet.write('A%s' % (i+start_row+1), u'合计')
+            worksheet.write('C%s' % (i+start_row+1), u'合计')
             worksheet.write('D%s' % (i+start_row+1), total_income)
             worksheet.write('E%s' % (i+start_row+1), total_outcome)
             worksheet.write('F%s' % (i+start_row+1), balance)
 
-
-        # Write some numbers, with row/column notation.
-        #worksheet.write(2, 0, 123)
-        #worksheet.write(3, 0, 123.456)
-
-        # Insert an image.
-        # worksheet.insert_image('B5', 'logo.png')
         left = u'&L\n单位:%s' % settings.ORGNAME
-        center = u'&C%s年日记账' % (year, )
+        center = u'&C%s日记账%s年' % (account, year, )
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
         worksheet.set_header(left+center+right, margin=0.6)
         worksheet.set_footer('&C&P/&N', margin=0.5)
@@ -677,7 +690,7 @@ class BillDoView(ListView):
         #worksheet.hide_gridlines(0)
 
         workbook.set_properties({
-            'title':    u'%s年日记账' % (year, ),
+            'title':    u'%s%s年日记账' % (account, year, ),
             'subject':  u'日记账',
             'author':   settings.AUTHOR,
             'manager':  settings.MANAGER,
@@ -688,14 +701,11 @@ class BillDoView(ListView):
             'status':   'Quo',
         })
 
-
-
-
         workbook.close()
+        output.seek(0)
 
-        filename = strMonth+'.xlsx'
-        displayname=  u'%s年.xlsx' % (year, )
-        return file_download(request, filename, displayname)
+        displayname=  u'%s日记账%s年.xlsx' % (account, year, )
+        return file_download(request, output, displayname)
 
     def exportall(self, request, *args, **kwargs):
         account = kwargs.get('account')
@@ -705,8 +715,9 @@ class BillDoView(ListView):
         filename = u'%s.xlsx' % account
 
         import xlsxwriter
+        output = StringIO.StringIO()
         # Create an new Excel file and add a worksheet.
-        workbook = xlsxwriter.Workbook(filename)
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
         # Widen the first column to make the text clearer.
         worksheet.set_column('A:A', 10)
@@ -747,15 +758,9 @@ class BillDoView(ListView):
         i=0
         for i, item  in enumerate(accountitem_list):
             worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            if not item.category:
-                category = ''
-            else:
-                category = unicode(item.category.name)
-            worksheet.write('B%s' % (i+start_row), category, format1)
-            if item.title not in ['','None', None]:
-                worksheet.write('C%s' % (i+start_row), item.title+' '+item.summary, format1)
-            else:
-                worksheet.write('C%s' % (i+start_row), item.summary, format1)
+            category = item.category.name if item.category else ''
+            worksheet.write('B%s' % (i+start_row), u' %s %s' % ('+' if item.tx_type else '-', category), format1)
+            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
                 worksheet.write('D%s' % (i+start_row), item.amount, format1)
                 worksheet.write('E%s' % (i+start_row), None, format1)
@@ -804,16 +809,10 @@ class BillDoView(ListView):
 
 
         workbook.close()
-        response={}
-        response['result']={}
-        response['result']['success']='true'
-        response['result']['message']=u"新增记录成功，点击这里查看<a href='/mybill/bill.do?method=listmonth&strMonth=2015-10' class='udl fbu'>该月账本</a>"
-        response['result']['totalCount']='0'
-        response['result']['pageSize']='100'
-        #return HttpResponse(json.dumps(response))
+        output.seek(0)
 
         displayname=  u'%s.xlsx' % account
-        return file_download(request, filename, displayname)
+        return file_download(request, output, displayname)
 
     def delete(self, request, *args, **kwargs):
         response={}
@@ -842,6 +841,12 @@ class BillDoView(ListView):
             account_list = kwargs.get('account_list')
             income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
             outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
+            accountitemid= request.GET.get('id',None)
+            if accountitemid:
+                accountitem = AccountItem.objects.get(id=accountitemid, account=account)
+            else:
+                accountitem = None
+
 
             return render(request,
                           self.template_name,
@@ -851,6 +856,7 @@ class BillDoView(ListView):
                           'servertime':datetime.datetime.now(),
                           'income_category_list': income_category_list,
                           'outcome_category_list': outcome_category_list,
+                          'accountitem':accountitem,
                           })
         else:
             account = kwargs.get('account')
@@ -939,6 +945,70 @@ class BillDoView(ListView):
                 toInstance.save()
 
             return HttpResponse(json.dumps(response))
+
+    def search(self, request, *args, **kwargs):
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
+
+        income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
+        outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
+
+        servertime = datetime.datetime.now()
+        lastmonth = servertime.month - 1
+        if lastmonth==0:
+            year = servertime.year-1
+            lastmonth = 12
+        else:
+            year = servertime.year
+        monthago = datetime.date(year, lastmonth, servertime.day)
+
+
+        key = request.POST.get('keyword', '').strip()
+        if not key:
+            return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
+            'accountitem_list': [],
+            'income_category_list': income_category_list,
+            'outcome_category_list': outcome_category_list,
+            'keyword': key,
+            'monthago':monthago,
+            'servertime':servertime,
+            'income': 0,
+            'outcome': 0,
+            'balance': 0,
+            })
+
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
+        p=re.search('\d+(\.\d{1,2})?', key)
+        n=None
+        if p:
+            n=decimal.Decimal(p.group())
+            accountitem_list = accountitem_list.filter(Q(amount=n))
+        else:
+            accountitem_list = accountitem_list.filter(Q(title__icontains=key) | Q(summary__icontains=key))
+
+        categoryId = request.POST.get('categoryId', '')
+        subCategoryId = request.POST.get('subCategoryId', '')
+        last_balance = 0
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        return render(request, self.template_name, {
+            'account': account,
+            'account_list': account_list,
+            'accountitem_list': accountitem_list,
+            'income_category_list': income_category_list,
+            'outcome_category_list': outcome_category_list,
+            'keyword': key,
+            'monthago':monthago,
+            'servertime':datetime.datetime.now(),
+            'income': income,
+            'outcome': outcome,
+            'balance': balance,
+            })
 
 class BillCategoryDoView(ListView):
     def get_queryset(self):
