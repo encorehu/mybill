@@ -488,18 +488,20 @@ class BillDoView(ListView):
         worksheet.set_column('D:D', 10)
         worksheet.set_column('E:E', 10)
         worksheet.set_column('F:F', 12)
+        worksheet.set_column('G:G', 10)
 
         # Add a bold format to use to highlight cells.
         #bold = workbook.add_format({'bold': True})
         format1 = workbook.add_format()
         format1.set_border(1)
 
-        worksheet.write('A1', u'收支项目', format1)
-        worksheet.write('B1', u'日期', format1)
+        worksheet.write('A1', u'日期', format1)
+        worksheet.write('B1', u'收支项目', format1)
         worksheet.write('C1', u'摘要', format1)
         worksheet.write('D1', u'收入金额', format1)
         worksheet.write('E1', u'支出金额', format1)
         worksheet.write('F1', u'余额', format1)
+        worksheet.write('G1', u'票据号码', format1)
 
 
 
@@ -523,6 +525,7 @@ class BillDoView(ListView):
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_month_balance, format1)
+        worksheet.write('G2', u'', format1)
 
         last_balance=last_month_balance
         balance=0
@@ -550,6 +553,8 @@ class BillDoView(ListView):
                 total_outcome = total_outcome + outcome
             balance = last_balance+income-outcome
             worksheet.write('F%s' % (i+start_row), balance, format1)
+            receipt = item.receipt if item.receipt else ''
+            worksheet.write('G%s' % (i+start_row), receipt, format1)
             last_balance= balance
 
         if i >0:
@@ -620,6 +625,7 @@ class BillDoView(ListView):
         worksheet.set_column('D:D', 10)
         worksheet.set_column('E:E', 10)
         worksheet.set_column('F:F', 12)
+        worksheet.set_column('G:G', 10)
 
         # Add a bold format to use to highlight cells.
         #bold = workbook.add_format({'bold': True})
@@ -632,6 +638,7 @@ class BillDoView(ListView):
         worksheet.write('D1', u'收入金额', format1)
         worksheet.write('E1', u'支出金额', format1)
         worksheet.write('F1', u'余额', format1)
+        worksheet.write('G1', u'票据号码', format1)
 
 
 
@@ -651,6 +658,7 @@ class BillDoView(ListView):
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_month_balance, format1)
+        worksheet.write('G1', u'', format1)
 
         last_balance=last_month_balance
         balance=0
@@ -678,6 +686,8 @@ class BillDoView(ListView):
                 total_outcome = total_outcome + outcome
             balance = last_balance+income-outcome
             worksheet.write('F%s' % (i+start_row), balance, format1)
+            receipt = item.receipt if item.receipt else ''
+            worksheet.write('G%s' % (i+start_row), receipt, format1)
             last_balance= balance
 
         if i >0:
@@ -733,6 +743,7 @@ class BillDoView(ListView):
         worksheet.set_column('D:D', 10)
         worksheet.set_column('E:E', 10)
         worksheet.set_column('F:F', 12)
+        worksheet.set_column('G:G', 10)
 
         # Add a bold format to use to highlight cells.
         #bold = workbook.add_format({'bold': True})
@@ -745,6 +756,7 @@ class BillDoView(ListView):
         worksheet.write('D1', u'收入金额', format1)
         worksheet.write('E1', u'支出金额', format1)
         worksheet.write('F1', u'余额', format1)
+        worksheet.write('G1', u'票据号码', format1)
 
         min_date= AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
         min_year= min_date.year
@@ -755,6 +767,7 @@ class BillDoView(ListView):
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_month_balance, format1)
+        worksheet.write('G2', u'', format1)
 
         last_balance=0
         balance=0
@@ -782,6 +795,8 @@ class BillDoView(ListView):
                 total_outcome = total_outcome + outcome
             balance = last_balance+income-outcome
             worksheet.write('F%s' % (i+start_row), balance, format1)
+            receipt = item.receipt if item.receipt else ''
+            worksheet.write('G%s' % (i+start_row), receipt, format1)
             last_balance= balance
 
         if i >0:
