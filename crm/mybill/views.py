@@ -97,6 +97,7 @@ class BillDoView(ListView):
             instance.title = request.POST.get('title','')
             instance.summary = request.POST.get('note','')
             instance.amount = request.POST.get('amount','')
+            instance.receipt = request.POST.get('receipt','')
             if request.POST.get('recDate',''):
                 instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
             else:
@@ -115,6 +116,7 @@ class BillDoView(ListView):
             instance.title = request.POST.get('title','')
             instance.summary = request.POST.get('note','')
             instance.amount = request.POST.get('amount','')
+            instance.receipt = request.POST.get('receipt','')
             if request.POST.get('recDate',''):
                 instance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
             else:
