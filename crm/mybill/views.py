@@ -705,6 +705,7 @@ class BillDoView(ListView):
         worksheet.set_margins(top=1)
 
         worksheet.repeat_rows(0)
+        worksheet.print_area('A1:F1048576') #same as A:F
         #worksheet.hide_gridlines(0)
 
         workbook.set_properties({
