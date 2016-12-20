@@ -82,6 +82,7 @@
 				<th>收入金额</th>
 				<th>支出金额</th>
 				<th>操作</th>
+				<th>票据号码</th>
 			</tr>
 
 			{% for accountitem in accountitem_list %}
@@ -97,6 +98,7 @@
 				    <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a> &nbsp;
 				    {%if accountitem.tx_type%}<a href="/mybill/bill.do?accountid={{account.id}}&method=transfer&id={{accountitem.id}}" class="icoTrans" title="转账">&nbsp;&nbsp;&nbsp;</a>{%endif%}
 				</td>
+				<td>{{accountitem.receipt}}</td>
 			</tr>
 			{% endfor %}
 
