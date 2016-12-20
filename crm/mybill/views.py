@@ -922,6 +922,7 @@ class BillDoView(ListView):
                 summary = request.POST.get('note','')
                 amount = request.POST.get('amount','')
                 recDate = request.POST.get('recDate','')
+                receipt = request.POST.get('receipt','')
 
                 frInstance = AccountItem(account=from_account)
                 frInstance.category = from_category
@@ -929,6 +930,7 @@ class BillDoView(ListView):
                 frInstance.summary = summary if summary else u'转出至%s' % to_account
                 frInstance.amount = amount if amount else 0
                 frInstance.tx_date = datetime.datetime.now()
+                frInstance.receipt = receipt
                 if recDate:
                     try:
                         frInstance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
@@ -943,6 +945,7 @@ class BillDoView(ListView):
                 toInstance.summary = summary if summary else u'%s转入' % from_account
                 toInstance.amount = amount if amount else 0
                 toInstance.tx_date = datetime.datetime.now()
+                toInstance.receipt = receipt
                 if recDate:
                     try:
                         toInstance.tx_date = datetime.datetime.strptime(request.POST.get('recDate',''),'%Y-%m-%d')
