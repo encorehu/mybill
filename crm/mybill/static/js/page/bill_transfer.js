@@ -141,7 +141,9 @@ function reset(){
 	$("#txtTitle").val("");
 	$("#txtNote").val("");
 	$("#txtAmount").val("");
-	$("#selToAccount").val("");
+	$("#txtReceipt").val("");
+	//$("#selToAccount").val("");
+	showMessage("数据已保存，可以添加新数据了");
 }
 
 function resetCategory(){
