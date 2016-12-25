@@ -504,11 +504,11 @@ class BillDoView(ListView):
 
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=fromRecDate)
         last_balance = 0
-        last_month_income = accountitem_list.filter(tx_type=1).aggregate(
+        last_income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
-        last_month_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+        last_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
-        last_balance = last_balance + last_month_income - last_month_outcome
+        last_balance = last_balance + last_income - last_outcome
         worksheet.write('A2', u'%s-%02d-%02d'   % (fromRecDate.year, fromRecDate.month, fromRecDate.day), format1)
         worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'上月底余额', format1)
