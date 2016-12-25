@@ -576,7 +576,10 @@ class BillDoView(ListView):
         account_list = kwargs.get('account_list')
         strMonth = request.GET.get('strMonth','')
         if strMonth:
-            year,month = map(int, strMonth.split('-'))
+            try:
+                year, month = map(int, strMonth.split('-'))
+            except:
+                raise Http404(u"Cant find records")
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
