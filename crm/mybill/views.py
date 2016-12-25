@@ -600,6 +600,7 @@ class BillDoView(ListView):
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
+        fromRecDate = datetime.datetime(year,month,1)
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         import xlsxwriter
         output = StringIO.StringIO()
@@ -630,7 +631,7 @@ class BillDoView(ListView):
 
 
         year_of_last_month = year-1
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,1,1))
+        accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=fromRecDate)
         last_balance = 0
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
