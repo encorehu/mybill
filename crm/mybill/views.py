@@ -601,7 +601,7 @@ class BillDoView(ListView):
             now = datetime.datetime.now()
             year,month = now.year, now.month
         fromRecDate = datetime.datetime(year,month,1)
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
+
         import xlsxwriter
         output = StringIO.StringIO()
 
@@ -642,7 +642,6 @@ class BillDoView(ListView):
         worksheet.write('F2', last_balance, format1)
         worksheet.write('G1', u'', format1)
 
-        last_balance=last_month_balance
         balance=0
         total_income = 0
         total_outcome = 0
