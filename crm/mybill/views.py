@@ -711,8 +711,6 @@ class BillDoView(ListView):
         account_list = kwargs.get('account_list')
         fromRecDate = AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
 
-        filename = u'%s.xlsx' % account
-
         import xlsxwriter
         output = StringIO.StringIO()
 
