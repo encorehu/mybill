@@ -578,30 +578,6 @@ class BillDoView(ListView):
             year,month = now.year, now.month
         fromRecDate = datetime.datetime(year,month,1)
         #toRecDate = datetime.datetime(year,month,30) #?
-        import xlsxwriter
-        output = StringIO.StringIO()
-
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        worksheet = workbook.add_worksheet()
-
-        worksheet.set_column('A:A', 10)
-        worksheet.set_column('B:B', 16)
-        worksheet.set_column('C:C', 26)
-        worksheet.set_column('D:D', 10)
-        worksheet.set_column('E:E', 10)
-        worksheet.set_column('F:F', 12)
-        worksheet.set_column('G:G', 10)
-
-        format1 = workbook.add_format()
-        format1.set_border(1)
-
-        worksheet.write('A1', u'日期', format1)
-        worksheet.write('B1', u'收支项目', format1)
-        worksheet.write('C1', u'摘要', format1)
-        worksheet.write('D1', u'收入金额', format1)
-        worksheet.write('E1', u'支出金额', format1)
-        worksheet.write('F1', u'余额', format1)
-        worksheet.write('G1', u'票据号码', format1)
 
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=fromRecDate)
         last_balance = 0
@@ -610,13 +586,6 @@ class BillDoView(ListView):
         last_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
                      combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
         last_balance = last_balance + last_income - last_outcome
-        worksheet.write('A2', u'%s-%02d-%02d'   % (fromRecDate.year, fromRecDate.month, fromRecDate.day), format1)
-        worksheet.write('B2', u'期初余额', format1)
-        worksheet.write('C2', u'期初余额', format1)
-        worksheet.write('D2', u'', format1)
-        worksheet.write('E2', u'', format1)
-        worksheet.write('F2', last_balance, format1)
-        worksheet.write('G2', u'', format1)
 
         balance=0
         total_income = 0
