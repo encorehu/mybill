@@ -568,6 +568,10 @@ class BillDoView(ListView):
         return output
 
     def export(self, request, *args, **kwargs):
+        # 获取期初余额, 按月的话, 就取本月第一天之前的收入-支出
+        # 按年, 就取本年第一天之前的收入-支出
+        # 所有的, 就取0
+        # 按分类, 取0
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
         strMonth = request.GET.get('strMonth','')
