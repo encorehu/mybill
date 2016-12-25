@@ -593,6 +593,7 @@ class BillDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
+        # get accountitem_list
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
         title = u'%s日记账%s年%s月' % (account, year, month)
 
