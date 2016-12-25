@@ -693,7 +693,7 @@ class BillDoView(ListView):
         worksheet.write('G1', u'票据号码', format1)
 
         last_balance = 0
-        worksheet.write('A2', u'%s-%02d-%02d'  % fromRecDate, format1)
+        worksheet.write('A2', u'%s-%02d-%02d'  % (fromRecDate.year, fromRecDate.month, fromRecDate.day), format1)
         worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'期初余额', format1)
         worksheet.write('D2', u'', format1)
