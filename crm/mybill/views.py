@@ -640,7 +640,7 @@ class BillDoView(ListView):
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_balance, format1)
-        worksheet.write('G1', u'', format1)
+        worksheet.write('G2', u'', format1)
 
         balance=0
         total_income = 0
