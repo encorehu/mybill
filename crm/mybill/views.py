@@ -740,13 +740,13 @@ class BillDoView(ListView):
 
         min_date= AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
         min_year= min_date.year
-        last_month_balance = 0
+        last_balance = 0
         worksheet.write('A2', u'%s-%02d-%02d'  % fromRecDate, format1)
         worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'期初余额', format1)
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
-        worksheet.write('F2', last_month_balance, format1)
+        worksheet.write('F2', last_balance, format1)
         worksheet.write('G2', u'', format1)
 
         last_balance=0
