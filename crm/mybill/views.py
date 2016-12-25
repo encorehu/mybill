@@ -591,7 +591,7 @@ class BillDoView(ListView):
             tmp=strMonth.split('-')
             if len(tmp)==1:
                 year=int(tmp[0])
-                month=None
+                month=1
             elif len(tmp)==2:
                 year,month = map(int, strMonth.split('-'))
             else:
