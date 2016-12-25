@@ -660,7 +660,6 @@ class BillDoView(ListView):
         last_balance = 0
 
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
-        i=0
 
         title = u'%s日记账' % account
 
