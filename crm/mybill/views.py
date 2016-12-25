@@ -630,6 +630,7 @@ class BillDoView(ListView):
         fromRecDate = datetime.datetime(year,month,1)
 
 
+        # calc last_balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=fromRecDate)
         last_balance = 0
         last_income = accountitem_list.filter(tx_type=1).aggregate(
@@ -644,6 +645,7 @@ class BillDoView(ListView):
         total_outcome = 0
         start_row=3 #start from 3d row, index from 1
         i=0
+        # get accountitem_list
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         title = u'%s%s年日记账' % (account, year, )
 
