@@ -622,7 +622,7 @@ class BillDoView(ListView):
         else:
             now = datetime.datetime.now()
             year,month = now.year, now.month
-        fromRecDate = datetime.datetime(year,month,1)
+        fromRecDate = datetime.datetime(year,1,1)
 
 
         # calc last_balance
