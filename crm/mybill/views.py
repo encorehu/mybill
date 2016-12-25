@@ -624,63 +624,7 @@ class BillDoView(ListView):
         start_row=3 #start from 3d row, index from 1
         i=0
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
-        for i, item  in enumerate(accountitem_list):
-            worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
-            category = item.category.name if item.category else ''
-            worksheet.write('B%s' % (i+start_row), u' %s %s' % ('+' if item.tx_type else '-', category), format1)
-            worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
-            if item.tx_type:
-                worksheet.write('D%s' % (i+start_row), item.amount, format1)
-                worksheet.write('E%s' % (i+start_row), None, format1)
-                income = item.amount
-                outcome = 0
-                total_income = total_income + income
-            else:
-                worksheet.write('D%s' % (i+start_row), None, format1)
-                worksheet.write('E%s' % (i+start_row), item.amount, format1)
-                income = 0
-                outcome = item.amount
-                total_outcome = total_outcome + outcome
-            balance = last_balance+income-outcome
-            worksheet.write('F%s' % (i+start_row), balance, format1)
-            receipt = item.receipt if item.receipt else ''
-            worksheet.write('G%s' % (i+start_row), receipt, format1)
-            last_balance= balance
-
-        if i >0:
-            worksheet.write('C%s' % (i+start_row+1), u'合计')
-            worksheet.write('D%s' % (i+start_row+1), total_income)
-            worksheet.write('E%s' % (i+start_row+1), total_outcome)
-            worksheet.write('F%s' % (i+start_row+1), balance)
-
         title = u'%s日记账%s年%s月' % (account, year, month)
-        left = u'&L\n单位:%s' % settings.ORGNAME
-        center = u'&C%s' % title
-        right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
-        worksheet.set_header(left+center+right, margin=0.6)
-        worksheet.set_footer('&C&P/&N', margin=0.5)
-        worksheet.set_margins(top=1)
-
-        worksheet.repeat_rows(0)
-        worksheet.print_area('A1:F1048576') #same as A:F
-
-        workbook.set_properties({
-            'title':    title,
-            'subject':  u'日记账',
-            'author':   settings.AUTHOR,
-            'manager':  settings.MANAGER,
-            'company':  settings.ORGNAME,
-            'category': u'财务日记账',
-            'keywords': u'财务日记账',
-            'comments': u'本日记账由系统自动导出',
-            'status':   'Quo',
-        })
-
-
-
-
-        workbook.close()
-        output.seek(0)
 
         kwargs.update({
             'last_balance':last_balance,
