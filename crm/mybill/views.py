@@ -649,8 +649,8 @@ class BillDoView(ListView):
         i=0
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         for i, item  in enumerate(accountitem_list):
-            category = item.category.name if item.category else ''
             worksheet.write('A%s' % (i+start_row), item.tx_date.strftime('%Y-%m-%d'), format1)
+            category = item.category.name if item.category else ''
             worksheet.write('B%s' % (i+start_row), u' %s %s' % ('+' if item.tx_type else '-', category), format1)
             worksheet.write('C%s' % (i+start_row), item.summary_display(), format1)
             if item.tx_type:
