@@ -476,7 +476,6 @@ class BillDoView(ListView):
             year,month = now.year, now.month
         fromRecDate = datetime.datetime(year,month,1)
         #toRecDate = datetime.datetime(year,month,30) #?
-        accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__lt=datetime.datetime(year,month,1))
         import xlsxwriter
         output = StringIO.StringIO()
 
