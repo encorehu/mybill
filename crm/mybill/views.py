@@ -478,10 +478,9 @@ class BillDoView(ListView):
         import xlsxwriter
         output = StringIO.StringIO()
 
-        # Create an new Excel file and add a worksheet.
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
-        # Widen the first column to make the text clearer.
+
         worksheet.set_column('A:A', 10)
         worksheet.set_column('B:B', 16)
         worksheet.set_column('C:C', 26)
@@ -490,8 +489,6 @@ class BillDoView(ListView):
         worksheet.set_column('F:F', 12)
         worksheet.set_column('G:G', 10)
 
-        # Add a bold format to use to highlight cells.
-        #bold = workbook.add_format({'bold': True})
         format1 = workbook.add_format()
         format1.set_border(1)
 
