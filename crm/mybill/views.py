@@ -510,7 +510,7 @@ class BillDoView(ListView):
         last_balance = last_balance + last_income - last_outcome
         worksheet.write('A2', u'%s-%02d-%02d'   % (fromRecDate.year, fromRecDate.month, fromRecDate.day), format1)
         worksheet.write('B2', u'期初余额', format1)
-        worksheet.write('C2', u'上月底余额', format1)
+        worksheet.write('C2', u'期初余额', format1)
         worksheet.write('D2', u'', format1)
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_balance, format1)
