@@ -579,6 +579,7 @@ class BillDoView(ListView):
         fromRecDate = datetime.datetime(year,month,1)
         #toRecDate = datetime.datetime(year,month,30) #?
 
+        # calc last_balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=fromRecDate)
         last_balance = 0
         last_income = accountitem_list.filter(tx_type=1).aggregate(
