@@ -635,11 +635,6 @@ class BillDoView(ListView):
         last_balance = last_balance + last_income - last_outcome
 
 
-        balance=0
-        total_income = 0
-        total_outcome = 0
-        start_row=3 #start from 3d row, index from 1
-        i=0
         # get accountitem_list
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         title = u'%s%s年日记账' % (account, year, )
