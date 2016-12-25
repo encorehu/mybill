@@ -659,10 +659,6 @@ class BillDoView(ListView):
 
         last_balance = 0
 
-        balance=0
-        total_income = 0
-        total_outcome = 0
-        start_row=3 #start from 3d row, index from 1
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
         i=0
 
