@@ -569,7 +569,6 @@ class BillDoView(ListView):
 
         worksheet.repeat_rows(0)
         worksheet.print_area('A1:F1048576') #same as A:F
-        #worksheet.hide_gridlines(0)
 
         workbook.set_properties({
             'title':    u'%s%s年%s月日记账' % (account, year, month),
