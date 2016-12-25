@@ -610,12 +610,11 @@ class BillDoView(ListView):
             year,month = now.year, now.month
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year)
         import xlsxwriter
-        # Create an new Excel file and add a worksheet.
         output = StringIO.StringIO()
 
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
         worksheet = workbook.add_worksheet()
-        # Widen the first column to make the text clearer.
+
         worksheet.set_column('A:A', 10)
         worksheet.set_column('B:B', 16)
         worksheet.set_column('C:C', 26)
@@ -624,8 +623,6 @@ class BillDoView(ListView):
         worksheet.set_column('F:F', 12)
         worksheet.set_column('G:G', 10)
 
-        # Add a bold format to use to highlight cells.
-        #bold = workbook.add_format({'bold': True})
         format1 = workbook.add_format()
         format1.set_border(1)
 
@@ -642,7 +639,6 @@ class BillDoView(ListView):
 
         year_of_last_month = year-1
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,1,1))
-        #accountitem_list = AccountItem.objects.select_related('category').filter(tx_date__year=year_of_last_month, tx_date__month=month)
         last_balance = 0
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
                      combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
@@ -702,7 +698,6 @@ class BillDoView(ListView):
 
         worksheet.repeat_rows(0)
         worksheet.print_area('A1:F1048576') #same as A:F
-        #worksheet.hide_gridlines(0)
 
         workbook.set_properties({
             'title':    u'%s%s年日记账' % (account, year, ),
