@@ -709,7 +709,7 @@ class BillDoView(ListView):
     def exportall(self, request, *args, **kwargs):
         account = kwargs.get('account')
         account_list = kwargs.get('account_list')
-
+        fromRecDate = AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
 
         filename = u'%s.xlsx' % account
 
@@ -741,7 +741,7 @@ class BillDoView(ListView):
         min_date= AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
         min_year= min_date.year
         last_month_balance = 0
-        worksheet.write('A2', u'%s-01-%02d'  % (min_year, 1), format1)
+        worksheet.write('A2', u'%s-%02d-%02d'  % fromRecDate, format1)
         worksheet.write('B2', u'期初余额', format1)
         worksheet.write('C2', u'期初余额', format1)
         worksheet.write('D2', u'', format1)
