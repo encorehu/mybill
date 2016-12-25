@@ -551,8 +551,9 @@ class BillDoView(ListView):
             worksheet.write('E%s' % (i+start_row+1), total_outcome)
             worksheet.write('F%s' % (i+start_row+1), balance)
 
+        title = u'%s日记账%s年%s月' % (account, year, month)
         left = u'&L\n单位:%s' % settings.ORGNAME
-        center = u'&C%s日记账%s年%s月' % (account, year, month)
+        center = u'&C%s' % title
         right = '' #u'&R\n打印日期:%s' % datetime.datetime.now().strftime('%Y-%m-%d')
         worksheet.set_header(left+center+right, margin=0.6)
         worksheet.set_footer('&C&P/&N', margin=0.5)
@@ -562,7 +563,7 @@ class BillDoView(ListView):
         worksheet.print_area('A1:F1048576') #same as A:F
 
         workbook.set_properties({
-            'title':    u'%s%s年%s月日记账' % (account, year, month),
+            'title':    title,
             'subject':  u'日记账',
             'author':   settings.AUTHOR,
             'manager':  settings.MANAGER,
