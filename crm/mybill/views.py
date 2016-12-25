@@ -682,6 +682,16 @@ class BillDoView(ListView):
         workbook.close()
         output.seek(0)
 
+        kwargs.update({
+            'last_balance':last_balance,
+            'fromRecDate':fromRecDate,
+            'accountitem_list':accountitem_list,
+            'title': title,
+            'displayname': u'%s%s年%s月.xlsx' % (account, year, month),
+        })
+        output = self.gen_xlsx_report(request, **kwargs)
+
+
         displayname=  u'%s%s年%s月.xlsx' % (account, year,month)
         return file_download(request, output, displayname)
 
