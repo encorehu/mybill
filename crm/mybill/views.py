@@ -502,15 +502,6 @@ class BillDoView(ListView):
         worksheet.write('F1', u'余额', format1)
         worksheet.write('G1', u'票据号码', format1)
 
-
-
-
-        last_month = month-1
-        if last_month==0:
-          year_of_last_month = year-1
-          last_month = 12
-        else:
-          year_of_last_month = year
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account,  tx_date__lt=datetime.datetime(year,month,1))
         last_balance = 0
         last_month_income = accountitem_list.filter(tx_type=1).aggregate(
