@@ -159,10 +159,17 @@ class BillDoView(ListView):
         #calc current accumulated balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
 
-        income = accountitem_list.filter(tx_type=1).aggregate(
-                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
-        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
-                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        curr=accountitem_list.aggregate(
+            income=Sum(
+                Case(When(tx_type=1, then='amount')),
+                default=V(0.00)
+            ),
+            outcome=Sum(
+                Case(When(tx_type=0, then='amount')),
+                default=V(0.00)
+            )
+        )
+        income, outcome=curr['income'], curr['outcome']
         balance = income - outcome
         accumulated_balance = last_balance + income - outcome
         year_list=[x for x in xrange(year+1, year-3, -1)]
