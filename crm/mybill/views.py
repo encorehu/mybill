@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.http import Http404
 
 from django.db.models import Sum, Value as V
+from django.db.models import Case, When
 from django.db.models.functions import Coalesce
 from django.db.models import Q
 from django.db import transaction
@@ -143,11 +144,17 @@ class BillDoView(ListView):
 
         #calc last balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__lt=datetime.datetime(year,month,1))
-        last_income = accountitem_list.filter(tx_type=1).aggregate(
-                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
-        last_outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
-                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
-        last_balance = last_income - last_outcome
+        lasts=accountitem_list.aggregate(
+            last_income=Sum(
+                Case(When(tx_type=1, then='amount')),
+                default=V(0.00)
+            ),
+            last_outcome=Sum(
+                Case(When(tx_type=0, then='amount')),
+                default=V(0.00)
+            )
+        )
+        last_balance = lasts['last_income'] - lasts['last_outcome']
 
         #calc current accumulated balance
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account, tx_date__year=year, tx_date__month=month)
