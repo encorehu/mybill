@@ -28,6 +28,7 @@ class AccountBook(models.Model):
 		return u'[{0}]{1}'.format(self.code, self.name)
 
 class Account(models.Model):
+	accountbook	= models.ForeignKey(AccountBook, null=True, blank=True, default=None, related_name='accountbook_account_set')
 	number = models.CharField(max_length=20)
 	account_type = models.CharField(max_length=10, null=True, blank=True, default='')
 	name = models.CharField(max_length=20, null=True, blank=True, default='')
