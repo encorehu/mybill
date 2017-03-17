@@ -1216,6 +1216,41 @@ class BillAccountDoView(ListView):
             'total_balance': total_balance,
             })
 
+    def edit(self, request, *args, **kwargs):
+        '''
+        {"result":{
+            "success":"true",
+            "message":"已经成功保存收支项目信息!",
+            "totalCount":"0",
+            "data":{
+                "@class":"categoryform",
+                "id":"57845394",
+                "categoryName":"大笑1",
+                "parentId":"0",
+                "type":"0"
+            },
+            "pageIndex":"0",
+            "pageSize":"100"}
+        }
+        '''
+
+        account = kwargs.get('account')
+        account_list = kwargs.get('account_list')
+        accountbook_list = AccountBook.objects.all()
+
+        if not account:
+            return Http404()
+
+        accountbook=account.accountbook
+        if request.method == 'GET':
+            return render(request,
+                   self.template_name,
+                   {
+                       'account': account,
+                       'account_list': account_list,
+                       'accountbook': accountbook,
+                       'accountbook_list': accountbook_list,
+                   })
 
 class BillAccountBookDoView(ListView):
     def get_queryset(self):
