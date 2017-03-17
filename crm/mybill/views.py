@@ -1193,3 +1193,101 @@ class BillAccountDoView(ListView):
                     "type":account_type,
                 }
         return HttpResponse(json.dumps(response))
+
+class BillAccountBookDoView(ListView):
+    def get_queryset(self):
+        return []
+
+    def get(self, request, *args, **kwargs):
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/accountbook_%s.html' % method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request, *args, **kwargs)
+        elif method == 'edit':
+            return self.edit(request, *args, **kwargs)
+        elif method == 'append':
+            return self.append(request, *args, **kwargs)
+        elif method == 'list':
+            return self.listall(request, *args, **kwargs)
+        else:
+            kwargs.update({'accountbook_list': AccountBook.objects.all()})
+            return render(request, self.template_name, kwargs)
+        return render(request, self.template_name, {'accountbook_list': AccountBook.objects.all()})
+
+    def post(self, request, *args, **kwargs):
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/accountbook_%s.html' % method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request, *args, **kwargs)
+        elif method == 'edit':
+            return self.edit(request, *args, **kwargs)
+        elif method == 'append':
+            return self.append(request, *args, **kwargs)
+        elif method == 'list':
+            return self.listall(request, *args, **kwargs)
+        else:
+            kwargs.update({'accountbook_list': AccountBook.objects.all()})
+            return render(request, self.template_name, kwargs)
+        return render(request, self.template_name, {'accountbook_list': AccountBook.objects.all()})
+
+    def append(self, request, *args, **kwargs):
+        return render(request,
+                      self.template_name,
+                      {
+                      'servertime':datetime.datetime.now(),
+                      })
+
+    def addOrUpdate(self, request, *args, **kwargs):
+        '''
+        {"result":
+            {
+                "success":"true",
+                "message":"已经成功保存收支项目信息!",
+                "totalCount":"0",
+                "data":{
+                    "@class":"categoryform",
+                    "id":"12345",
+                    "categoryName":"租金",
+                    "parentId":"0",
+                    "type":"1"
+                },
+                "pageIndex":"0",
+                "pageSize":"100"
+            }
+        }
+        '''
+        response={}
+        response['result']={}
+        response['result']['success']='true'
+        response['result']['message']=u"已经成功保存账户信息!"
+        response['result']['totalCount']='0'
+        response['result']['pageSize']='100'
+
+        account_id = request.POST.get('id','0')
+        name = request.POST.get('accountName','无名')
+        number = request.POST.get('accountNumber','无名')
+        account_type = request.POST.get('accountType','无名')
+        display_name = request.POST.get('accountDisplayname','无名')
+        tx_type = request.POST.get('type','0')
+        parent_id = request.POST.get('parentId','0')
+        if account_id=='0':
+            account, created = Account.objects.get_or_create(number=number, name=name, account_type=account_type, display_name=display_name)
+            response['result']['data']={
+                    "@class":"categoryform",
+                    "id":account.id,
+                    "accountName":name,
+                    "type":account_type,
+                }
+        else:
+            account=AccountCategory.objects.get(id=account_id)
+            account.display_name = display_name
+            account.account_type = account_type
+            account.name = name
+            account.save()
+            response['result']['data']={
+                    "@class":"categoryform",
+                    "id":account_id,
+                    "accountName":name,
+                    "type":account_type,
+                }
+        return HttpResponse(json.dumps(response))
