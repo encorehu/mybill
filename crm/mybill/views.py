@@ -1288,7 +1288,7 @@ class BillAccountBookDoView(ListView):
                     "type":"None",
                 }
         else:
-            accountbook=AccountBook.objects.get(id=account_id)
+            accountbook=AccountBook.objects.get(id=pk)
             accountbook.code = code
             accountbook.name = name
             accountbook.save()
