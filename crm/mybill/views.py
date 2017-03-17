@@ -1299,3 +1299,19 @@ class BillAccountBookDoView(ListView):
                     "type":"None",
                 }
         return HttpResponse(json.dumps(response))
+
+    def listall(self, request, *args, **kwargs):
+        accountbook = kwargs.get('accountbook')
+        accountbook_list = kwargs.get('accountbook_list')
+        account_list = Account.objects.filter(accountbook=accountbook)
+        last_balance = 0
+        total_balance = account_list.aggregate(
+                     combined_balance=Coalesce(Sum('balance'), V(0)))['combined_balance']
+        accountbook.balance = total_balance
+        accountbook.save()
+        return render(request, self.template_name, {
+            'accountbook': accountbook,
+            'accountbook_list': accountbook_list,
+            'account_list': account_list,
+            'total_balance': total_balance,
+            })
