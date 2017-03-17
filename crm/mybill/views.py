@@ -1201,7 +1201,6 @@ class BillAccountDoView(ListView):
                     accountbook=AccountBook.objects.get(id=accountbookid)
                 except AccountBook.DoesNotExist:
                     pass
-            print "accountbook", accountbook
             account=Account.objects.get(id=account_id)
             account.display_name = display_name
             account.account_type = account_type
