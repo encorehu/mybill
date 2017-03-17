@@ -1315,3 +1315,36 @@ class BillAccountBookDoView(ListView):
             'account_list': account_list,
             'total_balance': total_balance,
             })
+
+    def edit(self, request, *args, **kwargs):
+        '''
+        {"result":{
+            "success":"true",
+            "message":"已经成功保存收支项目信息!",
+            "totalCount":"0",
+            "data":{
+                "@class":"categoryform",
+                "id":"57845394",
+                "categoryName":"大笑1",
+                "parentId":"0",
+                "type":"0"
+            },
+            "pageIndex":"0",
+            "pageSize":"100"}
+        }
+        '''
+        accountbook = kwargs.get('accountbook')
+        accountbook_list = kwargs.get('accountbook_list')
+        print accountbook
+        print accountbook_list
+
+        if not accountbook:
+            return Http404()
+
+        if request.method == 'GET':
+            return render(request,
+                   self.template_name,
+                   {
+                       'accountbook': accountbook,
+                       'accountbook_list': accountbook_list,
+                   })
