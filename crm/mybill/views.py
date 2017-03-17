@@ -1183,6 +1183,7 @@ class BillAccountDoView(ListView):
         number = request.POST.get('accountNumber','无名')
         account_type = request.POST.get('accountType','无名')
         display_name = request.POST.get('accountDisplayname','无名')
+        accountbookid = request.POST.get('accountBook', None)
         tx_type = request.POST.get('type','0')
         parent_id = request.POST.get('parentId','0')
         if account_id=='0':
@@ -1194,10 +1195,18 @@ class BillAccountDoView(ListView):
                     "type":account_type,
                 }
         else:
-            account=AccountCategory.objects.get(id=account_id)
+            accountbook = None
+            if accountbookid:
+                try:
+                    accountbook=AccountBook.objects.get(id=accountbookid)
+                except AccountBook.DoesNotExist:
+                    pass
+            print "accountbook", accountbook
+            account=Account.objects.get(id=account_id)
             account.display_name = display_name
             account.account_type = account_type
             account.name = name
+            account.accountbook = accountbook
             account.save()
             response['result']['data']={
                     "@class":"categoryform",
