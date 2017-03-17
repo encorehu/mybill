@@ -11,6 +11,22 @@ ACCOUNT_TYPE=(
     (4, u'权益'), #应收债权, 报销款
 )
 
+class AccountBook(models.Model):
+	code = models.CharField(max_length=16)
+	name = models.CharField(max_length=32, default='')
+	balance =   models.DecimalField(u'账本金额合计', max_digits=10, decimal_places=2, null=True, blank=True, default=0.00)
+
+	class Meta:
+		verbose_name = u'账本'
+		verbose_name_plural =u'账本'
+		ordering = ('code', 'id')
+
+	def __str__(self):
+		return self.__unicode__().encode('utf-8')
+
+	def __unicode__(self):
+		return u'[{0}]{1}'.format(self.code, self.name)
+
 class Account(models.Model):
 	number = models.CharField(max_length=20)
 	account_type = models.CharField(max_length=10, null=True, blank=True, default='')
