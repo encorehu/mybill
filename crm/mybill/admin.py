@@ -11,9 +11,13 @@ from .models import Account
 from .models import AccountItem
 from .models import AccountCategory
 from .models import Transaction
+from .models import AccountBook
+
+class AccountBookAdmin(admin.ModelAdmin):
+    list_display=('name','code','balance')
 
 class AccountAdmin(admin.ModelAdmin):
-    list_display=('name','number','account_type')
+    list_display=('name','number','account_type', 'accountbook')
 
 class AccountItemAdmin(admin.ModelAdmin):
     list_display=('account','tx_date','category','title','summary','tx_type','amount')
@@ -94,6 +98,7 @@ class TransactionAdmin(admin.ModelAdmin):
     list_display=('from_account','to_account','amount')
 
 admin.site.register(Account, AccountAdmin)
+admin.site.register(AccountBook, AccountBookAdmin)
 admin.site.register(AccountItem, AccountItemAdmin)
 admin.site.register(AccountCategory, AccountCategoryAdmin)
 admin.site.register(Transaction, TransactionAdmin)
