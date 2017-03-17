@@ -1202,6 +1202,17 @@ class BillAccountBookDoView(ListView):
 
     def get(self, request, *args, **kwargs):
         method=request.GET.get('method', 'list')
+        accountbookid = request.GET.get('accountbookid', None)
+        try:
+            accountbook = AccountBook.objects.get(id=accountbookid)
+        except AccountBook.DoesNotExist:
+            ##raise Http404("AccountBook does not exist")
+            accountbook = None
+        accountbook_list = AccountBook.objects.all()
+        kwargs.update({
+            'accountbook':accountbook,
+            'accountbook_list':accountbook_list,
+        })
         self.template_name = 'mybill/accountbook_%s.html' % method
         if method == 'addOrUpdate':
             return self.addOrUpdate(request, *args, **kwargs)
