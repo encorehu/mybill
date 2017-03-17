@@ -519,6 +519,8 @@ class BillDoView(ListView):
         worksheet.write('E1', u'支出金额', format1)
         worksheet.write('F1', u'余额', format1)
         worksheet.write('G1', u'票据号码', format1)
+        worksheet.write('H1', u'抬头', format1)
+        worksheet.write('I1', u'摘要1', format1)
 
         # L2
         worksheet.write('A2', u'%s-%02d-%02d'  % (fromRecDate.year, fromRecDate.month, fromRecDate.day), format1)
@@ -528,6 +530,8 @@ class BillDoView(ListView):
         worksheet.write('E2', u'', format1)
         worksheet.write('F2', last_balance, format1)
         worksheet.write('G2', u'', format1)
+        worksheet.write('H2', u'', format1)
+        worksheet.write('I2', u'', format1)
 
         balance=0
         total_income = 0
@@ -555,6 +559,8 @@ class BillDoView(ListView):
             worksheet.write('F%s' % (i+start_row), balance, format1)
             receipt = item.receipt if item.receipt else ''
             worksheet.write('G%s' % (i+start_row), receipt, format1)
+            worksheet.write('H%s' % (i+start_row), item.title, format1)
+            worksheet.write('I%s' % (i+start_row), item.summary, format1)
             last_balance= balance
 
         if i >0:
