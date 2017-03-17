@@ -154,6 +154,10 @@ class BillDoView(ListView):
                 default=V(0.00)
             )
         )
+        if lasts['last_income']==None:
+            lasts['last_income'] = 0
+        if lasts['last_outcome']==None:
+            lasts['last_outcome'] = 0
         last_balance = lasts['last_income'] - lasts['last_outcome']
 
         #calc current accumulated balance
@@ -170,6 +174,10 @@ class BillDoView(ListView):
             )
         )
         income, outcome=curr['income'], curr['outcome']
+        if not income:
+            income = 0
+        if not outcome:
+            outcome =0
         balance = income - outcome
         accumulated_balance = last_balance + income - outcome
         year_list=[x for x in xrange(year+1, year-3, -1)]
