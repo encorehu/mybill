@@ -33,6 +33,35 @@
 
 			<h3>全部账本 总余额:{{total_balance}}</h3>
 
+			<table class="eTb" >
+					<col width="85" />
+					<col width="140" />
+					<col width="100" />
+					<col width="100" />
+					<tr>
+						<th>账本号码</th>
+						<th>账本名称</th>
+						<th>账本余额</th>
+						<th>操作</th>
+					</tr>
+
+
+
+					{%for accountbook in accountbook_list%}
+					<tr id='trBill_{{accountbook.id}}' class="tr1 trBillList">
+						<td class="tdCutL" title=""><nobr>{{accountbook.code}}</nobr></nobr></td>
+						<td class="tdCutL" title=""><nobr>{{accountbook.name}}</nobr></nobr></td>
+						<td class="fgn">￥{{accountbook.balance}}</td>
+						<td>
+							<a href="/mybill/accountbook.do?accountbookid={{accountbook.id}}&method=list" class="icoLst" title="查看账本">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
+							<a href="/mybill/accountbook.do?accountbookid={{accountbook.id}}&method=edit" class="icoEdt" title="编辑账本">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
+						</td>
+						<td></td>
+					</tr>
+			    {%endfor%}
+
+				</table>
+
 
 
 {%endblock%}

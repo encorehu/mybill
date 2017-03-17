@@ -51,10 +51,11 @@ class BillIndexView(ListView):
         return []
 
     def get(self, request, *args, **kwargs):
-        total_balance = Account.objects.aggregate(combined_balance=Coalesce(Sum('balance'), V(0)))['combined_balance']
+        total_balance = AccountBook.objects.aggregate(combined_balance=Coalesce(Sum('balance'), V(0)))['combined_balance']
         return render(request, self.template_name,
                     {
                         'account_list': Account.objects.all(),
+                        'accountbook_list': AccountBook.objects.all(),
                         'total_balance':total_balance,
                     })
 
