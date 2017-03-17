@@ -1103,6 +1103,17 @@ class BillAccountDoView(ListView):
         return []
 
     def get(self, request, *args, **kwargs):
+        accountid = request.GET.get('accountid', None)
+        try:
+            account = Account.objects.get(id=accountid)
+        except Account.DoesNotExist:
+            account = None
+        account_list = Account.objects.all()
+        kwargs.update({
+            'account':account,
+            'account_list':account_list,
+        })
+
         method=request.GET.get('method', 'list')
         self.template_name = 'mybill/account_%s.html' % method
         if method == 'addOrUpdate':
@@ -1204,6 +1215,7 @@ class BillAccountDoView(ListView):
             'account_list': account_list,
             'total_balance': total_balance,
             })
+
 
 class BillAccountBookDoView(ListView):
     def get_queryset(self):
