@@ -507,6 +507,8 @@ class BillDoView(ListView):
         worksheet.set_column('E:E', 10)
         worksheet.set_column('F:F', 12)
         worksheet.set_column('G:G', 10)
+        worksheet.set_column('H:H', 10)
+        worksheet.set_column('I:I', 10)
 
         format1 = workbook.add_format()
         format1.set_border(1)
