@@ -1400,8 +1400,6 @@ class BillAccountBookDoView(ListView):
         '''
         accountbook = kwargs.get('accountbook')
         accountbook_list = kwargs.get('accountbook_list')
-        print accountbook
-        print accountbook_list
 
         if not accountbook:
             return Http404()
