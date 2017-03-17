@@ -1196,6 +1196,15 @@ class BillAccountDoView(ListView):
                 }
         return HttpResponse(json.dumps(response))
 
+    def listall(self, request, *args, **kwargs):
+        account_list = kwargs.get('account_list')
+        total_balance = account_list.aggregate(
+                     combined_balance=Coalesce(Sum('balance'), V(0)))['combined_balance']
+        return render(request, self.template_name, {
+            'account_list': account_list,
+            'total_balance': total_balance,
+            })
+
 class BillAccountBookDoView(ListView):
     def get_queryset(self):
         return []
