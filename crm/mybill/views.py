@@ -25,6 +25,7 @@ from .models import AccountItem
 from .models import AccountCategory
 from .models import Transaction
 from .models import TX_TYPE
+from .models import AccountBook
 
 from django.core.files.base import ContentFile
 
@@ -1263,31 +1264,26 @@ class BillAccountBookDoView(ListView):
         response['result']['totalCount']='0'
         response['result']['pageSize']='100'
 
-        account_id = request.POST.get('id','0')
-        name = request.POST.get('accountName','无名')
-        number = request.POST.get('accountNumber','无名')
-        account_type = request.POST.get('accountType','无名')
-        display_name = request.POST.get('accountDisplayname','无名')
-        tx_type = request.POST.get('type','0')
-        parent_id = request.POST.get('parentId','0')
-        if account_id=='0':
-            account, created = Account.objects.get_or_create(number=number, name=name, account_type=account_type, display_name=display_name)
+        pk = request.POST.get('id','0')
+        name = request.POST.get('accountbookName','')
+        code = request.POST.get('accountbookCode','')
+        if pk=='0':
+            accountbook, created = AccountBook.objects.get_or_create(code=code, name=name)
             response['result']['data']={
                     "@class":"categoryform",
-                    "id":account.id,
-                    "accountName":name,
-                    "type":account_type,
+                    "id":accountbook.id,
+                    "accountBookName":name,
+                    "type":"None",
                 }
         else:
-            account=AccountCategory.objects.get(id=account_id)
-            account.display_name = display_name
-            account.account_type = account_type
-            account.name = name
-            account.save()
+            accountbook=AccountBook.objects.get(id=account_id)
+            accountbook.code = code
+            accountbook.name = name
+            accountbook.save()
             response['result']['data']={
                     "@class":"categoryform",
-                    "id":account_id,
-                    "accountName":name,
-                    "type":account_type,
+                    "id":pk,
+                    "accountBookName":name,
+                    "type":"None",
                 }
         return HttpResponse(json.dumps(response))
