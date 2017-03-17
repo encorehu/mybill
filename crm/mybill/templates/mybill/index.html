@@ -32,11 +32,6 @@
 
 			<h3>全部账本 总余额:{{total_balance}}</h3>
 
-			<ul class="eWelLst">
-			    {%for account in account_list%}
-			    <li><span>{{account}}(余额:{{account.balance}})：</span> <a href="bill.do?accountid={{account.id}}&method=list">开始记账</a></li>
-			    {%endfor%}
-			</ul>
 
 
 {%endblock%}
