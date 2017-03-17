@@ -135,7 +135,13 @@ function validate(){
 		return false
 	}
 
-
+	try{
+		var a=$("#selAccountBook").val();
+		$("#hdnAccountBook").val(a);
+	}catch(d){
+		showMessage("收支项目数据读取出错,请刷新页面后再试!");
+		return false
+	}
 
 	return true
 }
