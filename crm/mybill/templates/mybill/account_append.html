@@ -39,6 +39,18 @@
 					<input type='hidden' id='hdnId' name='id' class='accountdata' value="0" />
 					<input type='hidden' id='hdnAccountType' name='accountType' class='accountdata' value="1" />
 					<ul class="sFrm">
+						<li id='liAccountBookOption'>
+							<b>账户所属账本：</b>
+							<div class="itemFm">
+								<select id='selAccountBook' class="sSel" style="text-align:left">
+									<option value="" >不选择账本</option>
+									{%for ab in accountbook_list%}
+									<option value='{{ab.id}}'>&nbsp;&nbsp;&nbsp;&nbsp;{{ab.name}}</option>
+									{%endfor%}
+								</select>
+							</div>(可不选, 不选就不会计入账本总账统计范围)
+							<div class="clear0"></div>
+						</li>
 						<li><b><span class="icoImp">　</span> 账户名称：</b><div class="itemFm" style="padding-top:2px"><input id='txtAccountName' name='accountName' type="text"  class="sIpt3 accountdata" style="width:187px" value=""/>&nbsp;&nbsp;&nbsp;</div><div class="clear0"></div></li>
 						<li><b><span class="icoImp">　</span> 账户号码：</b><input id='txtAccountNumber' maxlength='30' name='accountNumber' type="text" class="itemFm sIpt3 accountdata" style="width:187px" value=''/><div class="clear0"></div></li>
 						<li><b>账户简称：</b><input id='txtAccountDisplayName' maxlength='30' name='accountDisplayname' type="text" class="itemFm sIpt3 accountdata" style="width:187px" value=''/><div class="clear0"></div></li>

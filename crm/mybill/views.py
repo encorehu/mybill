@@ -1150,6 +1150,7 @@ class BillAccountDoView(ListView):
                       self.template_name,
                       {
                       'servertime':datetime.datetime.now(),
+                      'accountbook_list': AccountBook.objects.all()
                       })
 
     def addOrUpdate(self, request, *args, **kwargs):
