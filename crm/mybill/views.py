@@ -248,7 +248,7 @@ class BillDoView(ListView):
         try:
             accountitem = AccountItem.objects.get(pk=pk)
         except AccountItem.DoesNotExist:
-            return Http404()
+            return Http404("accountitem id is None")
         income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
         return render(request,
