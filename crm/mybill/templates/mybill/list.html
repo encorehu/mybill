@@ -79,7 +79,6 @@
 				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
 				<td>
 				    <a href="/mybill/bill.do?accountid={{account.id}}&method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
-				    <a href="#" class="icoDel" title="删除账单" onclick='return del("{{accountitem.id}}","nAUxTEmsQQtGwXHUCmssHlJGzKtZAdoD")'>&nbsp;&nbsp;&nbsp;</a> &nbsp;
 				    {%if accountitem.tx_type%}<a href="/mybill/bill.do?accountid={{account.id}}&method=transfer&id={{accountitem.id}}" class="icoTrans" title="转账">&nbsp;&nbsp;&nbsp;</a>{%endif%}
 				</td>
 				<td>{{accountitem.receipt}}</td>
