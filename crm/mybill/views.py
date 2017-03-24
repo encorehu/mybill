@@ -1196,7 +1196,7 @@ class BillAccountDoView(ListView):
                 pass
 
         if account_id=='0':
-            account, created = Account.objects.get_or_create(number=number, name=name, account_type=account_type, display_name=display_name)
+            account, created = Account.objects.get_or_create(accountbook=accountbook, number=number, name=name, account_type=account_type, display_name=display_name)
             response['result']['data']={
                     "@class":"categoryform",
                     "id":account.id,
