@@ -38,7 +38,7 @@ class Account(models.Model):
 	class Meta:
 		verbose_name = u'科目（账户）'
 		verbose_name_plural =u'科目（账户）'
-		ordering = ('number', 'id')
+		ordering = ('accountbook__code','number', 'id')
 
 
 	def __str__(self):
