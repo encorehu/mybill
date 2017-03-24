@@ -1206,6 +1206,7 @@ class BillAccountDoView(ListView):
             account.display_name = display_name
             account.account_type = account_type
             account.name = name
+            account.number = number
             account.accountbook = accountbook
             account.save()
             response['result']['data']={
