@@ -169,7 +169,7 @@ function validate(){
 
 	if($("#rdoTypeIn").is(":checked")){
 		$("#hdnType").val("1");
-		if(!$("#selInCategory").val()){showMessage("必须选择对应的收支项�?");
+		if(!$("#selInCategory").val()){showMessage("必须选择对应的收支项目?");
 			$("#selInCategory").focus();
 			return false
 		}
@@ -186,7 +186,7 @@ function validate(){
 	}else{
 		$("#hdnType").val("0");
 		if(!$("#selOutCategory").val()){
-			showMessage("必须选择对应的收支项�?");
+			showMessage("必须选择对应的收支项目?");
 			$("#selOutCategory").focus();
 			return false
 		}
@@ -234,7 +234,7 @@ function validateCategory(a){
 			}else{
 				if($("#selInCategories option").size()==0){
 					$("#rdoScopeInCategory").attr("checked","true").focus();
-					showMessage("目前没有一级收入项目可�?请先建立一级项�?");
+					showMessage("目前没有一级收入项目可选?请先建立一级项目?");
 					b.preventDefault();
 					return false
 				}else{
@@ -258,7 +258,7 @@ function validateCategory(a){
 			}else{
 				if($("#selOutCategories option").size()==0){
 					$("#rdoScopeOutCategory").attr("checked","true").focus();
-					showMessage("目前没有一级支出项目可�?请先建立一级项�?");
+					showMessage("目前没有一级支出项目可选?请先建立一级项目?");
 					b.preventDefault();
 					return false
 				}else{
