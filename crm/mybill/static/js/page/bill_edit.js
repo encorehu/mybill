@@ -1,13 +1,26 @@
 _import("calendar");
 _import("billshare");
 _import("myext");
+_import("jedate");
+_linkCss("jeDate");
 $(document).ready(function(){
 	if(!$("#hdnId").val()||$("#hdnId").val()==0){
 		$(".topbar").removeClass("on");
 		$("#liTop2").addClass("on")
 	}
 
-	$("#txtRecDate,#aRecDate").click(function(){SelectDate($("#txtRecDate")[0],"yyyy-MM-dd")});
+    $("#txtRecDate, #aRecDate").click(
+		function(){
+			$.jeDate("#txtRecDate", {
+				isinitVal:true,
+				trigger:false, //this must set, or none input elem has no cal
+        format:"YYYY-MM-DD hh:mm:ss",
+        //isTime:false,
+        minDate:"2005-06-30 00:00:00",
+        maxDate: $.nowDate({DD:0})
+      })
+	  }
+);
 
 	$("#aAddInCategory").click(function(){
 		$("#liAddInCategory").toggle();
@@ -156,7 +169,7 @@ function validate(){
 
 	if($("#rdoTypeIn").is(":checked")){
 		$("#hdnType").val("1");
-		if(!$("#selInCategory").val()){showMessage("必须选择对应的收支项目!");
+		if(!$("#selInCategory").val()){showMessage("必须选择对应的收支项�?");
 			$("#selInCategory").focus();
 			return false
 		}
@@ -173,7 +186,7 @@ function validate(){
 	}else{
 		$("#hdnType").val("0");
 		if(!$("#selOutCategory").val()){
-			showMessage("必须选择对应的收支项目!");
+			showMessage("必须选择对应的收支项�?");
 			$("#selOutCategory").focus();
 			return false
 		}
@@ -221,7 +234,7 @@ function validateCategory(a){
 			}else{
 				if($("#selInCategories option").size()==0){
 					$("#rdoScopeInCategory").attr("checked","true").focus();
-					showMessage("目前没有一级收入项目可选,请先建立一级项目!");
+					showMessage("目前没有一级收入项目可�?请先建立一级项�?");
 					b.preventDefault();
 					return false
 				}else{
@@ -245,7 +258,7 @@ function validateCategory(a){
 			}else{
 				if($("#selOutCategories option").size()==0){
 					$("#rdoScopeOutCategory").attr("checked","true").focus();
-					showMessage("目前没有一级支出项目可选,请先建立一级项目!");
+					showMessage("目前没有一级支出项目可�?请先建立一级项�?");
 					b.preventDefault();
 					return false
 				}else{
