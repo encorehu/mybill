@@ -3,7 +3,7 @@ from peewee import *
 database = SqliteDatabase('db.sqlite3', **{})
 
 class UnknownField(object):
-    pass
+    def __init__(self, *_, **__): pass
 
 class BaseModel(Model):
     class Meta:
@@ -21,6 +21,9 @@ class DjangoContentType(BaseModel):
 
     class Meta:
         db_table = 'django_content_type'
+        indexes = (
+            (('app_label', 'model'), True),
+        )
 
 class AuthPermission(BaseModel):
     codename = CharField()
@@ -29,6 +32,9 @@ class AuthPermission(BaseModel):
 
     class Meta:
         db_table = 'auth_permission'
+        indexes = (
+            (('content_type', 'codename'), True),
+        )
 
 class AuthGroupPermissions(BaseModel):
     group = ForeignKeyField(db_column='group_id', rel_model=AuthGroup, to_field='id')
@@ -36,6 +42,9 @@ class AuthGroupPermissions(BaseModel):
 
     class Meta:
         db_table = 'auth_group_permissions'
+        indexes = (
+            (('group', 'permission'), True),
+        )
 
 class AuthUser(BaseModel):
     date_joined = DateTimeField()
@@ -58,6 +67,9 @@ class AuthUserGroups(BaseModel):
 
     class Meta:
         db_table = 'auth_user_groups'
+        indexes = (
+            (('user', 'group'), True),
+        )
 
 class AuthUserUserPermissions(BaseModel):
     permission = ForeignKeyField(db_column='permission_id', rel_model=AuthPermission, to_field='id')
@@ -65,6 +77,9 @@ class AuthUserUserPermissions(BaseModel):
 
     class Meta:
         db_table = 'auth_user_user_permissions'
+        indexes = (
+            (('user', 'permission'), True),
+        )
 
 class DjangoAdminLog(BaseModel):
     action_flag = IntegerField()
@@ -94,23 +109,24 @@ class DjangoSession(BaseModel):
     class Meta:
         db_table = 'django_session'
 
+class MybillAccountbook(BaseModel):
+    balance = DecimalField(null=True)
+    code = CharField()
+    name = CharField()
+
+    class Meta:
+        db_table = 'mybill_accountbook'
+
 class MybillAccount(BaseModel):
     account_type = CharField(null=True)
+    accountbook = ForeignKeyField(db_column='accountbook_id', null=True, rel_model=MybillAccountbook, to_field='id')
+    balance = DecimalField(null=True)
     display_name = CharField(null=True)
     name = CharField(null=True)
     number = CharField()
 
     class Meta:
         db_table = 'mybill_account'
-
-class MybillAccountbook(BaseModel):
-    balance = DecimalField()
-    balance_cash = DecimalField()
-    balance_deposit = DecimalField()
-    name = CharField(null=True)
-
-    class Meta:
-        db_table = 'mybill_accountbook'
 
 class MybillAccountcategory(BaseModel):
     account = ForeignKeyField(db_column='account_id', null=True, rel_model=MybillAccount, to_field='id')
@@ -127,7 +143,8 @@ class MybillAccountitem(BaseModel):
     adding_type = IntegerField()
     adding_type_name = CharField()
     amount = DecimalField()
-    category = ForeignKeyField(db_column='category_id', rel_model=MybillAccountcategory, to_field='id')
+    balance = DecimalField(null=True)
+    category = ForeignKeyField(db_column='category_id', null=True, rel_model=MybillAccountcategory, to_field='id')
     category_verbosename = CharField(null=True)
     operator = CharField()
     receipt = CharField(null=True)
@@ -176,10 +193,24 @@ class MybillAccounttype(BaseModel):
     class Meta:
         db_table = 'mybill_accounttype'
 
+class MybillTransaction(BaseModel):
+    amount = DecimalField()
+    from_account = ForeignKeyField(db_column='from_account_id', rel_model=MybillAccount, to_field='id')
+    from_category = ForeignKeyField(db_column='from_category_id', null=True, rel_model=MybillAccountcategory, to_field='id')
+    from_item = ForeignKeyField(db_column='from_item_id', rel_model=MybillAccountitem, to_field='id')
+    to_account = ForeignKeyField(db_column='to_account_id', rel_model=MybillAccount, related_name='mybill_account_to_account_set', to_field='id')
+    to_category = ForeignKeyField(db_column='to_category_id', null=True, rel_model=MybillAccountcategory, related_name='mybill_accountcategory_to_category_set', to_field='id')
+    to_item = ForeignKeyField(db_column='to_item_id', rel_model=MybillAccountitem, related_name='mybill_accountitem_to_item_set', to_field='id')
+    tx_date = DateTimeField()
+
+    class Meta:
+        db_table = 'mybill_transaction'
+
 class SqliteSequence(BaseModel):
-    name = UnknownField()  #
-    seq = UnknownField()  #
+    name = UnknownField(null=True)  # 
+    seq = UnknownField(null=True)  # 
 
     class Meta:
         db_table = 'sqlite_sequence'
+        primary_key = False
 
