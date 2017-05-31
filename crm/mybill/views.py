@@ -925,6 +925,9 @@ class BillDoView(ListView):
             })
 
         accountitem_list = AccountItem.objects.select_related('category').filter(account=account)
+        accountitem_list = accountitem_list.filter(tx_date__gte=fromRecDate)
+        accountitem_list = accountitem_list.filter(tx_date__lte=toRecDate)
+
         p=re.search('\d+(\.\d{1,2})?', key)
         n=None
         if p:
