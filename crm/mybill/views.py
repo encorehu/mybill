@@ -857,15 +857,15 @@ class BillDoView(ListView):
         income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
-        servertime = datetime.datetime.now()
-        lastmonth = servertime.month - 1
+        toRecDate = datetime.datetime.now()
+        lastmonth = toRecDate.month - 1
         if lastmonth==0:
-            year = servertime.year-1
+            year = toRecDate.year-1
             lastmonth = 12
         else:
-            year = servertime.year
-        days = datetime.date(servertime.year, servertime.month, 1) - datetime.date(servertime.year, servertime.month-1, 1)
-        fromRecDate = servertime - days
+            year = toRecDate.year
+        days = datetime.date(toRecDate.year, toRecDate.month, 1) - datetime.date(toRecDate.year, toRecDate.month-1, 1)
+        fromRecDate = toRecDate - days
 
 
         key = request.POST.get('keyword', '').strip()
@@ -878,7 +878,7 @@ class BillDoView(ListView):
             'outcome_category_list': outcome_category_list,
             'keyword': key,
             'fromRecDate':fromRecDate,
-            'servertime':servertime,
+            'toRecDate':toRecDate,
             'income': 0,
             'outcome': 0,
             'balance': 0,
@@ -909,7 +909,7 @@ class BillDoView(ListView):
             'outcome_category_list': outcome_category_list,
             'keyword': key,
             'fromRecDate':fromRecDate,
-            'servertime':datetime.datetime.now(),
+            'toRecDate':toRecDate,
             'income': income,
             'outcome': outcome,
             'balance': balance,
