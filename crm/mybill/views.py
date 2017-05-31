@@ -8,6 +8,7 @@ import re
 import decimal
 
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.http import Http404
 
@@ -1458,3 +1459,75 @@ class BillAccountBookDoView(ListView):
                        'accountbook': accountbook,
                        'accountbook_list': accountbook_list,
                    })
+
+class BillTxDoView(ListView):
+    def get_queryset(self):
+        return []
+
+    def get(self, request, *args, **kwargs):
+        txid = request.GET.get('txid', None)
+        tx = get_object_or_404(Transaction, pk=txid)
+        tx_list = Account.objects.all()
+        kwargs.update({
+            'tx':tx,
+            'txid':txid,
+        })
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/tx_%s.html' % method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request, *args, **kwargs)
+        elif method == 'list':
+            return self.listall(request, *args, **kwargs)
+        elif method == 'edit':
+            return self.edit(request, *args, **kwargs)
+        elif method == 'append':
+            return self.append(request, *args, **kwargs)
+        else:
+            return render(request, self.template_name, {'form': ''})
+
+    def post(self, request, *args, **kwargs):
+        pk = request.GET.get('txid', None)
+        if not pk:
+            #js ajax accountId, in a attrs
+            pk = request.POST.get('txid', None)
+            if not pk:
+                raise Http404()
+
+        try:
+            tx = Transaction.objects.get(id=accountid)
+        except Transaction.DoesNotExist:
+            raise Http404()
+        tx_list = Transaction.objects.all()
+        kwargs.update({
+            'tx':tx,
+            'txid':pk,
+        })
+        method=request.GET.get('method', 'list')
+        self.template_name = 'mybill/tx_%s.html' % method
+        if method == 'addOrUpdate':
+            return self.addOrUpdate(request, *args, **kwargs)
+        elif method == 'edit':
+            return self.edit(request, *args, **kwargs)
+        return render(request, self.template_name, {'form': ''})
+
+
+    def listall(self, request,  *args, **kwargs):
+        tx = kwargs.get('tx')
+        txid = kwargs.get('txid')
+        print 'txid', txid
+        #accountitem_list = AccountItem.objects.select_related('category').filter(transaction_id=txid)
+        accountitem_list = AccountItem.objects.select_related('category').filter(transaction_id=txid)
+        print accountitem_list
+        last_balance = 0
+        income = accountitem_list.filter(tx_type=1).aggregate(
+                     combined_debit=Coalesce(Sum('amount'), V(0)))['combined_debit']
+        outcome = accountitem_list.filter(~Q(tx_type=1)).aggregate(
+                     combined_credit=Coalesce(Sum('amount'), V(0)))['combined_credit']
+        balance = last_balance + income - outcome
+        return render(request, self.template_name, {
+            'tx': tx,
+            'accountitem_list': accountitem_list,
+            'income': income,
+            'outcome': outcome,
+            'balance': balance,
+            })

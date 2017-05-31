@@ -18,12 +18,8 @@
 	<!--增加代码 lemon end-->
 	<ul class="eNav">
 		<li id='liTop0' class="topbar " ><a href="/mybill/user.do?method=wel">理财易首页</a></li>
-		<li id='liTop1' class="topbar on" ><a href="/mybill/bill.do?accountid={{account.id}}&method=list">我的账本</a></li>
-		<li id='liTop2' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=append">新增记录</a></li>
-		<li id='liTop3' class="topbar "><a href="/mybill/category.do?accountid={{account.id}}&method=list">收支项目管理</a></li>
-		<li id='liTop4' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=analytics">分析报表</a></li>
-		<li id='liTop5' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=search">搜索账目</a></li>
 	  <li id='liTop6' class="topbar "><a href="/mybill/bill.do?accountid={{account.id}}&method=transfer">转账</a></li>
+	  <li id='liTop1' class="topbar on"><a href="/mybill/tx.do?txid={{tx.id}}&method=list">转账信息</a></li>
 	</ul>
 
 {%endblock%}
@@ -41,7 +37,28 @@
 		</div>
 
 
-		<div class="SummaryTxt bmSt"><a href="/mybill/bill.do?accountid={{account.id}}&method=exportall">导出全部数据</a></div>
+	<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
+		<col width="85" />
+		<col width="85" />
+		<col width="10" />
+		<col width="85" />
+		<col width="45" />
+
+			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
+				<td class="tdCutL" >交易日期:{{tx.tx_date}}</td>
+				<td>转出账户:{{tx.from_account}}</td>
+				<td>&raquo;&raquo;&raquo;</td>
+				<td class="tdCutL" title="">转入账户:{{tx.to_account}}</td>
+				<td class="fgn">交易金额:{{tx.amount}}</td>
+			</tr>
+
+
+		</table>
+
+
+
+
+
 		<div class="SummaryTxt bmSt"><b class="fLe">合计</b>&nbsp; <b class="fgn">收入:￥{{income}}</b>&nbsp;&nbsp;&nbsp;<b class="frd">支出:￥{{outcome}}</b>&nbsp;&nbsp;&nbsp;<b class="fbu">结余:￥{{balance}}</b></div>
 
     {% if not accountitem_list %}
@@ -53,9 +70,9 @@
     {%endif%}
 
 		<table class="eTb" {% if not accountitem_list %}style='display:none'{%endif%}>
-		<col width="85" />
-		<col width="85" />
-		<col width="240" />
+		<col width="175" />
+		<col width="80" />
+		<col width="200" />
 		<col width="85" />
 		<col width="85" />
 		<col width="90" />
@@ -75,21 +92,30 @@
 			{% for accountitem in accountitem_list %}
 
 			<tr id='trBill_{{accountitem.id}}' class="tr1 trBillList">
-				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.category.name}}</td>
+				<td class="tdCutL" title="饮食 - 工作餐">{{accountitem.account}}/{{accountitem.category.name}}</td>
 				<td>{{accountitem.tx_date|date:'Y-m-d'}}</td>
-				<td class="tdCutL" title=""><nobr>{{accountitem.summary_display}}</nobr></nobr></td>
+				<td class="tdCutL" title=""><nobr>{{accountitem.summary_display}}</nobr>
+
+					{%ifnotequal tx.tx_date accountitem.tx_date%}<br/><br/><span class="frd">记账条目和转账条目【时间】不符</span>
+					<br/>转：{{tx.tx_date|date:"Y-m-d H:i:s"}}
+					<br/>记：{{accountitem.tx_date|date:"Y-m-d H:i:s"}}
+					{%endifnotequal%}
+					{%ifnotequal tx.amount accountitem.amount%}<br/><br/><span class="frd">记账条目和转账条目【金额】不符</span>{%endifnotequal%}
+
+
+					</td>
 				<td class="fgn">{%if accountitem.tx_type%}￥{{accountitem.amount}}{%else%}&nbsp;{%endif%}</td>
 				<td class="frd">{%if accountitem.tx_type%}&nbsp;{%else%}￥{{accountitem.amount}}{%endif%}</td>
 				<td>
-				    <a href="/mybill/bill.do?accountid={{account.id}}&method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
+				    <a href="/mybill/bill.do?accountid={{accountitem.account.id}}&method=edit&id={{accountitem.id}}" class="icoEdt" title="编辑账单">&nbsp;&nbsp;&nbsp;&nbsp;</a> &nbsp;
 				    {%if accountitem.tx_type%}
-				    {%if accountitem.transaction_id%}
-				    <a href="/mybill/bill.do?accountid={{account.id}}&method=transfer&id={{accountitem.id}}" class="icoTrans" title="转账">&nbsp;&nbsp;&nbsp;</a>
+				    {%if not accountitem.transaction_id%}
+				    <a href="/mybill/bill.do?accountid={{accountitem.account.id}}&method=transfer&id={{accountitem.id}}" class="icoTrans" title="转账">&nbsp;&nbsp;&nbsp;</a>
 				    {%endif%}
 				    {%endif%}
 				</td>
 				<td>{{accountitem.receipt}}</td>
-				<td>{%if accountitem.transaction_id%}<a href="/mybill/tx.do?txid={{accountitem.transaction_id}}&method=list">{{accountitem.transaction_id}}</a>{%endif%}</td>
+				<td>{{accountitem.transaction_id}}</td>
 			</tr>
 			{% endfor %}
 
