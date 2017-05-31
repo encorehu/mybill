@@ -1,25 +1,13 @@
+_import("calendar");
 _import("billshare");
 _import("myext");
-_import("jedate");
-_linkCss("jeDate");
 $(document).ready(function(){
 	if(!$("#hdnId").val()||$("#hdnId").val()==0){
 		$(".topbar").removeClass("on");
 		$("#liTop2").addClass("on")
 	}
 
-    $("#txtRecDate, #aRecDate").click(
-		function(){
-			$.jeDate("#txtRecDate", {
-				isinitVal:true,
-				trigger:false, //this must set, or none input elem has no cal
-        format:"YYYY-MM-DD hh:mm:ss",
-        //isTime:false,
-        minDate:"2005-06-30 00:00:00",
-        maxDate: $.nowDate({DD:0})
-      })
-	  }
-);
+  $("#txtRecDate,#aRecDate").click(function(){SelectDate($("#txtRecDate")[0],"yyyy-MM-dd hh:mm:ss")});
 
 	$("#aAddInCategory").click(function(){
 		$("#liAddInCategory").toggle();
