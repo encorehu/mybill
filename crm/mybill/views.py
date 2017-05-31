@@ -511,6 +511,7 @@ class BillDoView(ListView):
         worksheet.set_column('G:G', 10)
         worksheet.set_column('H:H', 10)
         worksheet.set_column('I:I', 10)
+        worksheet.set_column('J:J', 10)
 
         format1 = workbook.add_format()
         format1.set_border(1)
@@ -525,6 +526,7 @@ class BillDoView(ListView):
         worksheet.write('G1', u'票据号码', format1)
         worksheet.write('H1', u'抬头', format1)
         worksheet.write('I1', u'摘要1', format1)
+        worksheet.write('J1', u'系统ID', format1)
 
         # L2
         worksheet.write('A2', u'%s-%02d-%02d'  % (fromRecDate.year, fromRecDate.month, fromRecDate.day), format1)
@@ -565,6 +567,7 @@ class BillDoView(ListView):
             worksheet.write('G%s' % (i+start_row), receipt, format1)
             worksheet.write('H%s' % (i+start_row), item.title, format1)
             worksheet.write('I%s' % (i+start_row), item.summary, format1)
+            worksheet.write('J%s' % (i+start_row), item.id, format1)
             last_balance= balance
 
         if i >0:
