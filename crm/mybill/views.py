@@ -864,7 +864,8 @@ class BillDoView(ListView):
             lastmonth = 12
         else:
             year = servertime.year
-        monthago = datetime.date(year, lastmonth, servertime.day)
+        days = datetime.date(servertime.year, servertime.month, 1) - datetime.date(servertime.year, servertime.month-1, 1)
+        monthago = servertime - days
 
 
         key = request.POST.get('keyword', '').strip()
