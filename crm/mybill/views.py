@@ -929,6 +929,16 @@ class BillDoView(ListView):
         accountitem_list = accountitem_list.filter(tx_date__lte=toRecDate)
 
 
+        p=re.search('\D+', key)
+        if p:
+            # contains not Numbers
+            accountitem_list = accountitem_list.filter(Q(title__icontains=key) | Q(summary__icontains=key))
+        else:
+            p=re.search('\d+(\.\d{1,2})?', key)
+            n=None
+            if p:
+                n=decimal.Decimal(p.group())
+                accountitem_list = accountitem_list.filter(Q(amount=n))
 
         categoryId = request.POST.get('categoryId', '')
         subCategoryId = request.POST.get('subCategoryId', '')
