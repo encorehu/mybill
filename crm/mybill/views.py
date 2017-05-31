@@ -865,7 +865,7 @@ class BillDoView(ListView):
         else:
             year = servertime.year
         days = datetime.date(servertime.year, servertime.month, 1) - datetime.date(servertime.year, servertime.month-1, 1)
-        monthago = servertime - days
+        fromRecDate = servertime - days
 
 
         key = request.POST.get('keyword', '').strip()
@@ -877,7 +877,7 @@ class BillDoView(ListView):
             'income_category_list': income_category_list,
             'outcome_category_list': outcome_category_list,
             'keyword': key,
-            'monthago':monthago,
+            'fromRecDate':fromRecDate,
             'servertime':servertime,
             'income': 0,
             'outcome': 0,
@@ -908,7 +908,7 @@ class BillDoView(ListView):
             'income_category_list': income_category_list,
             'outcome_category_list': outcome_category_list,
             'keyword': key,
-            'monthago':monthago,
+            'fromRecDate':fromRecDate,
             'servertime':datetime.datetime.now(),
             'income': income,
             'outcome': outcome,
