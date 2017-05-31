@@ -861,12 +861,6 @@ class BillDoView(ListView):
         outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
         toRecDate = datetime.datetime.now()
-        lastmonth = toRecDate.month - 1
-        if lastmonth==0:
-            year = toRecDate.year-1
-            lastmonth = 12
-        else:
-            year = toRecDate.year
         days = datetime.date(toRecDate.year, toRecDate.month, 1) - datetime.date(toRecDate.year, toRecDate.month-1, 1)
         fromRecDate = toRecDate - days
 
