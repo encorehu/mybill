@@ -860,9 +860,9 @@ class BillDoView(ListView):
         income_category_list = AccountCategory.objects.filter(account=account, tx_type=1, parent=None).all()
         outcome_category_list = AccountCategory.objects.filter(account=account, tx_type=0, parent=None).all()
 
-        toRecDate = datetime.datetime.now()
-        days = datetime.date(toRecDate.year, toRecDate.month, 1) - datetime.date(toRecDate.year, toRecDate.month-1, 1)
-        fromRecDate = toRecDate - days
+        #toRecDate = datetime.datetime.now()
+        #days = datetime.date(toRecDate.year, toRecDate.month, 1) - datetime.date(toRecDate.year, toRecDate.month-1, 1)
+        #fromRecDate = toRecDate - days
 
 
         key = request.POST.get('keyword', '').strip()
