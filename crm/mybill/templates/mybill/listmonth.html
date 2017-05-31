@@ -43,7 +43,12 @@
 		<form id="frmBillMonth" name='billMonthForm' method="post" action="/mybill/bill.do?accountid={{account.id}}" >
 		<div style="margin-bottom:15px">
 		<input type=hidden name='method' value='listmonth'/>
+		<input id='btnPrevMonth' type="button" value="&laquo;上一月"  class="btnFnt"/>
+
 		月份：<input id='txtStrMonth' name="strMonth" type="text" style=" width:65px" value="{{year}}-{{month}}" readonly=readonly/> <a id='aShowSelect' href="#" class="icoCal">&nbsp;&nbsp;&nbsp;&nbsp;</a>&nbsp;&nbsp;&nbsp;<input id='btnSearch' type="button" value="查看&raquo;"  class="btnFnt"/>
+
+		<input id='btnNextMonth' type="button" value="下一月&raquo;"  class="btnFnt"/>
+
 
 			<div id='divSelectMonth' class="expBox hide" style="width:240px;margin:0;background-position:-210px 0">
 				<div class="expBdy">
