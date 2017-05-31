@@ -864,7 +864,50 @@ class BillDoView(ListView):
         #days = datetime.date(toRecDate.year, toRecDate.month, 1) - datetime.date(toRecDate.year, toRecDate.month-1, 1)
         #fromRecDate = toRecDate - days
 
+        fromRecDate = request.POST.get('fromRecDate',None)
+        toRecDate = request.POST.get('toRecDate', None)
 
+        #default_fromRecDate = AccountItem.objects.filter(account=account).aggregate(Min('tx_date'))['tx_date__min']
+        default_fromRecDate = datetime.date(2015,1,1)
+        default_toRecDate   = datetime.datetime.now()
+
+        if not fromRecDate:
+            # None, set default time value
+            fromRecDate = default_fromRecDate
+        else:
+            # not empty string, is a 2015-1-1 like string
+            try:
+                fromRecDate = datetime.datetime.strptime(fromRecDate, '%Y-%m-%d')
+            except:
+                fromRecDate = default_fromRecDate
+
+        if not toRecDate:
+            toRecDate = datetime.datetime.now()
+        else:
+            try:
+                toRecDate = toRecDate + ' 23:59:59'
+                toRecDate = datetime.datetime.strptime(toRecDate, '%Y-%m-%d %H:%M:%S')
+            except:
+                toRecDate = default_toRecDate
+
+        if request.method == 'GET':
+            key = request.POST.get('keyword', '').strip()
+            if not key:
+                return render(request, self.template_name, {
+                'account': account,
+                'account_list': account_list,
+                'accountitem_list': [],
+                'income_category_list': income_category_list,
+                'outcome_category_list': outcome_category_list,
+                'keyword': key,
+                'fromRecDate':fromRecDate,
+                'toRecDate':toRecDate,
+                'income': 0,
+                'outcome': 0,
+                'balance': 0,
+                })
+
+        #POST data processsing below
         key = request.POST.get('keyword', '').strip()
         if not key:
             return render(request, self.template_name, {
